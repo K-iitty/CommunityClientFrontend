@@ -1,0 +1,108 @@
+<!-- pages/property/notice/list/list.wxml -->
+<!-- 公告管理 - 列表页面 -->
+
+<view class="page">
+  <!-- 页面头部 -->
+  <!-- <view class="header">
+    <view class="header-title">公告管理</view>
+    <view class="header-subtitle">社区通知和公告</view>
+  </view> -->
+
+  <!-- 搜索栏 -->
+  <view class="search-container">
+    <view class="search-bar">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="搜索公告标题"
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+      />
+      <button class="search-btn" bindtap="handleSearch">搜索</button>
+      <button class="clear-btn" bindtap="clearSearch" wx:if="{{searchKeyword}}">清除</button>
+    </view>
+  </view>
+
+  <!-- 分类筛选 -->
+  <view class="filter-tags">
+    <block wx:for="{{categories}}" wx:key="id">
+      <view
+        class="filter-tag {{categoryFilter === item.id ? 'active' : ''}}"
+        data-category="{{item.id}}"
+        bindtap="setCategory"
+      >
+        {{item.name}}
+      </view>
+    </block>
+  </view>
+
+  <!-- 内容区域 -->
+  <view class="content">
+    <!-- 空状态 -->
+    <view wx:if="{{empty && !loading}}" class="empty-state">
+      <view class="empty-icon">📋</view>
+      <view class="empty-text">暂无公告</view>
+      <view class="empty-tip">点击下方按钮发布新公告</view>
+    </view>
+
+    <!-- 公告列表 -->
+    <view wx:else class="notice-list">
+      <block wx:for="{{filteredNotices}}" wx:key="noticeId">
+        <!-- 公告卡片 -->
+        <view class="notice-card" bindtap="viewDetail" data-id="{{item.id}}">
+          <!-- 卡片头部 -->
+          <view class="card-header">
+            <view class="notice-title">{{item.title || item.noticeTitle || '-'}}</view>
+            <view class="category-badge {{item.noticeType}} {{item.status === '已发布' ? 'published' : 'draft'}}">
+              {{item.noticeType || item.category || '公告'}}
+            </view>
+          </view>
+
+          <!-- 卡片内容 -->
+          <view class="card-content">
+            <!-- 内容预览 -->
+            <!-- <view class="notice-summary">
+              {{item.content || item.noticeContent || '无内容描述'}}
+            </view> -->
+
+            <!-- 元信息 -->
+            <view class="notice-meta">
+              <view class="publish-time">
+                {{item.publishTime || item.createTime || '未知'}}
+              </view>
+              <view class="read-count">
+                阅读: {{item.readCount || 0}}
+              </view>
+              <!-- <view class="status-label {{item.status}}">
+                {{item.status || '已发布'}}
+              </view> -->
+            </view>
+          </view>
+
+          <!-- 操作按钮 -->
+          <view class="card-actions">
+            <button class="action-btn edit-btn" data-id="{{item.id}}" bindtap="editNotice" catch:tap>编辑</button>
+            <button class="action-btn delete-btn" data-id="{{item.id}}" bindtap="deleteNotice" catch:tap>删除</button>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <!-- 加载状态 -->
+    <view wx:if="{{loading && notices.length === 0}}" class="loading">
+      加载中...
+    </view>
+
+    <!-- 加载完成 -->
+    <view wx:if="{{!hasMore && filteredNotices.length > 0}}" class="load-complete">
+      已加载全部公告
+    </view>
+  </view>
+
+  <!-- 新增公告按钮 -->
+  <view class="add-button-container">
+    <button class="add-button" bindtap="goToAdd">
+      发布新公告
+    </button>
+  </view>
+</view>

@@ -1,0 +1,148 @@
+<!--pages/owner/profile/meter/detail/detail.wxml-->
+<view class="container" wx:if="{{!loading && meter}}">
+  <!-- 仪表头部 -->
+  <view class="meter-header">
+    <view class="header-top">
+      <text class="meter-title">{{meter.meterName}}</text>
+      <text class="meter-badge">{{meter.categoryName}}</text>
+    </view>
+    <view class="reading-display">
+      <text class="reading-label">当前读数</text>
+      <text class="reading-large">{{meter.currentReading}}</text>
+      <text class="reading-unit">{{meter.unit}}</text>
+    </view>
+  </view>
+
+  <!-- 基本信息 -->
+  <view class="section">
+    <view class="section-title">基本信息</view>
+    <view class="info-list">
+      <view class="info-item">
+        <text class="label">仪表类型</text>
+        <text class="value">{{meter.meterType}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">仪表编码</text>
+        <text class="value">{{meter.meterCode || '-'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">序列号</text>
+        <text class="value">{{meter.meterSn || '-'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">仪表状态</text>
+        <text class="value">{{meter.meterStatus || '正常'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 读数信息 -->
+  <view class="section">
+    <view class="section-title">读数信息</view>
+    <view class="info-list">
+      <view class="info-item">
+        <text class="label">当前读数</text>
+        <text class="value">{{meter.currentReading}} {{meter.unit}}</text>
+      </view>
+      <view class="info-item" wx:if="{{meter.initialReading}}">
+        <text class="label">起始读数</text>
+        <text class="value">{{meter.initialReading}} {{meter.unit}}</text>
+      </view>
+      <view class="info-item" wx:if="{{meter.maxReading}}">
+        <text class="label">最大读数</text>
+        <text class="value">{{meter.maxReading}} {{meter.unit}}</text>
+      </view>
+      <view class="info-item" wx:if="{{meter.totalUsage}}">
+        <text class="label">总用量</text>
+        <text class="value">{{meter.totalUsage}} {{meter.unit}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 安装信息 -->
+  <view class="section">
+    <view class="section-title">安装信息</view>
+    <view class="info-list">
+      <view class="info-item" wx:if="{{meter.installLocation}}">
+        <text class="label">安装位置</text>
+        <text class="value">{{meter.installLocation}}</text>
+      </view>
+      <view class="info-item" wx:if="{{meter.installDate}}">
+        <text class="label">安装日期</text>
+        <text class="value">{{meter.installDate}}</text>
+      </view>
+      <view class="info-item" wx:if="{{meter.locationType}}">
+        <text class="label">位置类型</text>
+        <text class="value">{{meter.locationType}}</text>
+      </view>
+      <view class="info-item" wx:if="{{meter.commAddress}}">
+        <text class="label">通信地址</text>
+        <text class="value">{{meter.commAddress}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 收费信息 -->
+  <view class="section" wx:if="{{config}}">
+    <view class="section-title">收费信息</view>
+    <view class="info-list">
+      <view class="info-item" wx:if="{{config.chargeStandard}}">
+        <text class="label">收费标准</text>
+        <text class="value">{{config.chargeStandard}}</text>
+      </view>
+      <view class="info-item" wx:if="{{config.unitPrice}}">
+        <text class="label">单价</text>
+        <text class="value">¥{{config.unitPrice}}/{{config.unit}}</text>
+      </view>
+      <view class="info-item" wx:if="{{config.calculationMethod}}">
+        <text class="label">计算方式</text>
+        <text class="value">{{config.calculationMethod}}</text>
+      </view>
+      <view class="info-item" wx:if="{{config.minValue}}">
+        <text class="label">最小值</text>
+        <text class="value">{{config.minValue}}</text>
+      </view>
+      <view class="info-item" wx:if="{{config.maxValue}}">
+        <text class="label">最大值</text>
+        <text class="value">{{config.maxValue}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 关联位置 -->
+  <view class="section" wx:if="{{house}}">
+    <view class="section-title">关联位置</view>
+    <view class="info-list">
+      <view class="info-item">
+        <text class="label">房屋</text>
+        <text class="value">{{house.fullRoomNo || house.roomNo}}</text>
+      </view>
+      <view class="info-item" wx:if="{{building}}">
+        <text class="label">楼栋</text>
+        <text class="value">{{building.buildingName}}({{building.buildingNo}}栋)</text>
+      </view>
+      <view class="info-item" wx:if="{{community}}">
+        <text class="label">社区</text>
+        <text class="value">{{community.communityName}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 备注信息 -->
+  <view class="section" wx:if="{{meter.remark}}">
+    <view class="section-title">备注</view>
+    <view class="remark-text">{{meter.remark}}</view>
+  </view>
+</view>
+
+<!-- 加载状态 -->
+<view class="loading-state" wx:if="{{loading}}">
+  <text>加载中...</text>
+</view>
+
+<!-- 错误状态 -->
+<view class="empty-state" wx:if="{{!loading && !meter}}">
+  <text class="empty-icon">-</text>
+  <text class="empty-text">仪表信息加载失败</text>
+  <text class="empty-tip">请稍后重试</text>
+</view>

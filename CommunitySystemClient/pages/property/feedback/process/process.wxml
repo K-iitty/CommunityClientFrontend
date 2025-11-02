@@ -1,0 +1,133 @@
+<!--pages/property/feedback/process/process.wxml-->
+<view class="page">
+  <!-- 页面标题 -->
+  <view class="header">
+    <view class="header-content">
+      <text class="header-title">处理反馈</text>
+      <text class="issue-id">工单 #{{id}}</text>
+    </view>
+    <view class="status-badge {{issue.issueStatus}}">{{issue.issueStatus}}</view>
+  </view>
+
+  <!-- 问题摘要 -->
+  <view class="section">
+    <view class="section-title">问题摘要</view>
+    <view class="summary-card">
+      <view class="summary-item">
+        <text class="summary-label">标题</text>
+        <text class="summary-value">{{issue.issueTitle}}</text>
+      </view>
+      <view class="summary-item">
+        <text class="summary-label">业主</text>
+        <text class="summary-value">{{issue.owner ? issue.owner.name : '-'}}</text>
+      </view>
+      <view class="summary-item">
+        <text class="summary-label">房号</text>
+        <text class="summary-value">{{issue.house ? issue.house.fullRoomNo : '-'}}</text>
+      </view>
+      <view class="summary-item">
+        <text class="summary-label">上报时间</text>
+        <text class="summary-value">{{issue.reportedTime}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 处理方案表单 -->
+  <view class="section">
+    <view class="section-title">处理方案</view>
+    <view class="form-card">
+      <view class="form-section">
+        <view class="form-label">
+          <text>处理方案</text>
+          <text style="color: #f44336;">*</text>
+        </view>
+        <textarea 
+          class="form-input textarea"
+          placeholder="请详细说明处理方案..."
+          placeholder-style="color: #bbb"
+          value="{{processPlan}}"
+          bindinput="onPlanDescriptionInput"
+          maxlength="500"
+        />
+        <view class="form-hint">{{processPlan.length}}/500</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 处理结果表单 -->
+  <view class="section">
+    <view class="section-title">处理结果</view>
+    <view class="form-card">
+      <view class="form-section">
+        <view class="form-label">
+          <text>处理结果</text>
+          <text style="color: #f44336;">*</text>
+        </view>
+        <textarea 
+          class="form-input textarea"
+          placeholder="请说明处理完成情况和效果..."
+          placeholder-style="color: #bbb"
+          value="{{resultDescription}}"
+          bindinput="onResultDescriptionInput"
+          maxlength="500"
+        />
+        <view class="form-hint">{{resultDescription.length}}/500</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 处理过程图片 -->
+  <view class="section">
+    <view class="section-title">处理过程图片</view>
+    <view class="upload-section">
+      <view class="upload-title">
+        <text>上传图片</text>
+        <text style="color: #f44336;">*</text>
+        <text style="color: #999; font-weight: 400; margin-left: 8rpx;">（最多{{maxImages}}张）</text>
+      </view>
+
+      <!-- 已上传图片 -->
+      <view class="image-grid" wx:if="{{uploadedImages && uploadedImages.length > 0}}">
+        <block wx:for="{{uploadedImages}}" wx:key="index">
+          <view class="image-item" bindtap="previewImage" data-index="{{index}}" data-urls="{{uploadedImages}}">
+            <image src="{{item}}" mode="aspectFill" />
+            <view class="delete-btn" bindtap="deleteImage" data-index="{{index}}">×</view>
+          </view>
+        </block>
+      </view>
+
+      <!-- 上传按钮 -->
+      <view 
+        class="upload-button {{uploadedImages.length >= maxImages ? 'disabled' : ''}}"
+        bindtap="chooseImage"
+        style="{{uploadedImages.length >= maxImages ? 'opacity: 0.5; cursor: not-allowed;' : ''}}"
+      >
+        <view class="upload-icon">📸</view>
+        <view class="upload-text">+ 添加图片</view>
+        <view style="font-size: 11px; color: #999; margin-top: 6rpx;">{{uploadedImages.length}}/{{maxImages}}</view>
+      </view>
+
+      <view class="upload-tip">
+        支持 JPG、PNG 格式，单张不超过 5MB
+      </view>
+    </view>
+  </view>
+
+  <!-- 提交区域 -->
+  <view class="action-buttons">
+    <button 
+      class="btn btn-secondary"
+      bindtap="onBack"
+      disabled="{{submitting}}"
+    >
+      返回
+    </button>
+    <button 
+      class="btn btn-primary" 
+      bindtap="onSubmit"
+      disabled="{{submitting}}"
+    >
+      {{submitting ? '提交中...' : '提交处理结果'}}
+    </button>
+  </view>
+</view>

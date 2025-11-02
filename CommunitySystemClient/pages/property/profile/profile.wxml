@@ -1,0 +1,279 @@
+<!-- pages/property/profile/profile.wxml -->
+<!-- 员工资料管理 - 个人资料页面 -->
+
+<view class="page">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">
+    <view class="loading-spinner"></view>
+    <view class="loading-text">加载中...</view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{empty && !loading}}" class="empty-state">
+    <view class="empty-icon">👤</view>
+    <view class="empty-text">加载失败</view>
+    <button class="retry-btn" bindtap="loadStaffProfile">重试</button>
+  </view>
+
+  <!-- 内容区域 -->
+  <view wx:if="{{staff && !loading}}" class="content">
+    <!-- 员工头部信息卡片 -->
+    <view class="staff-header">
+      <!-- 头像和基本信息 -->
+      <view class="header-content">
+        <view class="avatar">👤</view>
+        <view class="info">
+          <view class="name">{{staff.name}}</view>
+          <view class="position" style="color: {{getPositionColor(staff.position)}}">
+            {{staff.position || '员工'}}
+          </view>
+          <view class="department">{{(staff.department && staff.department.departmentName) || '部门未知'}}</view>
+        </view>
+      </view>
+      <!-- 账户状态徽章 -->
+      <view class="status-badge" style="background-color: {{staff.accountStatus === '正常' ? '#10b981' : '#ef4444'}}">
+        {{staff.accountStatus || '正常'}}
+      </view>
+    </view>
+
+    <!-- 基础信息区 -->
+    <view class="info-section">
+      <view class="section-title">基础信息</view>
+      
+      <view class="info-grid">
+        <view class="info-item">
+          <view class="label">姓名</view>
+          <view class="value">{{staff.name || '-'}}</view>
+        </view>
+        
+        <view class="info-item">
+          <view class="label">账号</view>
+          <view class="value">{{staff.username || '-'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">员工ID</view>
+          <view class="value">{{staff.id || '-'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">工作号</view>
+          <view class="value">{{staff.workNo || '-'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">性别</view>
+          <view class="value">{{staff.gender || '-'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">出生日期</view>
+          <view class="value">{{staff.birthDate || '-'}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 联系方式区 -->
+    <view class="info-section">
+      <view class="section-title">联系方式</view>
+      
+      <view class="info-grid">
+        <view class="info-item">
+          <view class="label">电话</view>
+          <view class="value">{{staff.phone || '-'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">邮箱</view>
+          <view class="value">{{staff.email || '-'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">微信</view>
+          <view class="value">{{staff.wechat || '-'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">办公电话</view>
+          <view class="value">{{staff.telephoneAreaCode}}-{{staff.telephoneNumber}}{{staff.telephoneExtension ? '-' + staff.telephoneExtension : ''}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">紧急联系人</view>
+          <view class="value">{{staff.emergencyContact || '-'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">紧急电话</view>
+          <view class="value">{{staff.emergencyPhone || '-'}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 工作信息区 -->
+    <view class="info-section">
+      <view class="section-title">工作信息</view>
+      
+      <view class="info-grid">
+        <view class="info-item">
+          <view class="label">部门</view>
+          <view class="value">{{(staff.department && staff.department.departmentName) || '未分配'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">部门编码</view>
+          <view class="value">{{(staff.department && staff.department.departmentCode) || '-'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">职位</view>
+          <view class="value" style="color: {{getPositionColor(staff.position)}}">
+            {{staff.position || '员工'}}
+          </view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">职务</view>
+          <view class="value">{{staff.jobTitle || '-'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">入职日期</view>
+          <view class="value">{{staff.hireDate || '-'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">工作状态</view>
+          <view class="value" style="color: {{staff.workStatus === '在职' ? '#10b981' : '#ef4444'}}">
+            {{staff.workStatus || '在职'}}
+          </view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">是否管理者</view>
+          <view class="value">{{staff.isManager ? '是' : '否'}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 教育背景区 -->
+    <view class="info-section">
+      <view class="section-title">教育背景</view>
+      
+      <view class="info-grid">
+        <view class="info-item">
+          <view class="label">学历</view>
+          <view class="value">{{staff.educationLevel || '-'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">毕业院校</view>
+          <view class="value">{{staff.graduateSchool || '-'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">所学专业</view>
+          <view class="value">{{staff.major || '-'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">毕业日期</view>
+          <view class="value">{{staff.graduationDate || '-'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">籍贯</view>
+          <view class="value">{{staff.nativePlace || '-'}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 账户信息区 -->
+    <view class="info-section">
+      <view class="section-title">证件照片</view>
+      
+      <!-- 身份证照片 -->
+      <view class="photo-subsection" wx:if="{{staff.idCardPhotos}}">
+        <view class="photo-label">身份证照片</view>
+        <view class="photo-grid">
+          <view class="photo-item" bindtap="previewImage" data-url="{{staff.idCardPhotos}}" data-type="idCard">
+            <image src="{{staff.idCardPhotos}}" mode="aspectFill" class="photo-image"></image>
+            <view class="photo-overlay">查看</view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 证件照 -->
+      <view class="photo-subsection" wx:if="{{staff.certificatePhotos}}">
+        <view class="photo-label">证件照</view>
+        <view class="photo-grid">
+          <view class="photo-item" bindtap="previewImage" data-url="{{staff.certificatePhotos}}" data-type="certificate">
+            <image src="{{staff.certificatePhotos}}" mode="aspectFill" class="photo-image"></image>
+            <view class="photo-overlay">查看</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 账户信息区 -->
+    <view class="info-section">
+      <view class="section-title">账户信息</view>
+      
+      <view class="info-grid">
+        <view class="info-item">
+          <view class="label">身份证</view>
+          <view class="value">{{staff.idCard || '-'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">账户状态</view>
+          <view class="value" style="color: {{staff.accountStatus === '正常' ? '#10b981' : '#ef4444'}}">
+            {{staff.accountStatus || '正常'}}
+          </view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">登录次数</view>
+          <view class="value">{{staff.loginCount || 0}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">最后登录</view>
+          <view class="value">{{staff.lastLoginTime || '未登录'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">最后登录IP</view>
+          <view class="value">{{staff.lastLoginIp || '-'}}</view>
+        </view>
+
+        <view class="info-item">
+          <view class="label">在线状态</view>
+          <view class="value" style="color: {{staff.onlineStatus ? '#10b981' : '#ef4444'}}">
+            {{staff.onlineStatus ? '在线' : '离线'}}
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作菜单 -->
+    <view class="menu-section">
+      <view class="section-title">操作</view>
+      <view class="menu-grid">
+        <block wx:for="{{menuItems}}" wx:key="id">
+          <view 
+            class="menu-item" 
+            data-id="{{item.id}}"
+            bindtap="handleMenuClick"
+          >
+            <view class="menu-label">{{item.label}}</view>
+          </view>
+        </block>
+      </view>
+        <!-- 退出登陆按钮 -->
+       <view>
+          <button class="outlog-button" bindtap="handleLogout">退出登录</button>
+       </view> 
+    </view>
+  </view>
+</view>

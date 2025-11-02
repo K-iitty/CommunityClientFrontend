@@ -1,0 +1,210 @@
+<!-- pages/property/vehicle/vehicle-detail/vehicle-detail.wxml -->
+<view class="page">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">
+    <view class="loading-spinner"></view>
+    <view class="loading-text">加载中...</view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{empty && !loading}}" class="empty-state">
+    <view class="empty-icon">📋</view>
+    <view class="empty-text">车辆不存在</view>
+    <button class="back-btn" bindtap="goBack">返回列表</button>
+  </view>
+
+  <!-- 内容区域 -->
+  <view wx:if="{{vehicle && !loading}}" class="content">
+    <!-- 基本信息卡片 -->
+    <view class="card">
+      <view class="card-title">基本信息</view>
+      <view class="card-content">
+        <!-- 车牌号 -->
+        <view class="info-item">
+          <view class="info-label">车牌号</view>
+          <view class="info-value" wx:if="{{!isEditing}}">{{vehicle.plateNumber || '-'}}</view>
+          <input wx:if="{{isEditing}}" class="form-input" type="text" value="{{editData.plateNumber}}" data-field="plateNumber" bindinput="onInputChange" placeholder="输入车牌号" />
+        </view>
+        
+        <!-- 车辆类型 -->
+        <view class="info-item">
+          <view class="info-label">车辆类型</view>
+          <view class="info-value" wx:if="{{!isEditing}}">{{vehicle.vehicleType || '-'}}</view>
+          <input wx:if="{{isEditing}}" class="form-input" type="text" value="{{editData.vehicleType}}" data-field="vehicleType" bindinput="onInputChange" placeholder="如：小型车、SUV" />
+        </view>
+        
+        <!-- 品牌 -->
+        <view class="info-item">
+          <view class="info-label">品牌</view>
+          <view class="info-value" wx:if="{{!isEditing}}">{{vehicle.brand || '-'}}</view>
+          <input wx:if="{{isEditing}}" class="form-input" type="text" value="{{editData.brand}}" data-field="brand" bindinput="onInputChange" placeholder="输入品牌" />
+        </view>
+        
+        <!-- 型号 -->
+        <view class="info-item">
+          <view class="info-label">型号</view>
+          <view class="info-value" wx:if="{{!isEditing}}">{{vehicle.model || '-'}}</view>
+          <input wx:if="{{isEditing}}" class="form-input" type="text" value="{{editData.model}}" data-field="model" bindinput="onInputChange" placeholder="输入型号" />
+        </view>
+        
+        <!-- 颜色 -->
+        <view class="info-item">
+          <view class="info-label">颜色</view>
+          <view class="info-value" wx:if="{{!isEditing}}">{{vehicle.color || '-'}}</view>
+          <input wx:if="{{isEditing}}" class="form-input" type="text" value="{{editData.color}}" data-field="color" bindinput="onInputChange" placeholder="输入颜色" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 证件信息卡片 -->
+    <view class="card">
+      <view class="card-title">证件信息</view>
+      <view class="card-content">
+        <!-- 行驶证号 -->
+        <view class="info-item">
+          <view class="info-label">行驶证号</view>
+          <view class="info-value" wx:if="{{!isEditing}}">{{vehicle.vehicleLicenseNo || '-'}}</view>
+          <input wx:if="{{isEditing}}" class="form-input" type="text" value="{{editData.vehicleLicenseNo}}" data-field="vehicleLicenseNo" bindinput="onInputChange" placeholder="输入行驶证号" />
+        </view>
+        
+        <!-- 发动机号 -->
+        <view class="info-item">
+          <view class="info-label">发动机号</view>
+          <view class="info-value" wx:if="{{!isEditing}}">{{vehicle.engineNo || '-'}}</view>
+          <input wx:if="{{isEditing}}" class="form-input" type="text" value="{{editData.engineNo}}" data-field="engineNo" bindinput="onInputChange" placeholder="输入发动机号" />
+        </view>
+        
+        <!-- 注册日期 -->
+        <view class="info-item" wx:if="{{vehicle.registerDate || isEditing}}">
+          <view class="info-label">注册日期</view>
+          <view class="info-value" wx:if="{{!isEditing}}">{{vehicle.registerDate || '-'}}</view>
+          <input wx:if="{{isEditing}}" class="form-input" type="text" value="{{editData.registerDate}}" data-field="registerDate" bindinput="onInputChange" placeholder="YYYY-MM-DD" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 停车位信息卡片 -->
+    <view class="card" wx:if="{{vehicle.fixedSpaceId || isEditing}}">
+      <view class="card-title">停车位信息</view>
+      <view class="card-content">
+        <view class="info-item">
+          <view class="info-label">固定停车位ID</view>
+          <view class="info-value" wx:if="{{!isEditing}}">{{vehicle.fixedSpaceId || '-'}}</view>
+          <input wx:if="{{isEditing}}" class="form-input" type="number" value="{{editData.fixedSpaceId}}" data-field="fixedSpaceId" bindinput="onInputChange" placeholder="输入停车位ID" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 业主信息卡片 -->
+    <view class="card" wx:if="{{vehicle.ownerId}}">
+      <view class="card-title">业主信息</view>
+      <view class="card-content">
+        <view class="info-item">
+          <view class="info-label">业主ID</view>
+          <view class="info-value" wx:if="{{!isEditing}}">{{vehicle.ownerId}}</view>
+          <input wx:if="{{isEditing}}" class="form-input" type="number" value="{{editData.ownerId}}" data-field="ownerId" bindinput="onInputChange" placeholder="业主ID" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 状态卡片 -->
+    <view class="card">
+      <view class="card-title">状态信息</view>
+      <view class="card-content">
+        <view class="info-item">
+          <view class="info-label">状态</view>
+          <view class="info-value status {{vehicle.status === '正常' ? 'normal' : 'abnormal'}}" wx:if="{{!isEditing}}">
+            {{vehicle.status || '正常'}}
+          </view>
+          <picker wx:if="{{isEditing}}" class="form-input" mode="selector" range="{{statusOptions}}" bindchange="onStatusChange">
+            <view class="picker-value">{{editData.status || '正常'}}</view>
+          </picker>
+        </view>
+        
+        <!-- 备注 -->
+        <view class="info-item">
+          <view class="info-label">备注</view>
+          <view class="info-value" wx:if="{{!isEditing}}">{{vehicle.remark || '-'}}</view>
+          <input wx:if="{{isEditing}}" class="form-input" type="text" value="{{editData.remark}}" data-field="remark" bindinput="onInputChange" placeholder="输入备注" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 驾驶证图片卡片 -->
+    <view class="card" wx:if="{{vehicle.driverLicenseImage || isEditing}}">
+      <view class="card-title">驾驶证</view>
+      <view class="card-content">
+        <!-- 显示模式 -->
+        <view wx:if="{{!isEditing && vehicle.driverLicenseImage}}" class="img-box">
+          <image class="img" src="{{vehicle.driverLicenseImage}}" mode="aspectFill" bindtap="previewDriverLicense" />
+        </view>
+        
+        <!-- 编辑模式 -->
+        <view wx:if="{{isEditing}}" class="edit-img-section">
+          <!-- 已有图片部分（来自数据库或新上传） -->
+          <view wx:if="{{!driverLicenseImageToDelete && (vehicle.driverLicenseImage || editDriverLicenseImage)}}" class="img-box">
+            <image class="img" src="{{editDriverLicenseImage || vehicle.driverLicenseImage}}" mode="aspectFill" />
+            <view class="image-delete" bindtap="deleteDriverLicense">✕</view>
+          </view>
+          
+          <!-- 上传按钮（仅在无图片时显示） -->
+          <view wx:if="{{driverLicenseImageToDelete || (!vehicle.driverLicenseImage && !editDriverLicenseImage)}}" class="image-upload" bindtap="chooseDriverLicenseImage">
+            <view class="upload-icon">➕</view>
+            <view class="upload-text">上传驾驶证</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 车辆图片卡片 -->
+    <view class="card" wx:if="{{vehicleImagesList.length > 0 || isEditing}}">
+      <view class="card-title">车辆照片（最多1张）</view>
+      <view class="card-content">
+        <!-- 显示模式 -->
+        <view wx:if="{{!isEditing && vehicleImagesList.length > 0}}" class="img-box">
+          <image class="img" src="{{vehicleImagesList[0]}}" mode="aspectFill" bindtap="previewVehicleImage" data-index="0" />
+        </view>
+        
+        <!-- 编辑模式 -->
+        <view wx:if="{{isEditing}}" class="edit-img-section">
+          <!-- 已有图片部分（来自数据库或新上传） -->
+          <view wx:if="{{!vehicleImageToDelete && (vehicleImagesList.length > 0 || editVehicleImage)}}" class="img-box">
+            <image class="img" src="{{editVehicleImage || vehicleImagesList[0]}}" mode="aspectFill" />
+            <view class="image-delete" bindtap="deleteVehicleImage">✕</view>
+          </view>
+          
+          <!-- 上传按钮（仅在无图片时显示） -->
+          <view wx:if="{{vehicleImageToDelete || (vehicleImagesList.length === 0 && !editVehicleImage)}}" class="image-upload" bindtap="chooseVehicleImage">
+            <view class="upload-icon">➕</view>
+            <view class="upload-text">上传车辆照片</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 时间戳 -->
+    <view class="card">
+      <view class="card-title">记录时间</view>
+      <view class="card-content">
+        <view class="info-item" wx:if="{{vehicle.createdAt}}">
+          <view class="info-label">创建时间</view>
+          <view class="info-value">{{vehicle.createdAt}}</view>
+        </view>
+        <view class="info-item" wx:if="{{vehicle.updatedAt}}">
+          <view class="info-label">更新时间</view>
+          <view class="info-value">{{vehicle.updatedAt}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="actions">
+      <button class="action-btn edit-btn" wx:if="{{!isEditing}}" bindtap="startEdit">编辑</button>
+      <button class="action-btn save-btn" wx:if="{{isEditing}}" bindtap="submitEdit" disabled="{{submitting}}">{{submitting ? '保存中...' : '保存'}}</button>
+      <button class="action-btn cancel-btn" wx:if="{{isEditing}}" bindtap="cancelEdit" disabled="{{submitting}}">取消</button>
+    </view>
+
+    <!-- 返回按钮 -->
+    <button class="back-btn" bindtap="goBack">返回列表</button>
+  </view>
+</view>

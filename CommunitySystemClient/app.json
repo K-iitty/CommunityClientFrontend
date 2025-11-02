@@ -1,0 +1,88 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/owner/register/register",
+    "pages/owner/home/home",
+    "pages/owner/notice/notice",
+    "pages/owner/notice/detail/detail",
+    "pages/owner/feedback/feedback",
+    "pages/owner/feedback/submit/submit",
+    "pages/owner/feedback/detail/detail",
+    "pages/owner/profile/profile",
+    "pages/owner/profile/edit/edit",
+    "pages/owner/profile/house/house",
+    "pages/owner/profile/house/detail/detail",
+    "pages/owner/profile/vehicle/vehicle",
+    "pages/owner/profile/vehicle/detail/detail",
+    "pages/owner/profile/parking/parking",
+    "pages/owner/profile/meter/meter",
+    "pages/owner/profile/meter/detail/detail",
+    "pages/owner/profile/billing/billing",
+    "pages/owner/profile/property-contact/property-contact",
+    "pages/owner/ai-chat/ai-chat",
+    "pages/property/home/home",
+    "pages/property/feedback/list/list",
+    "pages/property/feedback/detail/detail",
+    "pages/property/feedback/follow-up/follow-up",
+    "pages/property/meter/owner-list/owner-list",
+    "pages/property/meter/config/config-list",
+    "pages/property/meter/reading/reading-list",
+    "pages/property/meter/reading/reading-add",
+    "pages/property/vehicle/vehicle-list/vehicle-list",
+    "pages/property/vehicle/vehicle-detail/vehicle-detail",
+    "pages/property/vehicle/add-vehicle/add-vehicle",
+    "pages/property/house/house-list/house-list",
+    "pages/property/house/add-house/add-house",
+    "pages/property/house/edit-house/edit-house",
+    "pages/property/house/house-info/house-info",
+    "pages/property/notice/list/list",
+    "pages/property/notice/detail/detail",
+    "pages/property/notice/add/add",
+    "pages/property/notice/edit/edit",
+    "pages/property/community/community",
+    "pages/property/community/detail/detail",
+    "pages/property/department/department",
+    "pages/property/profile/profile",
+    "pages/property/profile/edit/edit",
+    "pages/property/profile/change-password/change-password"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#35b6f4",
+    "navigationBarTitleText": "智慧社区",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#75cef9"
+  },
+  "tabBar": {
+    "custom": false,
+    "color": "#999999",
+    "selectedColor": "#35b6f4",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/owner/home/home",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/owner/notice/notice",
+        "text": "通知"
+      },
+      {
+        "pagePath": "pages/owner/feedback/feedback",
+        "text": "反馈"
+      },
+      {
+        "pagePath": "pages/owner/ai-chat/ai-chat",
+        "text": "AI客服"
+      },
+      {
+        "pagePath": "pages/owner/profile/profile",
+        "text": "个人"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

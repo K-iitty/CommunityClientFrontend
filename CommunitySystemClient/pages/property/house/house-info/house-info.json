@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "房屋详情",
+  "navigationBarBackgroundColor": "#35b6f4",
+  "navigationBarTextStyle": "white",
+  "backgroundColorTop": "#f5f7fa",
+  "backgroundColorBottom": "#f5f7fa",
+  "enablePullDownRefresh": true,
+  "usingComponents": {}
+}

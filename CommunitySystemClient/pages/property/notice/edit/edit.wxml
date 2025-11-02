@@ -1,0 +1,197 @@
+<!-- pages/property/notice/edit/edit.wxml -->
+<!-- 公告管理 - 编辑公告页面 -->
+
+<view class="page">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">
+    <view class="loading-spinner"></view>
+    <view class="loading-text">加载中...</view>
+  </view>
+
+  <!-- 编辑表单 -->
+  <view wx:if="{{!loading}}" class="page-content">
+    <!-- 页面头部 -->
+    <!-- <view class="header">
+      <view class="header-title">编辑公告</view>
+      <view class="header-subtitle">修改公告信息</view>
+    </view> -->
+
+    <!-- 表单内容 -->
+    <view class="form-container">
+      <!-- 标题字段 -->
+      <view class="form-group">
+        <view class="form-label">
+          <text class="required">*</text>
+          <text>公告标题</text>
+        </view>
+        <input
+          class="form-input {{errors.title ? 'error' : ''}}"
+          type="text"
+          placeholder="请输入公告标题"
+          value="{{title}}"
+          bindinput="onTitleInput"
+          maxlength="100"
+        />
+        <view class="char-count">{{title.length}}/100</view>
+        <view wx:if="{{errors.title}}" class="error-text">{{errors.title}}</view>
+      </view>
+
+      <!-- 公告类型字段 -->
+      <view class="form-group">
+        <view class="form-label">
+          <text class="required">*</text>
+          <text>公告类型</text>
+        </view>
+        <picker
+          class="form-picker"
+          range="{{noticeTypeOptions}}"
+          value="{{noticeTypeIndex}}"
+          bindchange="onNoticeTypeChange"
+        >
+          <view class="picker-value">{{noticeType}}</view>
+        </picker>
+      </view>
+
+      <!-- 内容字段 -->
+      <view class="form-group">
+        <view class="form-label">
+          <text class="required">*</text>
+          <text>公告内容</text>
+        </view>
+        <textarea
+          class="form-textarea {{errors.content ? 'error' : ''}}"
+          placeholder="请输入公告内容"
+          value="{{content}}"
+          bindinput="onContentInput"
+          maxlength="5000"
+          auto-height
+        />
+        <view class="char-count">{{content.length}}/5000</view>
+        <view wx:if="{{errors.content}}" class="error-text">{{errors.content}}</view>
+      </view>
+
+      <!-- 活动公告信息 -->
+      <block wx:if="{{noticeType === '活动公告'}}">
+        <view class="section-title">活动信息</view>
+        
+        <!-- 活动日期 -->
+        <view class="form-group">
+          <view class="form-label">活动日期</view>
+          <picker mode="date" value="{{activityDate}}" bindchange="onActivityDateChange">
+            <view class="picker-value">{{activityDate || '选择日期'}}</view>
+          </picker>
+        </view>
+
+        <!-- 活动时间 -->
+        <view class="form-group">
+          <view class="form-label">活动时间</view>
+          <input
+            class="form-input"
+            type="text"
+            placeholder="例如：19:00-21:30"
+            value="{{activityTime}}"
+            bindinput="onActivityTimeInput"
+          />
+        </view>
+
+        <!-- 活动地点 -->
+        <view class="form-group">
+          <view class="form-label">活动地点</view>
+          <input
+            class="form-input"
+            type="text"
+            placeholder="请输入活动地点"
+            value="{{activityLocation}}"
+            bindinput="onActivityLocationInput"
+          />
+        </view>
+
+        <!-- 主办单位 -->
+        <view class="form-group">
+          <view class="form-label">主办单位</view>
+          <input
+            class="form-input"
+            type="text"
+            placeholder="请输入主办单位"
+            value="{{activityOrganizer}}"
+            bindinput="onActivityOrganizerInput"
+          />
+        </view>
+
+        <!-- 联系人 -->
+        <view class="form-group">
+          <view class="form-label">联系人</view>
+          <input
+            class="form-input"
+            type="text"
+            placeholder="请输入联系人"
+            value="{{activityContact}}"
+            bindinput="onActivityContactInput"
+          />
+        </view>
+
+        <!-- 联系电话 -->
+        <view class="form-group">
+          <view class="form-label">联系电话</view>
+          <input
+            class="form-input"
+            type="tel"
+            placeholder="请输入联系电话"
+            value="{{activityContactPhone}}"
+            bindinput="onActivityContactPhoneInput"
+          />
+        </view>
+      </block>
+
+      <!-- 图片管理 -->
+      <view class="form-group">
+        <view class="form-label section-title">
+          <text>公告图片</text>
+          <!-- <text class="optional">（最多3张）</text> -->
+        </view>
+        
+        <!-- 已存在的图片 -->
+        <view wx:if="{{noticeImages.length > 0}}" class="images-section">
+          <!-- <view class="">已有图片</view> -->
+          <view class="images-container">
+            <block wx:for="{{noticeImages}}" wx:key="index">
+              <view class="image-item">
+                <image class="image-preview" src="{{item}}" mode="aspectFill" />
+                <view class="image-delete" data-index="{{index}}" bindtap="deleteNoticeImage">✕</view>
+              </view>
+            </block>
+          </view>
+        </view>
+
+        <!-- 新增图片 -->
+        <view wx:if="{{noticeImageFiles.length > 0}}" class="images-section">
+          <view class="section-title">新增图片</view>
+          <view class="images-container">
+            <block wx:for="{{noticeImageFiles}}" wx:key="index">
+              <view class="image-item">
+                <image class="image-preview" src="{{item}}" mode="aspectFill" />
+                <view class="image-delete" data-index="{{index}}" bindtap="deleteNoticeImageFile">✕</view>
+              </view>
+            </block>
+          </view>
+        </view>
+
+        <!-- 上传按钮 -->
+        <view wx:if="{{noticeImageFiles.length === 0}}" class="image-upload" bindtap="chooseNoticeImage">
+          <view class="upload-icon">➕</view>
+          <view class="upload-text">{{noticeImages.length > 0 ? '替换图片' : '上传图片'}}</view>
+        </view>
+
+        <!-- <view class="image-tip">提示: 支持JPG、PNG等格式</view> -->
+      </view>
+
+      <!-- 提交按钮 -->
+      <view class="button-container">
+        <button class="btn-submit" bindtap="submitForm" disabled="{{submitting}}">
+          {{submitting ? '更新中...' : '保存更新'}}
+        </button>
+        <button class="btn-cancel" bindtap="goBack" disabled="{{submitting}}">取消</button>
+      </view>
+    </view>
+  </view>
+</view>

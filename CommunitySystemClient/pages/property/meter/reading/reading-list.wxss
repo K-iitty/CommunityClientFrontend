@@ -1,0 +1,218 @@
+/* pages/property/meter/reading/reading-list.wxss */
+
+.page {
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* 页面头部 */
+.page-header {
+  background: linear-gradient(135deg, #35b6f4 0%, #35b6f4 100%);
+  padding: 24rpx 16rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  box-shadow: 0 4rpx 12rpx rgba(53, 182, 244, 0.15);
+}
+
+.header-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  flex: 1;
+}
+
+.btn-add {
+  background: rgba(255, 255, 255, 0.25);
+  color: white;
+  border: 1.5rpx solid rgba(255, 255, 255, 0.4);
+  border-radius: 8rpx;
+  padding: 20rpx 26rpx;
+  font-size: 12px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36rpx;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.btn-add:active {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.05);
+}
+
+/* 容器 */
+.container {
+  padding: 12rpx 16rpx;
+  padding-bottom: 100rpx;
+}
+
+/* 读数列表 */
+.reading-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+/* 读数卡片 */
+.reading-card {
+  background: #ebf5fe;
+  border-radius: 12rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  border: 1rpx solid #e5e7eb;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #e2e2e2;
+  margin-top: 5px;
+}
+
+.reading-card:active {
+  transform: translateY(-4rpx);
+  box-shadow: 0 8rpx 20rpx rgba(53, 182, 244, 0.12);
+  border-color: #35b6f4;
+}
+
+/* 卡片头部 */
+.card-header {
+  padding: 16rpx;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e8f4fd 100%);
+  /* border-bottom: 1rpx solid #e5e7eb; */
+}
+
+.reading-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.reading-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.reading-row .label {
+  color: #6b7280;
+  font-weight: 600;
+  min-width: 80rpx;
+}
+
+.reading-row .value {
+  margin-left: 10px;
+  color: #5f5f5f;
+  font-weight: 500;
+  text-align: left;
+  flex: 1;
+}
+
+.reading-row .value.highlight {
+  text-align: center !important;
+  margin-left: 10px;
+  color: #35b6f4;
+  font-size: 13px;
+}
+
+/* 卡片信息 */
+.card-info {
+  background-color: #ffffff;
+  margin:10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  border-radius: 10px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.info-row .label {
+  color: #6b7280;
+  font-weight: 600;
+  min-width: 80rpx;
+}
+
+.info-row .value {
+  color: #4b5563;
+  flex: 1;
+  text-align: center;
+}
+
+.status {
+  margin: 4px 120px;
+  /* margin-left:50px ; */
+  padding: 4rpx 0rpx;
+  border-radius: 4rpx;
+  font-size: 20rpx;
+  font-weight: 700;
+  text-align: center;
+  display: inline-block;
+}
+
+.status.normal {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.status.abnormal {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* 卡片图片 */
+.card-image {
+  padding: 12rpx 16rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.card-image image {
+  width: 100%;
+  height: 200rpx;
+  border-radius: 8rpx;
+  object-fit: cover;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 20rpx;
+  text-align: center;
+  background: white;
+  border-radius: 12rpx;
+  margin: 12rpx 16rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 16rpx;
+  opacity: 0.3;
+}
+
+.empty-text {
+  font-size: 14px;
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+/* 加载完成提示 */
+.load-complete {
+  text-align: center;
+  padding: 20rpx;
+  color: #9ca3af;
+  font-size: 12px;
+  font-weight: 600;
+}

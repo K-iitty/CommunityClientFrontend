@@ -1,0 +1,131 @@
+<!-- pages/property/department/department.wxml -->
+<!-- 部门管理 - 部门信息页面 -->
+
+<view class="page">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">
+    <view class="loading-spinner"></view>
+    <view class="loading-text">加载中...</view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{empty && !loading}}" class="empty-state">
+    <view class="empty-icon">🏢</view>
+    <view class="empty-text">部门信息加载失败</view>
+    <button class="retry-btn" bindtap="loadDepartmentData">重试</button>
+  </view>
+
+  <!-- 内容区域 -->
+  <view wx:if="{{department && !loading}}" class="content">
+    <!-- 部门头部卡片 -->
+    <view class="department-header">
+      <view class="header-left">
+        <view class="header-icon">🏢</view>
+        <view class="header-info">
+          <view class="dept-name">{{department.departmentName}}</view>
+          <view class="dept-code">{{department.departmentCode || 'N/A'}}  |  {{department.departmentLevel || '一级'}}</view>
+        </view>
+      </view>
+      <view class="member-count">{{members.length}}人</view>
+    </view>
+
+    <!-- 标签页导航 -->
+    <view class="tabs-container">
+      <view class="tabs">
+        <block wx:for="{{tabs}}" wx:key="id">
+          <view 
+            class="tab-item {{activeTab === item.id ? 'active' : ''}}"
+            data-id="{{item.id}}"
+            bindtap="switchTab"
+          >
+            {{item.label}}
+          </view>
+        </block>
+      </view>
+    </view>
+
+    <!-- 标签页内容 -->
+    <!-- 部门信息 -->
+    <view wx:if="{{activeTab === 'info'}}" class="tab-content">
+      <view class="info-card">
+        <view class="section-title">部门信息</view>
+        
+        <view class="info-grid">
+          <view class="info-item">
+            <view class="label">部门名称</view>
+            <view class="value">{{department.departmentName}}</view>
+          </view>
+
+          <view class="info-item">
+            <view class="label">部门代码</view>
+            <view class="value">{{department.departmentCode || '-'}}</view>
+          </view>
+
+          <view class="info-item">
+            <view class="label">部门等级</view>
+            <view class="value">{{department.departmentLevel || '一级'}}</view>
+          </view>
+
+          <view class="info-item">
+            <view class="label">成员数量</view>
+            <view class="value">{{members.length || 0}}人</view>
+          </view>
+
+          <view class="info-item">
+            <view class="label">部门描述</view>
+            <view class="value">{{department.description || '-'}}</view>
+          </view>
+
+          <view class="info-item">
+            <view class="label">状态</view>
+            <view class="value" style="color: {{department.status === '启用' ? '#10b981' : '#ef4444'}}">
+              {{department.status || '启用'}}
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 团队成员 -->
+    <view wx:if="{{activeTab === 'members'}}" class="tab-content">
+      <view class="members-section">
+        <view class="section-title">团队成员 ({{members.length}}人)</view>
+
+        <view wx:if="{{members.length === 0}}" class="empty-tips">
+          暂无团队成员
+        </view>
+
+        <block wx:for="{{members}}" wx:key="id">
+          <view class="member-card">
+            <view class="member-header">
+              <view class="member-avatar">👤</view>
+              <view class="member-title">
+                <view class="member-name">{{item.name}}</view>
+                <view class="member-workno">{{item.workNo || '-'}}</view>
+              </view>
+              <view class="member-status" style="color: {{item.workStatus === '在职' ? '#10b981' : '#ef4444'}}">
+                {{item.workStatus || '在职'}}
+              </view>
+            </view>
+            
+            <view class="member-details">
+              <view class="detail-item">
+                <view class="detail-label">职位</view>
+                <view class="detail-value">{{item.position || '-'}}</view>
+              </view>
+              <view class="detail-item">
+                <view class="detail-label">电话</view>
+                <view class="detail-value">{{item.phone || '-'}}</view>
+              </view>
+              <view class="detail-item">
+                <view class="detail-label">最后登录</view>
+                <view class="detail-value">{{item.lastLoginTime || '未登录'}}</view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+
+  </view>
+</view>

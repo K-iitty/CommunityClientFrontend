@@ -1,0 +1,120 @@
+<!--pages/owner/feedback/submit/submit.wxml-->
+<view class="container">
+  <view class="form-section">
+    <!-- 问题标题 -->
+    <view class="form-item">
+      <view class="form-label">
+        <text class="required">*</text>
+        <text>问题标题</text>
+      </view>
+      <input 
+        class="form-input" 
+        placeholder="请简要描述问题"
+        value="{{formData.title}}"
+        bindinput="onTitleInput"
+        maxlength="50"
+      />
+      <view class="char-count">{{formData.title.length}}/50</view>
+    </view>
+
+    <!-- 问题类型 -->
+    <view class="form-item">
+      <view class="form-label">
+        <text class="required">*</text>
+        <text>问题类型</text>
+      </view>
+      <picker 
+        mode="selector" 
+        range="{{issueTypes}}"
+        value="{{issueTypes.indexOf(formData.issueType)}}"
+        bindchange="onIssueTypeChange"
+      >
+        <view class="picker">
+          {{formData.issueType}}
+          <text class="arrow">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 问题位置 -->
+    <view class="form-item">
+      <view class="form-label">问题位置</view>
+      <input 
+        class="form-input" 
+        placeholder="如：1栋101室"
+        value="{{formData.location}}"
+        bindinput="onLocationInput"
+      />
+    </view>
+
+    <!-- 紧急程度 -->
+    <view class="form-item">
+      <view class="form-label">
+        <text class="required">*</text>
+        <text>紧急程度</text>
+      </view>
+      <picker 
+        mode="selector" 
+        range="{{urgencyLevels}}"
+        value="{{urgencyLevels.indexOf(formData.urgency)}}"
+        bindchange="onUrgencyChange"
+      >
+        <view class="picker">
+          <text class="urgency-badge urgency-{{urgencyClassMap[formData.urgency] || 'medium'}}">{{formData.urgency}}</text>
+          <text class="arrow">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 问题描述 -->
+    <view class="form-item">
+      <view class="form-label">
+        <text class="required">*</text>
+        <text>问题描述</text>
+      </view>
+      <textarea 
+        class="form-textarea" 
+        placeholder="请详细描述问题情况，以便我们更好地为您服务"
+        value="{{formData.description}}"
+        bindinput="onDescriptionInput"
+        maxlength="500"
+        auto-height
+      />
+      <view class="char-count">{{formData.description.length}}/500</view>
+    </view>
+
+    <!-- 图片上传 -->
+    <view class="form-item">
+      <view class="form-label">上传图片</view>
+      <view class="image-upload">
+        <view class="image-list">
+          <view 
+            class="image-item" 
+            wx:for="{{images}}" 
+            wx:key="index"
+          >
+            <image src="{{item}}" mode="aspectFill" bindtap="previewImage" data-url="{{item}}"></image>
+            <view class="delete-btn" bindtap="deleteImage" data-index="{{index}}">×</view>
+          </view>
+          <view 
+            class="upload-btn" 
+            wx:if="{{images.length < maxImages}}"
+            bindtap="chooseImages"
+          >
+            <text class="upload-icon">+</text>
+            <text class="upload-text">添加图片</text>
+            <text class="upload-hint">{{images.length}}/{{maxImages}}</text>
+          </view>
+        </view>
+        <view class="upload-tip">最多上传6张图片，每张不超过5MB</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button class="btn-secondary" bindtap="handleReset">重置</button>
+    <button class="btn-primary" bindtap="handleSubmit">提交问题</button>
+  </view>
+</view>
+

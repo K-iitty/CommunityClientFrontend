@@ -1,0 +1,59 @@
+<!--pages/owner/profile/vehicle/vehicle.wxml-->
+<view class="container">
+  <view class="section-header">
+    <text class="section-title">我的车辆</text>
+    <text class="count">{{vehicles.length}}</text>
+  </view>
+
+  <view class="vehicle-list" wx:if="{{vehicles.length > 0}}">
+    <view class="vehicle-card" wx:for="{{vehicles}}" wx:key="id" bind:tap="viewDetail" data-vehicle-id="{{item.id}}">
+      <view class="card-header">
+        <text class="vehicle-name">{{item.plateNumber}}</text>
+        <text class="status-tag tag-primary">
+          {{item.status || '正常'}}
+        </text>
+      </view>
+
+      <view class="card-body">
+        <view class="info-item">
+          <text class="label">品牌型号：</text>
+          <text class="value">{{item.brand}} {{item.model}}</text>
+        </view>
+        <view class="info-item">
+          <text class="label">车辆类型：</text>
+          <text class="value">{{item.vehicleType || '-'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="label">车身颜色：</text>
+          <text class="value">{{item.color || '-'}}</text>
+        </view>
+        <!-- <view class="info-item">
+          <text class="label">行驶证号：</text>
+          <text class="value">{{item.vehicleLicenseNo || '-'}}</text>
+        </view> -->
+        <!-- <view class="info-item">
+          <text class="label">发动机号：</text>
+          <text class="value">{{item.engineNo || '-'}}</text>
+        </view> -->
+        <!-- <view class="info-item">
+          <text class="label">登记日期：</text>
+          <text class="value">{{item.registerDate || '-'}}</text>
+        </view> -->
+        <view class="info-item" wx:if="{{item.parkingLotName}}">
+          <text class="label">停车位：</text>
+          <text class="value">{{item.parkingLotName}} - {{item.fullSpaceNo}}</text>
+        </view>
+      </view>
+
+      <view class="card-footer">
+        <text class="btn-link">查看详情 ></text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:else>
+    <text class="empty-icon">-</text>
+    <text class="empty-text">暂无车辆信息</text>
+    <text class="empty-tip">请先申请添加车辆或联系物业</text>
+  </view>
+</view>

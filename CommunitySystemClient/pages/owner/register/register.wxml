@@ -1,0 +1,104 @@
+<!--pages/owner/register/register.wxml-->
+<view class="register-container">
+  <!-- 注册表单 -->
+  <view class="register-form">
+    <view class="form-header">
+      <view class="header-title">欢迎加入</view>
+      <view class="header-subtitle">创建您的业主账户</view>
+    </view>
+
+    <!-- 用户名 -->
+    <view class="input-group">
+      <view class="input-label">用户名</view>
+      <view class="input-wrapper">
+        <!-- <view class="input-prefix">U</view> -->
+        <input 
+          class="input-field" 
+          type="text" 
+          placeholder="请输入用户名（3-20位）"
+          value="{{form.username}}"
+          bindinput="onUsernameInput"
+          maxlength="20"
+        />
+        <view class="input-action" wx:if="{{form.username}}">
+          <text class="status-icon" wx:if="{{usernameStatus.includes('✓')}}">✓</text>
+        </view>
+      </view>
+      <view class="input-tip {{usernameStatus.includes('✓') ? 'status-success' : 'status-error'}}">{{usernameStatus}}</view>
+    </view>
+
+    <!-- 密码 -->
+    <view class="input-group">
+      <view class="input-label">密码</view>
+      <view class="input-wrapper">
+        <!-- <view class="input-prefix">P</view> -->
+        <input 
+          class="input-field" 
+          password="{{!showPassword}}" 
+          placeholder="至少8位，包含字母和数字"
+          value="{{form.password}}"
+          bindinput="onPasswordInput"
+        />
+        <view class="input-action" bindtap="togglePassword" wx:if="{{form.password}}">
+          <text class="eye-icon">{{showPassword ? '👁️' : '🔒'}}</text>
+        </view>
+      </view>
+      <view class="input-tip {{passwordStatus.includes('✓') ? 'status-success' : 'status-error'}}">{{passwordStatus}}</view>
+    </view>
+
+    <!-- 确认密码 -->
+    <view class="input-group">
+      <view class="input-label">确认密码</view>
+      <view class="input-wrapper">
+        <!-- <view class="input-prefix">P</view> -->
+        <input 
+          class="input-field" 
+          password="{{!showConfirmPassword}}" 
+          placeholder="请再次输入密码"
+          value="{{form.confirmPassword}}"
+          bindinput="onConfirmPasswordInput"
+        />
+        <view class="input-action" bindtap="toggleConfirmPassword" wx:if="{{form.confirmPassword}}">
+          <text class="eye-icon">{{showConfirmPassword ? '👁️' : '🔒'}}</text>
+        </view>
+      </view>
+      <view class="input-tip {{confirmPasswordStatus.includes('✓') ? 'status-success' : 'status-error'}}">{{confirmPasswordStatus}}</view>
+    </view>
+
+    <!-- 同意条款 -->
+    <view class="agreement-group">
+      <checkbox-group bindchange="onAgreementChange">
+        <label class="agreement-label">
+          <checkbox value="agreed" checked="{{form.agreed}}" class="agreement-checkbox" />
+          <view class="agreement-text">
+            <text>我已阅读并同意</text>
+            <text class="link">用户服务协议</text>
+            <text>和</text>
+            <text class="link">隐私政策</text>
+          </view>
+        </label>
+      </checkbox-group>
+      <view class="input-tip" wx:if="{{agreementStatus}}" style="color: #ff6b6b;">{{agreementStatus}}</view>
+    </view>
+
+    <!-- 注册按钮 -->
+    <button 
+      class="btn btn-primary btn-large {{isFormValid ? 'btn-active' : 'btn-disabled'}}" 
+      bindtap="handleRegister"
+    >
+      {{loading ? '注册中...' : '创建账户'}}
+    </button>
+
+    <!-- 返回登录 -->
+    <view class="login-link">
+      <text>已有账户？</text>
+      <text class="link" bindtap="handleBack">返回登录</text>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-overlay">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">正在注册...</text>
+  </view>
+</view>

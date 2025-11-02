@@ -1,0 +1,436 @@
+/* ============================================
+   业主注册页面 - 现代简约设计
+   主题色: #35b6f4
+   ============================================ */
+
+.register-container {
+  background: linear-gradient(135deg, #f5f9ff 0%, #f0f5ff 50%, #f5f0ff 100%);
+  min-height: 100vh;
+  padding-bottom: 40rpx;
+}
+
+/* ============================================
+   顶部导航栏
+   ============================================ */
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12rpx 16rpx;
+  background: linear-gradient(135deg, #35b6f4 0%, #1e88e5 100%);
+  box-shadow: 0 4rpx 12rpx rgba(53, 182, 244, 0.25);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nav-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.nav-back:active {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0.95);
+}
+
+.nav-icon {
+  font-size: 36rpx;
+  color: #FFFFFF;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.nav-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #FFFFFF;
+  flex: 1;
+  text-align: center;
+}
+
+.nav-spacer {
+  width: 64rpx;
+}
+
+/* ============================================
+   注册表单
+   ============================================ */
+.register-form {
+  padding: 40rpx 20rpx;
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 48rpx;
+  padding: 32rpx 20rpx;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 20rpx;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8rpx 32rpx rgba(53, 182, 244, 0.1);
+}
+
+.header-title {
+  font-size: 44rpx;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 12rpx;
+  letter-spacing: 0.5rpx;
+  background: linear-gradient(135deg, #35b6f4 0%, #1e88e5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-subtitle {
+  font-size: 26rpx;
+  color: #666666;
+  font-weight: 500;
+}
+
+/* ============================================
+   输入框组
+   ============================================ */
+.input-group {
+  margin-bottom: 32rpx;
+  animation: slideInUp 0.4s ease-out both;
+}
+
+.input-group:nth-child(2) {
+  animation-delay: 0.05s;
+}
+.input-group:nth-child(3) {
+  animation-delay: 0.1s;
+}
+.input-group:nth-child(4) {
+  animation-delay: 0.15s;
+}
+.input-group:nth-child(5) {
+  animation-delay: 0.2s;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.input-label {
+    margin-left: 10px;
+  display: block;
+  margin-bottom: 10rpx;
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: 700;
+  letter-spacing: 0.3rpx;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 0 16rpx;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2rpx solid #e8eef8;
+  border-radius: 14rpx;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 72rpx;
+  box-shadow: 0 2rpx 8rpx rgba(53, 182, 244, 0.05);
+}
+
+.input-wrapper:focus-within {
+  border-color: #35b6f4;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 4rpx rgba(53, 182, 244, 0.15);
+  transform: translateY(-2rpx);
+}
+
+.input-prefix {
+  font-size: 32rpx;
+  color: #35b6f4;
+  font-weight: 700;
+  margin-right: 12rpx;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40rpx;
+  height: 40rpx;
+  background: rgba(53, 182, 244, 0.1);
+  border-radius: 10rpx;
+}
+
+.input-field {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 28rpx;
+  color: #333333;
+  height: 100%;
+  padding: 0;
+}
+
+.input-field::placeholder {
+  color: #c0c4cc;
+}
+
+.input-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44rpx;
+  height: 44rpx;
+  margin-left: 8rpx;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 10rpx;
+}
+
+.input-action:active {
+  background: rgba(53, 182, 244, 0.1);
+  transform: scale(0.9);
+}
+
+.status-icon {
+  font-size: 32rpx;
+  color: #52c41a;
+  font-weight: 700;
+}
+
+.eye-icon {
+  font-size: 32rpx;
+  color: #35b6f4;
+  font-weight: 700;
+}
+
+.input-tip {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #999999;
+  min-height: 24rpx;
+  padding-left: 6rpx;
+  transition: color 0.3s ease;
+}
+
+.input-tip.status-success {
+  color: #52c41a;
+}
+
+.input-tip.status-error {
+  color: #ff6b6b;
+}
+
+/* ============================================
+   同意条款
+   ============================================ */
+.agreement-group {
+  margin-bottom: 40rpx;
+  padding: 20rpx;
+  /* background: rgba(53, 182, 244, 0.08);
+  border: 2rpx solid rgba(53, 182, 244, 0.2); */
+  border-radius: 14rpx;
+  animation: slideInUp 0.4s ease-out 0.25s both;
+  transition: all 0.3s ease;
+}
+
+.agreement-group:focus-within {
+  background: rgba(53, 182, 244, 0.12);
+  border-color: rgba(53, 182, 244, 0.3);
+}
+
+.agreement-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12rpx;
+  cursor: pointer;
+  user-select: none;
+}
+
+.agreement-checkbox {
+  width: 32rpx;
+  height: 32rpx;
+  margin-top: 0rpx;
+  flex-shrink: 0;
+}
+
+.agreement-text {
+  margin-left: 10px;
+  font-size: 26rpx;
+  color: #555555;
+  line-height: 1.6;
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0rpx;
+}
+
+.agreement-text text {
+  display: inline;
+  white-space: nowrap;
+}
+
+.link {
+  color: #35b6f4;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  margin: 0 4rpx;
+}
+
+.link:active {
+  opacity: 0.7;
+}
+
+/* ============================================
+   按钮
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14rpx 28rpx;
+  border-radius: 50rpx;
+  font-size: 30rpx;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 0.5rpx;
+}
+
+.btn::after {
+  border: none;
+}
+
+.btn-large {
+  width: 100%;
+  padding: 20rpx 32rpx;
+  border-radius: 14rpx;
+  animation: slideInUp 0.4s ease-out 0.3s both;
+  font-size: 32rpx;
+}
+
+.btn-primary {
+  margin-left: 30% !important;
+  background: linear-gradient(135deg, #35b6f4 0%, #1e88e5 100%);
+  color: #FFFFFF;
+  box-shadow: 0 8rpx 24rpx rgba(53, 182, 244, 0.35);
+}
+
+.btn-primary.btn-active {
+  opacity: 1;
+}
+
+.btn-primary.btn-active:active {
+  opacity: 0.95;
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 12rpx rgba(53, 182, 244, 0.25);
+}
+
+.btn-disabled {
+  opacity: 0.5;
+  box-shadow: 0 2rpx 8rpx rgba(53, 182, 244, 0.1);
+  cursor: not-allowed;
+}
+
+.btn-disabled:active {
+  transform: none;
+  opacity: 0.5;
+}
+
+/* ============================================
+   返回登录
+   ============================================ */
+.login-link {
+  text-align: center;
+  margin-top: 32rpx;
+  font-size: 26rpx;
+  color: #666666;
+  animation: slideInUp 0.4s ease-out 0.35s both;
+}
+
+.login-link .link {
+  margin-left: 8rpx;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+/* ============================================
+   加载状态
+   ============================================ */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+  backdrop-filter: blur(4px);
+}
+
+.loading-spinner {
+  width: 80rpx;
+  height: 80rpx;
+  border: 5rpx solid rgba(255, 255, 255, 0.2);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 24rpx;
+  box-shadow: 0 0 30rpx rgba(53, 182, 244, 0.3);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  color: #FFFFFF;
+  font-size: 30rpx;
+  font-weight: 600;
+  letter-spacing: 0.5rpx;
+}
+

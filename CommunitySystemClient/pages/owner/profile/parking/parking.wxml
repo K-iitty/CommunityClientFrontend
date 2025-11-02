@@ -1,0 +1,178 @@
+<!--pages/owner/profile/parking/parking.wxml-->
+<view class="container">
+  <!-- 标签页切换 -->
+  <view class="tab-container">
+    <view class="tab-list">
+      <view 
+        wx:for="{{tabItems}}" 
+        wx:key="value"
+        class="tab-item {{activeTab === item.value ? 'active' : ''}}"
+        bindtap="switchTab"
+        data-index="{{item.value}}"
+      >
+        {{item.label}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 我的车位Tab -->
+  <view class="tab-content" wx:if="{{activeTab === 0}}">
+    <view class="section-header">
+      <text class="section-title">我的车位</text>
+      <text class="count">{{parkingSpaces.length}}</text>
+    </view>
+
+    <view class="parking-list" wx:if="{{parkingSpaces.length > 0}}">
+      <view class="parking-card" wx:for="{{parkingSpaces}}" wx:key="id" bindtap="viewDetail" data-id="{{item.id}}">
+        <view class="card-header">
+          <text class="space-no">{{item.fullSpaceNo}}</text>
+          <text class="space-type">{{item.spaceType}}</text>
+        </view>
+
+        <view class="card-body">
+          <view class="info-row">
+            <view class="info-item">
+              <text class="label">车位号：</text>
+              <text class="value">{{item.spaceNo}}</text>
+            </view>
+            <view class="info-item">
+              <text class="label">面积：</text>
+              <text class="value">{{item.spaceArea}}㎡</text>
+            </view>
+          </view>
+
+          <view class="info-row">
+            <view class="info-item">
+              <text class="label">停车场：</text>
+              <text class="value">{{item.lotName}}</text>
+            </view>
+            <view class="info-item">
+              <text class="label">区域：</text>
+              <text class="value">{{item.zoneName}}</text>
+            </view>
+          </view>
+
+          <view class="info-row">
+            <view class="info-item">
+              <text class="label">收费标准：</text>
+              <text class="value">{{item.chargeStandard}}</text>
+            </view>
+            <view class="info-item">
+              <text class="label">月费：</text>
+              <text class="value">¥{{item.monthlyFee}}</text>
+            </view>
+          </view>
+
+          <view class="info-row full-width">
+            <view class="info-item">
+              <text class="label">备注：</text>
+              <text class="value">{{item.remark}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:else>
+      <text class="empty-icon">车</text>
+      <text class="empty-text">暂无车位信息</text>
+    </view>
+
+  
+  </view>
+
+  <!-- 查找停车位Tab -->
+  <view class="tab-content" wx:if="{{activeTab === 1}}">
+    <!-- 加载中状态 -->
+    <view class="loading-state" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+
+    <!-- 状态过滤栏 -->
+    <view class="filter-bar" wx:if="{{!loading}}">
+      <scroll-view scroll-x="true" class="filter-scroll">
+        <view class="filter-item {{activeSpaceStatusFilter === index ? 'active' : ''}}" 
+          wx:for="{{spaceStatusFilters}}" wx:key="*this" wx:for-index="index"
+          bindtap="selectSpaceStatusFilter" data-index="{{index}}">
+          {{item.label}}
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 搜索结果列表 - 显示所有停车位 -->
+    <view class="parking-list" wx:if="{{searchSpaces.length > 0 && !loading}}">
+      <view class="parking-card" wx:for="{{searchSpaces}}" wx:key="id">
+        <view class="card-header">
+          <text class="space-no">{{item.fullSpaceNo}}</text>
+          <view class="tag-group">
+            <text class="space-type">{{item.spaceType}}</text>
+            <text class="space-status" style="background-color: {{item.spaceStatus === '空闲' ? '#52c41a' : '#f5222d'}}">{{item.spaceStatus}}</text>
+          </view>
+        </view>
+
+        <view class="card-body">
+          <view class="info-row">
+            <view class="info-item">
+              <text class="label">所属社区：</text>
+              <text class="value">{{item.communityName}}</text>
+            </view>
+          </view>
+
+          <view class="info-row">
+            <view class="info-item">
+              <text class="label">车位号：</text>
+              <text class="value">{{item.spaceNo}}</text>
+            </view>
+            <view class="info-item">
+              <text class="label">面积：</text>
+              <text class="value">{{item.spaceArea}}㎡</text>
+            </view>
+          </view>
+
+          <view class="info-row">
+            <view class="info-item">
+              <text class="label">停车场：</text>
+              <text class="value">{{item.lotName}}</text>
+            </view>
+            <view class="info-item">
+              <text class="label">区域：</text>
+              <text class="value">{{item.zoneName}}</text>
+            </view>
+          </view>
+
+          <view class="info-row">
+            <view class="info-item">
+              <text class="label">收费标准：</text>
+              <text class="value">{{item.chargeStandard}}</text>
+            </view>
+            <view class="info-item">
+              <text class="label">月费：</text>
+              <text class="value">¥{{item.monthlyFee}}</text>
+            </view>
+          </view>
+
+          <view class="info-row" wx:if="{{item.remark}}">
+            <view class="info-item full-width">
+              <text class="label">备注：</text>
+              <text class="value">{{item.remark}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- <view class="card-footer">
+          <button class="apply-btn" bindtap="applyParkingSpace">申请此车位</button>
+        </view> -->
+      </view>
+
+      <!-- 加载更多 -->
+      <view class="load-more" wx:if="{{searchHasMore}}" bindtap="loadMoreSearchSpaces">
+        <text>加载更多</text>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{!loading && searchSpaces.length === 0}}">
+      <text class="empty-icon">P</text>
+      <text class="empty-text">暂无可用车位</text>
+    </view>
+  </view>
+</view>

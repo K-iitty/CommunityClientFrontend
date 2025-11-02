@@ -1,0 +1,300 @@
+/* ============================================
+   个人资料页面 - 现代简约设计
+   主题色: #45c3ff
+   ============================================ */
+
+.container {
+  padding-bottom: 150rpx;
+  background: #FFFFFF;
+}
+
+/* ============================================
+   用户信息 - 顶部卡片
+   ============================================ */
+.profile-header {
+  background: linear-gradient(135deg, #45c3ff 0%, #0088cc 100%);
+  padding: 40rpx 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(69, 195, 255, 0.25);
+  animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.user-card:active {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(0.98);
+}
+
+.avatar-placeholder {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 4rpx solid rgba(255, 255, 255, 0.5);
+  margin-right: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56rpx;
+  font-weight: 700;
+  color: #45c3ff;
+  flex-shrink: 0;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15);
+}
+
+.user-info {
+  flex: 1;
+}
+
+.name {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 12rpx;
+  letter-spacing: 0.5rpx;
+}
+
+.details {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  flex-wrap: wrap;
+}
+
+.details .tag {
+  margin-left: 180px;
+  padding: 10rpx 16rpx;
+  padding-bottom: 10px;
+  border-radius: 16rpx;
+  font-size: 22rpx;
+  background: rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.details .tag:active {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(0.95);
+}
+
+.username {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.edit-btn {
+  background: rgba(255, 255, 255, 0.2);
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #FFFFFF;
+  font-size: 28rpx;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.edit-btn:active {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0.95);
+}
+
+.edit-icon {
+  font-weight: 600;
+  font-size: 28rpx;
+}
+
+/* ============================================
+   功能菜单
+   ============================================ */
+.menu-section {
+  margin: 20rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(69, 195, 255, 0.08);
+  border: 1rpx solid #f0f4f8;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 32rpx 30rpx;
+  border-bottom: 1rpx solid #f0f4f8;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-item:active {
+  background: #f0f8ff;
+  transform: translateX(2rpx);
+}
+
+.menu-icon {
+  width: 64rpx;
+  height: 64rpx;
+  background: linear-gradient(135deg, #45c3ff 0%, #0088cc 100%);
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-right: 24rpx;
+  flex-shrink: 0;
+  box-shadow: 0 2rpx 8rpx rgba(69, 195, 255, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 房屋 - 橙色 */
+.menu-icon[data-menu-code="H"] {
+  background: linear-gradient(135deg, #ffdda2 0%, #ffba4b 100%);
+  box-shadow: 0 2rpx 8rpx rgba(243, 156, 18, 0.2);
+}
+
+/* 车辆 - 红色 */
+.menu-icon[data-menu-code="V"] {
+  background: linear-gradient(135deg, #fc402b 0%, #ffb3aa 100%);
+  box-shadow: 0 2rpx 8rpx rgba(231, 76, 60, 0.2);
+}
+
+/* 车位 - 粉色 */
+.menu-icon[data-menu-code="P"] {
+  background: linear-gradient(135deg, #ffb0ca 0%, #ff3586 100%);
+  box-shadow: 0 2rpx 8rpx rgba(233, 30, 99, 0.2);
+}
+
+/* 仪表 - 绿色 */
+.menu-icon[data-menu-code="M"] {
+  background: linear-gradient(135deg, #22cc69 0%, #88fdb9 100%);
+  box-shadow: 0 2rpx 8rpx rgba(46, 204, 113, 0.2);
+}
+
+/* 账单 - 紫色 */
+.menu-icon[data-menu-code="B"] {
+  background: linear-gradient(135deg, #d891f5 0%, #bb2ff7 100%);
+  box-shadow: 0 2rpx 8rpx rgba(155, 89, 182, 0.2);
+}
+
+/* 联系 - 青色 */
+.menu-icon[data-menu-code="C"] {
+  background: linear-gradient(135deg, #30acff 0%, #7dc7f8 100%);
+  box-shadow: 0 2rpx 8rpx rgba(52, 152, 219, 0.2);
+}
+
+.menu-image {
+  width: 38rpx;
+  height: 38rpx;
+  display: block;
+  opacity: 0.85;
+  filter: drop-shadow(0 1rpx 2rpx rgba(0, 0, 0, 0.15));
+}
+
+.menu-item:active .menu-icon {
+  transform: scale(1.05);
+  box-shadow: 0 4rpx 12rpx rgba(69, 195, 255, 0.3);
+}
+
+.menu-title {
+  flex: 1;
+  font-size: 30rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+.menu-badge {
+  background: linear-gradient(135deg, #F56C6C 0%, #E03E3E 100%);
+  color: #FFFFFF;
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  margin-right: 16rpx;
+  font-weight: 600;
+}
+
+.menu-arrow {
+  font-size: 32rpx;
+  color: #45c3ff;
+  font-weight: 700;
+  transition: transform 0.3s ease;
+}
+
+.menu-item:active .menu-arrow {
+  transform: translateX(4rpx);
+  color: #0088cc;
+}
+
+/* ============================================
+   退出登录
+   ============================================ */
+.logout-section {
+  margin: 40rpx 20rpx 20rpx;
+}
+
+.logout-btn {
+  background: #FFFFFF;
+  color: #F56C6C;
+  border: 2rpx solid #F56C6C;
+  border-radius: 50rpx;
+  padding: 28rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 2rpx 8rpx rgba(245, 108, 108, 0.1);
+}
+
+.logout-btn::after {
+  border: none;
+}
+
+.logout-btn:active {
+  background: rgba(245, 108, 108, 0.05);
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 12rpx rgba(245, 108, 108, 0.2);
+}
+
+/* ============================================
+   版本信息
+   ============================================ */
+.version-info {
+  text-align: center;
+  padding: 30rpx 0;
+  font-size: 24rpx;
+  color: #999999;
+  font-weight: 500;
+}
+

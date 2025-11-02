@@ -1,0 +1,9 @@
+{
+  "navigationBarBackgroundColor": "#35b6f4",
+  "navigationBarTextStyle": "white",
+  "navigationBarTitleText": "仪表管理",
+  "backgroundColor": "#f5f5f5",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "onReachBottomDistance": 50
+}

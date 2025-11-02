@@ -1,0 +1,281 @@
+<!--pages/property/feedback/detail/detail.wxml-->
+<view class="page">
+  <!-- 详情卡片 -->
+  <view class="detail-card">
+    <!-- 标题和状态 -->
+    <view class="detail-header">
+      <view class="title-section">
+        <view class="issue-title">{{issue.issueTitle}}</view>
+        <view class="status-badge {{issue.statusClass}}">{{issue.issueStatus}}</view>
+      </view>
+    </view>
+
+    <!-- 基本信息 -->
+    <view class="section-title">基本信息</view>
+    <view class="detail-grid">
+      <view class="detail-item">
+        <view class="label">问题类型：</view>
+        <view class="value">{{issue.issueType || '-'}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">优先级：</view>
+        <view class="value">{{issue.urgencyLevel || '中'}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">状态：</view>
+        <view class="value" style="color: #3b82f6;">{{issue.issueStatus || '-'}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">问题位置：</view>
+        <view class="value">{{issue.specificLocation || '-'}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">提交时间：</view>
+        <view class="value">{{issue.reportedDate || '-'}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">预计完成：</view>
+        <view class="value">{{issue.estimatedCompleteTime || '-'}}</view>
+      </view>
+    </view>
+
+    <!-- 业主信息 -->
+    <view class="section-title" style="margin-top: 20rpx;">业主信息</view>
+    <view class="detail-grid">
+      <view class="detail-item">
+        <view class="label">姓名：</view>
+        <view class="value">{{issue.contactPhone || (issue.owner && issue.owner.phone) || '-'}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">业主ID：</view>
+        <view class="value">{{issue.ownerId || '-'}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">联系时间：</view>
+        <view class="value">{{issue.bestContactTime || '-'}}</view>
+      </view>
+    </view>
+
+    <!-- 房屋信息 -->
+    <view class="section-title" style="margin-top: 20rpx;">房屋信息</view>
+    <view class="detail-grid">
+      <view class="detail-item">
+        <view class="label">房间号：</view>
+        <view class="value">{{(issue.house && issue.house.roomNo) || '-'}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">房屋类型：</view>
+        <view class="value">{{(issue.house && issue.house.houseType) || '-'}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">房屋编号：</view>
+        <view class="value">{{issue.houseId || '-'}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">社区：</view>
+        <view class="value">{{(issue.community && issue.community.communityName) || '-'}}</view>
+      </view>
+    </view>
+
+    <!-- 指派处理信息 -->
+    <view class="section-title" style="margin-top: 20rpx;">处理信息</view>
+    <view class="detail-grid">
+      <view class="detail-item">
+        <view class="label">指派部门：</view>
+        <view class="value">{{issue.assignedDepartmentId || '-'}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">指派时间：</view>
+        <view class="value">{{issue.assignedTime || '-'}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">处理员：</view>
+        <view class="value">{{(issue.processor && issue.processor.name) || issue.processorStaffId || '-'}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">处理员电话：</view>
+        <view class="value">{{(issue.processor && issue.processor.phone) || '-'}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">开始处理：</view>
+        <view class="value">{{issue.processStartTime || '-'}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">完成时间：</view>
+        <view class="value">{{issue.actualCompleteTime || '-'}}</view>
+      </view>
+    </view>
+
+    <!-- 成本信息 -->
+    <view wx:if="{{issue.hasCost}}" class="section-title" style="margin-top: 20rpx;">成本信息</view>
+    <view wx:if="{{issue.hasCost}}" class="detail-grid">
+      <view class="detail-item">
+        <view class="label">材料费：</view>
+        <view class="value">¥{{issue.materialCost || 0}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">人工费：</view>
+        <view class="value">¥{{issue.laborCost || 0}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">总费用：</view>
+        <view class="value" style="color: #dc2626; font-weight: bold;">¥{{issue.totalCost || 0}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">支付状态：</view>
+        <view class="value">{{issue.costPaymentStatus || '-'}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">处理耗时：</view>
+        <view class="value">{{issue.actualHours || 0}} 小时</view>
+      </view>
+    </view>
+
+    <!-- 问题描述 -->
+    <view class="section-title" style="margin-top: 20rpx;">问题描述</view>
+    <view class="description">{{issue.issueContent || '-'}}</view>
+
+    <!-- 处理计划 -->
+    <block wx:if="{{issue.processPlan}}">
+      <view class="section-title" style="margin-top: 20rpx;">处理计划</view>
+      <view class="description">{{issue.processPlan}}</view>
+    </block>
+
+    <!-- 处理结果 -->
+    <block wx:if="{{issue.processResult}}">
+      <view class="section-title" style="margin-top: 20rpx;">处理结果</view>
+      <view class="description">{{issue.processResult}}</view>
+    </block>
+
+    <!-- 满意度评价 -->
+    <block wx:if="{{issue.isEvaluated}}">
+      <view class="section-title" style="margin-top: 20rpx;">满意度评价</view>
+      <view class="detail-grid">
+        <view class="detail-item">
+          <view class="label">评分等级</view>
+          <view class="value">{{issue.satisfactionLevel || '-'}} 分</view>
+        </view>
+        <view class="detail-item">
+          <view class="label">评价内容</view>
+          <view class="value">{{issue.satisfactionFeedback || '-'}}</view>
+        </view>
+        <view class="detail-item">
+          <view class="label">评价时间</view>
+          <view class="value">{{issue.evaluationTime || '-'}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!-- 时间线和跟进记录 -->
+  <view class="section-title section-title-1" style="margin-top: 16rpx; padding: 0 16rpx;">完整时间线（所有追加记录）</view>
+  <view class="timeline-section">
+    <block wx:if="{{followUps.length > 0}}">
+      <view class="timeline">
+        <block wx:for="{{followUps}}" wx:key="id">
+          <view class="timeline-item">
+            <view class="timeline-dot {{item.operatorType}}"></view>
+            <view class="timeline-content">
+              <view class="timeline-header">
+                <view class="timeline-operator">
+                  <view class="operator-type {{item.operatorType}}">
+                    {{item.operatorType === 'staff' ? '物业' : '业主'}}
+                  </view>
+                  <text class="operator-name">{{item.operatorName}}</text>
+                </view>
+                <view class="timeline-time">{{item.createdDate}}</view>
+              </view>
+              <view class="timeline-tag">{{item.followUpType}}</view>
+              <view class="timeline-text">{{item.followUpContent}}</view>
+              <view wx:if="{{item.internalNote && item.operatorType === 'staff'}}" class="timeline-note">
+                内部备注：{{item.internalNote}}
+              </view>
+              <!-- <view wx:if="{{item.attachments}}" class="timeline-attachments">
+                附件：{{item.attachments}}
+              </view> -->
+            </view>
+          </view>
+        </block>
+      </view>
+    </block>
+
+    <block wx:if="{{followUps.length === 0}}">
+      <view class="empty-timeline">
+        <view>暂无处理记录</view>
+      </view>
+    </block>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <!-- 待处理状态：显示开始按钮 -->
+    <block wx:if="{{issue.issueStatus === '待处理'}}">
+      <button 
+        class="btn btn-primary"
+        bindtap="onStartProcessing"
+      >
+        开始处理
+      </button>
+    </block>
+
+    <!-- 处理中状态：显示跟进按钮 -->
+    <block wx:elif="{{issue.issueStatus === '处理中'}}">
+      <button 
+        class="btn btn-primary"
+        bindtap="onAddFollowUp"
+      >
+        添加跟进
+      </button>
+    </block>
+
+    <!-- 已完成状态：不显示操作按钮 -->
+
+    <!-- 返回按钮 -->
+    <button 
+      class="btn btn-gray"
+      bindtap="onBack"
+    >
+      返回
+    </button>
+  </view>
+
+  <!-- 开始处理模态框 -->
+  <view class="modal-overlay" wx:if="{{showStartModal}}" bindtap="onCloseStartModal"></view>
+  <view class="modal" wx:if="{{showStartModal}}">
+    <view class="modal-header">
+      <text class="modal-title">开始处理</text>
+      <view class="modal-close" bindtap="onCloseStartModal">×</view>
+    </view>
+    <view class="modal-body">
+      <view class="modal-label">
+        <text>处理方案</text>
+        <text style="color: #f44336;">*</text>
+      </view>
+      <textarea 
+        class="modal-textarea"
+        placeholder="请简要说明处理方案..."
+        placeholder-style="color: #bbb"
+        value="{{startPlanDescription}}"
+        bindinput="onStartPlanInput"
+        maxlength="200"
+      />
+      <view class="char-count">{{startPlanDescription.length}}/200</view>
+    </view>
+    <view class="modal-footer">
+        <button 
+        class="btn btn-primary" 
+        bindtap="onConfirmStart"
+        disabled="{{!startPlanValid || submitting}}"
+      >
+        {{submitting ? '提交中...' : '确认开始'}}
+      </button>
+      <button 
+        class="btn btn-secondary" 
+        bindtap="onCloseStartModal"
+      >
+        取消
+      </button>
+ 
+    </view>
+  </view>
+</view>

@@ -1,0 +1,201 @@
+/* pages/owner/profile/meter/meter.wxss */
+.container {
+  padding: 20rpx;
+  background: #F5F7FA;
+  padding-bottom: 100rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #2C3E50;
+}
+
+.count {
+  font-size: 26rpx;
+  color: #909399;
+  background: #F5F7FA;
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
+}
+
+.meter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.meter-card {
+  background: #FFFFFF;
+  border-radius: 12rpx;
+  margin-bottom: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.meter-card:active {
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.12);
+  transform: translateY(-2rpx);
+}
+
+/* 卡片头部 */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx;
+  background: #f9f9f9;
+  border-bottom: 1rpx solid #f0f0f0;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.meter-info-left {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  flex: 1;
+}
+
+.meter-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.meter-type {
+  height:15px;
+  line-height: 0.5;
+  padding: 4rpx 10rpx;
+  border-radius: 4rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+  white-space: nowrap;
+  color: #ffffff;
+}
+
+.tag-electric {
+  background: #366cff;
+}
+
+.tag-water {
+  background: #00b7ff;
+}
+
+.tag-gas {
+  background: #ff6b6b;
+}
+
+/* 当前读数显示 */
+.meter-reading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4rpx;
+}
+
+.reading-value {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #35b6f4;
+}
+
+.reading-unit {
+  font-size: 22rpx;
+  color: #999;
+}
+
+/* 卡片内容 */
+.card-body {
+  padding: 14rpx 16rpx;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* 信息行 */
+.info-row {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 12rpx;
+  align-items: center;
+}
+
+.info-row:last-child {
+  margin-bottom: 0;
+}
+
+.info-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  min-width: 0;
+}
+
+.info-item.full-width {
+  flex: 1 1 100%;
+}
+
+.label {
+  color: #999;
+  font-size: 24rpx;
+  flex-shrink: 0;
+  min-width: fit-content;
+}
+
+.value {
+  color: #333;
+  font-size: 24rpx;
+  flex: 1;
+  word-break: break-all;
+}
+
+/* 卡片底部 */
+.card-footer {
+  padding: 12rpx 16rpx;
+  border-top: 1rpx solid #f0f0f0;
+  background: #f9f9f9;
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.detail-link {
+  color: #35b6f4;
+  font-size: 24rpx;
+  padding: 6rpx 10rpx;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 20rpx;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 100rpx;
+  color: #DCDFE6;
+  margin-bottom: 16rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #909399;
+}
+
+
+
+
+
+

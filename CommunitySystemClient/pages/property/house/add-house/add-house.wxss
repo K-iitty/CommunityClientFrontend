@@ -1,0 +1,195 @@
+/* pages/property/house/add-house/add-house.wxss */
+
+.page {
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  padding-bottom: 100rpx;
+}
+
+.page-header {
+  background-color: white;
+  padding: 24rpx 16rpx;
+  border-bottom: 1rpx solid #e5e7eb;
+  margin-bottom: 16rpx;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 8rpx;
+}
+
+.subtitle {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.form-container {
+  background-color: white;
+  margin: 16rpx;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  box-shadow: 0 1rpx 3rpx rgba(0, 0, 0, 0.08);
+}
+
+.form-group {
+  margin-bottom: 24rpx;
+}
+
+.form-group:last-of-type {
+  margin-bottom: 12rpx;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.required {
+  color: #ef4444;
+  margin-right: 4rpx;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12rpx 14rpx;
+  border: 1rpx solid #d1d5db;
+  border-radius: 8rpx;
+  font-size: 12px;
+  background-color: #fafbfc;
+  color: #1f2937;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: #35b6f4;
+  background-color: white;
+}
+
+.form-input.error {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+}
+
+.picker-value {
+  padding: 12rpx 0;
+  color: #1f2937;
+  font-size: 12px;
+}
+
+.form-input-with-unit {
+  display: flex;
+  align-items: center;
+  border: 1rpx solid #d1d5db;
+  border-radius: 8rpx;
+  background-color: #fafbfc;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.form-input-with-unit .form-input {
+  flex: 1;
+  border: none;
+  background-color: transparent;
+  padding: 12rpx 14rpx;
+  margin: 0;
+}
+
+.form-input-with-unit .form-input:focus {
+  background-color: transparent;
+  border: none;
+}
+
+.unit {
+  padding: 0 14rpx;
+  color: #9ca3af;
+  font-size: 12px;
+  font-weight: 500;
+  min-width: 40rpx;
+  text-align: center;
+}
+
+.placeholder {
+  color: #d1d5db;
+  font-size: 12px;
+}
+
+.error-msg {
+  font-size: 11px;
+  color: #ef4444;
+  margin-top: 6rpx;
+  display: block;
+}
+
+.form-tips {
+  background-color: #f0f9ff;
+  border-left: 4rpx solid #35b6f4;
+  padding: 12rpx 14rpx;
+  border-radius: 6rpx;
+  margin-top: 24rpx;
+}
+
+.tip-item {
+  font-size: 11px;
+  color: #1e40af;
+  padding: 6rpx 0;
+  line-height: 1.5;
+}
+
+.button-area {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16rpx;
+  background-color: white;
+  border-top: 1rpx solid #e5e7eb;
+  box-shadow: 0 -2rpx 8rpx rgba(0, 0, 0, 0.08);
+}
+
+.btn {
+  width: 100%;
+  margin-bottom: 12rpx;
+  padding: 14rpx 24rpx;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8rpx;
+  height: 52rpx;
+  line-height: 52rpx;
+  transition: all 0.3s ease;
+}
+
+.btn:last-child {
+  margin-bottom: 0;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #35b6f4 0%, #1e88e5 100%);
+  color: white;
+}
+
+.btn-primary:active {
+  opacity: 0.9;
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+  background-color: #bfdbfe;
+  opacity: 0.6;
+}
+
+.btn-secondary {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  border: 1rpx solid #d1d5db;
+}
+
+.btn-secondary:active {
+  background-color: #e5e7eb;
+}

@@ -1,0 +1,313 @@
+/* ============================================
+   登录页面 - 现代简约设计
+   主题色: #45c3ff
+   ============================================ */
+
+.login-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #45c3ff 0%, #0088cc 100%);
+  padding: 60rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   头部
+   ============================================ */
+.login-header {
+  text-align: center;
+  margin-bottom: 80rpx;
+  margin-top: 80rpx;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.title {
+  font-size: 56rpx;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 16rpx;
+  letter-spacing: 2rpx;
+  text-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.subtitle {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 1rpx;
+  font-weight: 500;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   角色切换
+   ============================================ */
+.role-tabs {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 40rpx;
+  justify-content: center;
+}
+
+.role-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 32rpx;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  min-width: 140rpx;
+  backdrop-filter: blur(10px);
+}
+
+.role-tab:active {
+  transform: scale(0.95);
+}
+
+.role-tab.active {
+  background: #FFFFFF;
+  border-color: #FFFFFF;
+  box-shadow: 0 8rpx 24rpx rgba(69, 195, 255, 0.3);
+}
+
+.tab-text {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+  letter-spacing: 1rpx;
+}
+
+.role-tab.active .tab-text {
+  color: #45c3ff;
+  font-size: 30rpx;
+}
+
+/* ============================================
+   登录表单
+   ============================================ */
+.login-form {
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  padding: 40rpx;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+  flex: 1;
+  margin-bottom: 40rpx;
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   输入框组
+   ============================================ */
+.input-group {
+  display: flex;
+  align-items: center;
+  padding: 0 16rpx;
+  border: 2rpx solid #f0f4f8;
+  border-radius: 12rpx;
+  background: #FFFFFF;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 52rpx;
+  cursor: text;
+}
+
+.input-group:focus-within {
+  border-color: #45c3ff;
+  box-shadow: 0 0 0 3rpx rgba(69, 195, 255, 0.1);
+  background: #f0f8ff;
+}
+
+.input-prefix {
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #45c3ff;
+  margin-right: 12rpx;
+  min-width: 20rpx;
+}
+
+.input-field {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 28rpx;
+  color: #333333;
+  height: 100%;
+  background: transparent;
+}
+
+.input-field::placeholder {
+  color: #C0C4CC;
+}
+
+.input-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40rpx;
+  height: 40rpx;
+  cursor: pointer;
+  margin-left: 8rpx;
+  transition: all 0.2s ease;
+}
+
+.input-action:active {
+  transform: scale(0.9);
+}
+
+.eye-icon {
+  font-size: 20rpx;
+  color: #45c3ff;
+  font-weight: 700;
+}
+
+/* ============================================
+   登录按钮
+   ============================================ */
+.btn-large {
+  margin-top: 12rpx;
+}
+
+/* ============================================
+   登录操作
+   ============================================ */
+.login-actions {
+  display: flex;
+  gap: 20rpx;
+  justify-content: center;
+  margin-top: 12rpx;
+}
+
+.action-link {
+  font-size: 26rpx;
+  color: #45c3ff;
+  padding: 8rpx 0;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  font-weight: 500;
+}
+
+.action-link:active {
+  opacity: 0.7;
+  transform: scale(0.95);
+}
+
+.action-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2rpx;
+  left: 0;
+  width: 0;
+  height: 2rpx;
+  background: #45c3ff;
+  transition: width 0.3s ease;
+}
+
+.action-link:active::after {
+  width: 100%;
+}
+
+/* ============================================
+   底部
+   ============================================ */
+.login-footer {
+  text-align: center;
+  padding: 20rpx 0;
+}
+
+.footer-text {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 8rpx;
+  font-weight: 500;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+}
+
+.link {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: underline;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+
+.link:active {
+  opacity: 0.7;
+  transform: scale(0.95);
+  color: #FFFFFF;
+}
+
+.separator {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.6);
+}
+

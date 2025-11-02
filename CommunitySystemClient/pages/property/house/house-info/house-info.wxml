@@ -1,0 +1,183 @@
+<!--pages/property/house/house-info/house-info.wxml-->
+<view class="page">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">
+    <view class="loading-spinner"></view>
+    <view class="loading-text">加载中...</view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{empty && !loading}}" class="empty-state">
+    <view class="empty-icon">🏠</view>
+    <view class="empty-text">房屋不存在</view>
+    <button class="back-btn" bindtap="goBack">返回列表</button>
+  </view>
+
+  <!-- 房屋详情内容 -->
+  <view wx:if="{{house && !loading}}" class="content">
+    <!-- 户型图 -->
+    <view class="floor-plan-section" wx:if="{{house.floorPlanImage}}">
+      <image 
+        class="floor-plan-image" 
+        src="{{house.floorPlanImage}}" 
+        mode="aspectFill" 
+        bindtap="previewFloorPlan"
+      />
+    </view>
+
+    <!-- 基本信息卡片 -->
+    <view class="card">
+      <view class="card-title">基本信息</view>
+      <view class="card-content">
+        <!-- 房号 -->
+        <view class="info-item">
+          <view class="label">房号</view>
+          <view class="value">{{house.roomNo}}</view>
+        </view>
+        
+        <!-- 完整房号 -->
+        <view class="info-item">
+          <view class="label">完整房号</view>
+          <view class="value">{{house.fullRoomNo}}</view>
+        </view>
+        
+        <!-- 房屋代码 -->
+        <view class="info-item">
+          <view class="label">房屋代码</view>
+          <view class="value">{{house.houseCode}}</view>
+        </view>
+        
+        <!-- 楼层 -->
+        <view class="info-item">
+          <view class="label">楼层</view>
+          <view class="value">第{{house.floorLevel}}层</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 面积信息卡片 -->
+    <view class="card">
+      <view class="card-title">面积信息</view>
+      <view class="card-content">
+        <!-- 建筑面积 -->
+        <view class="info-item">
+          <view class="label">建筑面积</view>
+          <view class="value">{{house.buildingArea}} ㎡</view>
+        </view>
+        
+        <!-- 可用面积 -->
+        <view class="info-item">
+          <view class="label">可用面积</view>
+          <view class="value">{{house.usableArea}} ㎡</view>
+        </view>
+        
+        <!-- 共享面积 -->
+        <view class="info-item">
+          <view class="label">共享面积</view>
+          <view class="value">{{house.sharedArea}} ㎡</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 房屋属性卡片 -->
+    <view class="card">
+      <view class="card-title">房屋属性</view>
+      <view class="card-content">
+        <!-- 房屋类型 -->
+        <view class="info-item">
+          <view class="label">房屋类型</view>
+          <view class="value">{{house.houseType || '-'}}</view>
+        </view>
+        
+        <!-- 房屋布局 -->
+        <view class="info-item">
+          <view class="label">房屋布局</view>
+          <view class="value">{{house.houseLayout || '-'}}</view>
+        </view>
+        
+        <!-- 房屋朝向 -->
+        <view class="info-item">
+          <view class="label">房屋朝向</view>
+          <view class="value">{{house.houseOrientation || '-'}}</view>
+        </view>
+        
+        <!-- 装修状态 -->
+        <view class="info-item">
+          <view class="label">装修状态</view>
+          <view class="value">{{house.decorationStatus || '-'}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 房屋状态卡片 -->
+    <view class="card">
+      <view class="card-title">房屋状态</view>
+      <view class="card-content">
+        <!-- 房屋状态 -->
+        <view class="info-item">
+          <view class="label">状态</view>
+          <view class="value status {{house.houseStatus === '空置' ? 'vacant' : house.houseStatus === '已售' ? 'sold' : house.houseStatus === '已租' ? 'rented' : house.houseStatus === '维修' ? 'maintenance' : ''}}">{{house.houseStatus || '-'}}</view>
+        </view>
+        
+        <!-- 是否有阳台 -->
+        <view class="info-item">
+          <view class="label">阳台</view>
+          <view class="value">{{house.hasBalcony === 1 ? '有' : '无'}}</view>
+        </view>
+        
+        <!-- 是否有花园 -->
+        <view class="info-item">
+          <view class="label">花园</view>
+          <view class="value">{{house.hasGarden === 1 ? '有' : '无'}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 停车信息卡片 -->
+    <view class="card" wx:if="{{house.parkingSpaceNo}}">
+      <view class="card-title">停车信息</view>
+      <view class="card-content">
+        <!-- 停车位号 -->
+        <view class="info-item">
+          <view class="label">停车位号</view>
+          <view class="value">{{house.parkingSpaceNo}}</view>
+        </view>
+        
+        <!-- 停车类型 -->
+        <view class="info-item" wx:if="{{house.parkingType}}">
+          <view class="label">停车类型</view>
+          <view class="value">{{house.parkingType}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 备注信息卡片 -->
+    <view class="card" wx:if="{{house.remark}}">
+      <view class="card-title">备注</view>
+      <view class="card-content">
+        <view class="remark-text">{{house.remark}}</view>
+      </view>
+    </view>
+
+    <!-- 记录时间卡片 -->
+    <view class="card">
+      <view class="card-title">记录时间</view>
+      <view class="card-content">
+        <!-- 创建时间 -->
+        <view class="info-item" wx:if="{{house.createdAt}}">
+          <view class="label">创建时间</view>
+          <view class="value">{{house.createdAt}}</view>
+        </view>
+        
+        <!-- 更新时间 -->
+        <view class="info-item" wx:if="{{house.updatedAt}}">
+          <view class="label">更新时间</view>
+          <view class="value">{{house.updatedAt}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 返回按钮 -->
+    <button class="back-btn" bindtap="goBack">返回列表</button>
+  </view>
+</view>

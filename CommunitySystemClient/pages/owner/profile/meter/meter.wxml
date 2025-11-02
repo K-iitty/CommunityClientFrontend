@@ -1,0 +1,71 @@
+<!--pages/owner/profile/meter/meter.wxml-->
+<view class="container">
+  <view class="section-header">
+    <text class="section-title">我的仪表</text>
+    <text class="count">{{meters.length}}</text>
+  </view>
+
+  <view class="meter-list" wx:if="{{meters.length > 0}}">
+    <view class="meter-card" wx:for="{{meters}}" wx:key="meterId">
+      <!-- 仪表卡片头部 -->
+      <view class="card-header" bindtap="viewDetail" data-id="{{item.meterId}}">
+        <view class="meter-info-left">
+          <text class="meter-name">{{item.meterName}}</text>
+          <text class="meter-type tag-{{item.categoryName === '电表' ? 'electric' : item.categoryName === '水表' ? 'water' : 'gas'}}">
+            {{item.categoryName}}
+          </text>
+        </view>
+        <view class="meter-reading">
+          <text class="reading-value">{{item.currentReading}}</text>
+          <text class="reading-unit">{{item.unit}}</text>
+        </view>
+      </view>
+
+      <!-- 仪表卡片简要信息 -->
+      <view class="card-body" bindtap="viewDetail" data-id="{{item.meterId}}">
+        <!-- 基本信息 -->
+        <view class="info-row">
+          <view class="info-item">
+            <text class="label">仪表编码</text>
+            <text class="value">{{item.meterCode || '-'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">状态</text>
+            <text class="value">{{item.meterStatus || '正常'}}</text>
+          </view>
+        </view>
+
+        <!-- 房屋位置 -->
+        <view class="info-row">
+          <view class="info-item full-width">
+            <text class="label">房屋</text>
+            <text class="value">{{item.fullRoomNo || item.roomNo}} ({{item.buildingName}})</text>
+          </view>
+        </view>
+
+        <!-- 收费信息 -->
+        <view class="info-row" wx:if="{{item.unitPrice || item.chargeStandard}}">
+          <view class="info-item">
+            <text class="label">单价</text>
+            <text class="value">{{item.unitPrice ? '¥' + item.unitPrice : '-'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">收费</text>
+            <text class="value">{{item.chargeStandard || '-'}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 查看详情提示 -->
+      <view class="card-footer" bindtap="viewDetail" data-id="{{item.meterId}}">
+        <text class="detail-link">查看详情 ></text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:else>
+    <text class="empty-icon">-</text>
+    <text class="empty-text">暂无仪表信息</text>
+    <text class="empty-tip">请联系物业查询仪表信息</text>
+  </view>
+</view>

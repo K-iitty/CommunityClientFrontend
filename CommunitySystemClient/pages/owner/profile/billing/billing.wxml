@@ -1,0 +1,220 @@
+<!--pages/owner/profile/billing/billing.wxml-->
+<view class="container">
+  <view class="section-header">
+    <text class="section-title">我的账单</text>
+    <text class="count">{{pagination.total}}</text>
+  </view>
+
+  <!-- 账单汇总 -->
+  <view class="summary-card" wx:if="{{summary}}">
+    <view class="summary-item">
+      <text class="summary-label">待缴金额</text>
+      <text class="summary-amount">¥{{summary.unpaidAmount || '0.00'}}</text>
+    </view>
+    <view class="summary-item">
+      <text class="summary-label">总金额</text>
+      <text class="summary-total">¥{{summary.totalAmount || '0.00'}}</text>
+    </view>
+  </view>
+
+  <!-- 分类统计 -->
+  <view class="category-summary" wx:if="{{categorySummary}}">
+    <view class="category-item" wx:if="{{categorySummary.meter.count > 0}}">
+      <text class="category-label">仪表费用</text>
+      <text class="category-count">{{categorySummary.meter.count}}</text>
+      <text class="category-amount">¥{{categorySummary.meter.amount}}</text>
+    </view>
+    <view class="category-item" wx:if="{{categorySummary.parking.count > 0}}">
+      <text class="category-label">停车费用</text>
+      <text class="category-count">{{categorySummary.parking.count}}</text>
+      <text class="category-amount">¥{{categorySummary.parking.amount}}</text>
+    </view>
+    <view class="category-item" wx:if="{{categorySummary.issue.count > 0}}">
+      <text class="category-label">问题费用</text>
+      <text class="category-count">{{categorySummary.issue.count}}</text>
+      <text class="category-amount">¥{{categorySummary.issue.amount}}</text>
+    </view>
+  </view>
+
+  <!-- 标签页切换 -->
+  <view class="tab-container">
+    <view class="tab-bar">
+      <view class="tab-item {{activeTab === index ? 'active' : ''}}" 
+            wx:for="{{tabs}}" 
+            wx:key="index"
+            bindtap="switchTab"
+            data-tab="{{item.name}}">
+        {{item.label}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 账单列表 -->
+  <view class="bill-list" wx:if="{{bills.length > 0}}">
+    <view class="bill-card" wx:for="{{bills}}" wx:key="id">
+      <!-- 仪表账单卡片 -->
+      <view wx:if="{{item.billType === 'meter'}}" 
+            bindtap="viewDetail" 
+            data-type="meter"
+            data-id="{{item.meterId}}"
+            data-meterid="{{item.meterId}}">
+        <view class="card-header">
+          <text class="bill-type">{{item.meterName}}</text>
+          <text class="bill-category tag-{{item.categoryName === '电表' ? 'electric' : item.categoryName === '水表' ? 'water' : 'gas'}}">
+            {{item.categoryName}}
+          </text>
+        </view>
+
+        <view class="card-body">
+          <view class="info-item">
+            <text class="label">关联房屋：</text>
+            <text class="value">{{item.fullRoomNo}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">本期用量：</text>
+            <text class="value">{{item.usage}} {{item.unit}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">单价：</text>
+            <text class="value">¥{{item.unitPrice}}/{{item.unit}}</text>
+          </view>
+          <view class="info-row">
+            <view class="info-item" style="flex: 1;">
+              <text class="label">应缴金额：</text>
+              <text class="amount">¥{{item.amount}}</text>
+            </view>
+          </view>
+          <view class="info-item">
+            <text class="label">最后读数：</text>
+            <text class="value">{{item.lastReadingDate || '-'}}</text>
+          </view>
+        </view>
+
+        <!-- <view class="card-footer">
+          <text class="btn-link">查看详情 ></text>
+        </view> -->
+      </view>
+
+      <!-- 停车位账单卡片 -->
+      <view wx:elif="{{item.billType === 'parking'}}" 
+            bindtap="viewDetail"
+            data-type="parking"
+            data-id="{{item.parkingSpaceId}}"
+            data-spaceid="{{item.parkingSpaceId}}">
+        <view class="card-header">
+          <text class="bill-type">{{item.spaceNo}}</text>
+          <text class="bill-category tag-parking">
+            {{item.spaceType === '固定' ? '固定车位' : item.spaceType === '临时' ? '临时车位' : 'VIP车位'}}
+          </text>
+        </view>
+
+        <view class="card-body">
+          <view class="info-item">
+            <text class="label">停车场：</text>
+            <text class="value">{{item.lotName}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">停车区域：</text>
+            <text class="value">{{item.zoneName || '-'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">车牌号：</text>
+            <text class="value">{{item.plateNumber || '-'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">收费方式：</text>
+            <text class="value">{{item.chargeMethod || '月租'}}</text>
+          </view>
+          <view class="info-row">
+            <view class="info-item" style="flex: 1;">
+              <text class="label">月租金额：</text>
+              <text class="amount">¥{{item.amount}}</text>
+            </view>
+          </view>
+        </view>
+<!-- 
+        <view class="card-footer">
+          <text class="btn-link">查看详情 ></text>
+        </view> -->
+      </view>
+
+      <!-- 问题反馈费用账单卡片 -->
+      <view wx:else 
+            bindtap="viewDetail"
+            data-type="issue"
+            data-id="{{item.issueId}}"
+            data-issueid="{{item.issueId}}">
+        <view class="card-header">
+          <text class="bill-type">{{item.issueTitle}}</text>
+          <text class="bill-category tag-issue">
+            {{item.issueType}}
+          </text>
+        </view>
+
+        <view class="card-body">
+          <view class="info-item">
+            <text class="label">关联房屋：</text>
+            <text class="value">{{item.fullRoomNo || '-'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">处理单位：</text>
+            <text class="value">{{item.communityName || '-'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">报告时间：</text>
+            <text class="value">{{item.reportedTime || '-'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">完成时间：</text>
+            <text class="value">{{item.completedTime || '-'}}</text>
+          </view>
+          <view class="info-row">
+            <view class="info-item">
+              <text class="label">材料费：</text>
+              <text class="value">¥{{item.materialCost}}</text>
+            </view>
+            <view class="info-item">
+              <text class="label">人工费：</text>
+              <text class="value">¥{{item.laborCost}}</text>
+            </view>
+          </view>
+          <view class="info-row">
+            <view class="info-item" style="flex: 1;">
+              <text class="label">总费用：</text>
+              <text class="amount">¥{{item.amount}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- <view class="card-footer">
+          <text class="btn-link">查看详情 ></text>
+        </view> -->
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:else>
+    <text class="empty-icon">-</text>
+    <text class="empty-text">暂无账单信息</text>
+    <text class="empty-tip">
+      {{tabs[activeTab].label}}暂无费用
+    </text>
+  </view>
+
+  <!-- 分页控制 -->
+  <view class="pagination" wx:if="{{bills.length > 0 && pagination.pages > 1}}">
+    <button class="btn-prev {{pagination.current <= 1 ? 'disabled' : ''}}" 
+            bindtap="prevPage"
+            disabled="{{pagination.current <= 1}}">
+      上一页
+    </button>
+    <view class="page-info">
+      第 {{pagination.current}} / {{pagination.pages}} 页
+    </view>
+    <button class="btn-next {{pagination.current >= pagination.pages ? 'disabled' : ''}}" 
+            bindtap="nextPage"
+            disabled="{{pagination.current >= pagination.pages}}">
+      下一页
+    </button>
+  </view>
+</view>

@@ -1,0 +1,49 @@
+<!--pages/owner/profile/profile.wxml-->
+<view class="container">
+  <!-- 用户信息卡片 -->
+  <view class="profile-header" bindtap="editProfile">
+    <view class="user-card">
+      <view class="user-info">
+        <view class="name">{{userInfo.name || '业主用户'}}</view>
+        <view class="details">
+          <text class="tag tag-{{userInfo.verifyStatus === '已认证' ? 'success' : 'warning'}}">
+            {{userInfo.verifyStatus || '未认证'}}
+          </text>
+          <text class="username">@{{userInfo.username}}</text>
+        </view>
+      </view>
+      <!-- <view class="edit-btn">
+        <text class="edit-icon">E</text>
+      </view> -->
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-section">
+    <view 
+      class="menu-item"
+      wx:for="{{menuItems}}"
+      wx:key="menuCode"
+      bindtap="navigateToMenu"
+      data-url="{{item.url}}"
+    >
+      <view class="menu-icon {{item.menuCode | menuIconClass}}" data-menu-code="{{item.menuCode}}">
+        <image src="{{item.image}}" class="menu-image"></image>
+      </view>
+      <view class="menu-title">{{item.title}}</view>
+      <view class="menu-badge" wx:if="{{item.badge}}">
+        <text>{{item.badge}}</text>
+      </view>
+      <view class="menu-arrow">></view>
+    </view>
+  </view>
+
+  <!-- 退出登录 -->
+  <view class="logout-section">
+    <button class="logout-btn" bindtap="handleLogout">
+      退出登录
+    </button>
+  </view>
+
+</view>
+

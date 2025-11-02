@@ -1,0 +1,119 @@
+<!--pages/owner/notice/detail/detail.wxml-->
+<view class="container">
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 公告详情 -->
+  <view class="notice-detail" wx:if="{{notice && !loading}}">
+    <!-- 详情头部 - 参考新闻风格 -->
+    <view class="notice-header">
+      <view class="notice-title">{{notice.title}}</view>
+      
+      <!-- 元数据行 - 时间、阅读数等放在标题下面 -->
+      <view class="notice-meta-row">
+        <text class="meta-time">{{notice.publishTime}}</text>
+        <text class="meta-dot">·</text>
+        <text class="meta-read">已读 {{notice.readCount}}</text>
+      </view>
+
+      <!-- 标签行 - 置顶、紧急、分类标签 -->
+      <view class="tags-row">
+        <text class="tag" wx:if="{{notice.isTop === 1}}">置顶</text>
+        <text class="tag tag-urgent" wx:if="{{notice.isUrgent === 1}}">紧急</text>
+        <text class="tag tag-type">{{notice.noticeType}}</text>
+      </view>
+    </view>
+
+    <!-- 分割线 -->
+    <view class="divider"></view>
+
+    <!-- 公告内容 -->
+    <view class="notice-content-section">
+      <view class="notice-content">{{notice.content}}</view>
+    </view>
+
+    <!-- 公告图片 -->
+    <view class="notice-images-section" wx:if="{{noticeImages && noticeImages.length > 0}}">
+      <view class="images-grid">
+        <image 
+          wx:for="{{noticeImages}}" 
+          wx:key="{{index}}"
+          src="{{item}}" 
+          mode="aspectFit"
+          class="notice-image"
+          bindtap="previewImage"
+          data-url="{{item}}"
+          data-index="{{index}}"
+        ></image>
+      </view>
+    </view>
+
+    <!-- 活动信息（仅当为活动公告时显示） -->
+    <view class="activity-section" wx:if="{{showActivity && notice.activityDate}}">
+      <view class="section-title">活动信息</view>
+      <view class="activity-card">
+        <view class="activity-item">
+          <text class="label">活动日期</text>
+          <text class="value">{{notice.activityDate}}</text>
+        </view>
+        
+        <view class="activity-item" wx:if="{{notice.activityTime}}">
+          <text class="label">活动时间</text>
+          <text class="value">{{notice.activityTime}}</text>
+        </view>
+        
+        <view class="activity-item" wx:if="{{notice.activityLocation}}">
+          <text class="label">活动地点</text>
+          <text class="value">{{notice.activityLocation}}</text>
+        </view>
+        
+        <view class="activity-item" wx:if="{{notice.activityOrganizer}}">
+          <text class="label">组织者</text>
+          <text class="value">{{notice.activityOrganizer}}</text>
+        </view>
+        
+        <view class="activity-item" wx:if="{{notice.activityContact}}">
+          <text class="label">联系人</text>
+          <text class="value">{{notice.activityContact}}</text>
+        </view>
+        
+        <view class="activity-item" wx:if="{{notice.activityContactPhone}}">
+          <text class="label">联系电话</text>
+          <text class="phone-value" bindtap="copyPhone" data-phone="{{notice.activityContactPhone}}">
+            {{notice.activityContactPhone}}
+          </text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 附件 -->
+    <view class="attachments-section" wx:if="{{attachments && attachments.length > 0}}">
+      <view class="section-title">附件文件</view>
+      <view class="attachments-list">
+        <view class="attachment-item" wx:for="{{attachments}}" wx:key="{{index}}" bindtap="openAttachment" data-filename="{{item.name}}" data-url="{{item.url}}">
+          <view class="attachment-left">
+            <text class="attachment-icon">文件</text>
+            <view class="attachment-info">
+              <text class="attachment-name">{{item.name}}</text>
+              <text class="attachment-size" wx:if="{{item.size}}">{{item.size}}</text>
+            </view>
+          </view>
+          <text class="attachment-arrow">></text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 页脚操作 -->
+    <!-- <view class="notice-footer">
+      <button class="btn-share" bindtap="share">分享公告</button>
+    </view> -->
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!notice && !loading}}">
+    <text class="empty-text">公告加载失败</text>
+  </view>
+</view>
+

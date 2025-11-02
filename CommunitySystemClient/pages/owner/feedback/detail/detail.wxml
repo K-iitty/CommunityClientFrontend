@@ -1,0 +1,290 @@
+<!--pages/owner/feedback/detail/detail.wxml-->
+<view class="container" wx:if="{{issue}}">
+  <!-- 问题头部 -->
+  <view class="issue-header">
+    <view class="header-top">
+      <text class="issue-title">{{issue.issueTitle}}</text>
+      <text class="status-tag status-{{issue.issueStatus === '已完成' ? 'completed' : issue.issueStatus === '处理中' ? 'processing' : issue.issueStatus === '待处理' ? 'pending' : 'closed'}}">
+        {{issue.issueStatus || '待处理'}}
+      </text>
+    </view>
+    <view class="header-meta">
+      <view class="meta-badge">{{issue.urgencyLevel || '一般'}}</view>
+      <view class="meta-badge">{{issue.issueType}}</view>
+      <view class="meta-badge" wx:if="{{issue.workStatus}}">工单：{{issue.workStatus}}</view>
+    </view>
+  </view>
+
+  <!-- 问题详情主体 -->
+  <view class="detail-container">
+    <!-- 基本信息区 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">基本信息</text>
+      </view>
+      <view class="section-content">
+        <view class="info-row">
+          <text class="info-label">问题描述</text>
+          <text class="info-value">{{issue.issueContent}}</text>
+        </view>
+        
+        <view class="info-row" wx:if="{{issue.specificLocation}}">
+          <text class="info-label">具体位置</text>
+          <text class="info-value">{{issue.specificLocation}}</text>
+        </view>
+
+        <view class="info-row" wx:if="{{issue.subType}}">
+          <text class="info-label">问题子类</text>
+          <text class="info-value">{{issue.subType}}</text>
+        </view>
+
+        <view class="info-row">
+          <text class="info-label">上报时间</text>
+          <text class="info-value">{{issue.reportedTime}}</text>
+        </view>
+
+        <view class="info-row">
+          <text class="info-label">联系人</text>
+          <text class="info-value">{{issue.contactName}} {{issue.contactPhone}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 问题图片区 -->
+    <view class="section" wx:if="{{issue.additionalImages && issueImages.length > 0}}">
+      <view class="section-header">
+        <text class="section-title">问题图片</text>
+      </view>
+      <view class="image-grid">
+        <image
+          wx:for="{{issueImages}}"
+          wx:key="index"
+          src="{{item}}"
+          mode="aspectFill"
+          bindtap="previewImages"
+          data-url="{{item}}"
+          class="image-item"
+        />
+      </view>
+    </view>
+
+    <!-- 处理信息区 -->
+    <view class="section" wx:if="{{issue.assignedStaffName || issue.processStart_time}}">
+      <view class="section-header">
+        <text class="section-title">处理信息</text>
+      </view>
+      <view class="section-content">
+        <view class="info-row" wx:if="{{issue.assignedStaffName}}">
+          <text class="info-label">处理人员</text>
+          <text class="info-value">{{issue.assignedStaffName}}</text>
+        </view>
+
+        <view class="info-row" wx:if="{{issue.processPlan}}">
+          <text class="info-label">处理方案</text>
+          <text class="info-value">{{issue.processPlan}}</text>
+        </view>
+
+        <view class="info-row" wx:if="{{issue.processStartTime}}">
+          <text class="info-label">处理开始时间</text>
+          <text class="info-value">{{issue.processStartTime}}</text>
+        </view>
+
+        <view class="info-row" wx:if="{{issue.processEndTime}}">
+          <text class="info-label">处理完成时间</text>
+          <text class="info-value">{{issue.processEndTime}}</text>
+        </view>
+
+        <view class="info-row" wx:if="{{issue.processResult}}">
+          <text class="info-label">处理结果</text>
+          <text class="info-value">{{issue.processResult}}</text>
+        </view>
+
+        <view class="info-row" wx:if="{{issue.actualHours}}">
+          <text class="info-label">实际耗时</text>
+          <text class="info-value">{{issue.actualHours}} 小时</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 处理结果图片区 -->
+    <view class="section" wx:if="{{issue.resultImages && resultImages.length > 0}}">
+      <view class="section-header">
+        <text class="section-title">处理结果图片</text>
+      </view>
+      <view class="image-grid">
+        <image
+          wx:for="{{resultImages}}"
+          wx:key="index"
+          src="{{item}}"
+          mode="aspectFill"
+          bindtap="previewResultImages"
+          data-url="{{item}}"
+          class="image-item"
+        />
+      </view>
+    </view>
+
+    <!-- 费用信息区 -->
+    <view class="section" wx:if="{{issue.hasCost === 1}}">
+      <view class="section-header">
+        <text class="section-title">费用信息</text>
+      </view>
+      <view class="section-content">
+        <view class="info-row">
+          <text class="info-label">是否产生费用</text>
+          <text class="info-value">是</text>
+        </view>
+
+        <view class="info-row" wx:if="{{issue.totalCost}}">
+          <text class="info-label">总费用</text>
+          <text class="info-value cost-amount">¥{{issue.totalCost}}</text>
+        </view>
+
+        <view class="info-row" wx:if="{{issue.costPaymentStatus}}">
+          <text class="info-label">支付状态</text>
+          <text class="info-value payment-status" data-status="{{issue.costPaymentStatus}}">{{issue.costPaymentStatus}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 时间轴信息区 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">处理时间线</text>
+      </view>
+      <view class="timeline">
+        <view class="timeline-item">
+          <view class="timeline-marker"></view>
+          <view class="timeline-content">
+            <text class="timeline-label">上报时间</text>
+            <text class="timeline-time">{{issue.reportedTime}}</text>
+          </view>
+        </view>
+
+        <view class="timeline-item" wx:if="{{issue.estimatedCompleteTime}}">
+          <view class="timeline-marker"></view>
+          <view class="timeline-content">
+            <text class="timeline-label">预计完成</text>
+            <text class="timeline-time">{{issue.estimatedCompleteTime}}</text>
+          </view>
+        </view>
+
+        <view class="timeline-item" wx:if="{{issue.actualCompleteTime}}">
+          <view class="timeline-marker" style="background-color: #48c774;"></view>
+          <view class="timeline-content">
+            <text class="timeline-label">实际完成</text>
+            <text class="timeline-time">{{issue.actualCompleteTime}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 跟进记录区 -->
+    <view class="section" wx:if="{{followUpRecords && followUpRecords.length > 0}}">
+      <view class="section-header">
+        <text class="section-title">跟进记录</text>
+      </view>
+      <view class="followup-list">
+        <view class="followup-item" wx:for="{{followUpRecords}}" wx:key="id">
+          <view class="followup-header">
+            <text class="followup-type">{{item.followUpType}}</text>
+            <text class="followup-time">{{item.createdAt}}</text>
+          </view>
+          <view class="followup-meta" wx:if="{{item.operatorName}}">
+            <text>{{item.operatorType === 'owner' ? '业主' : '物业'}}：{{item.operatorName}}</text>
+          </view>
+          <text class="followup-content">{{item.followUpContent}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 追加记录区 -->
+    <view class="section" wx:if="{{issue.issueStatus !== '已完成'}}">
+      <view class="section-header">
+        <text class="section-title">追加信息</text>
+      </view>
+      <view class="section-content">
+        <textarea
+          class="followup-textarea"
+          placeholder="可以继续添加问题相关信息..."
+          value="{{followUpContent}}"
+          bindinput="onFollowUpInput"
+          maxlength="500"
+        />
+        <view class="char-count">{{followUpContent.length}}/500</view>
+        <button class="btn-primary" bindtap="handleFollowUp">提交追加</button>
+      </view>
+    </view>
+
+    <!-- 评价区域 -->
+    <view class="section" wx:if="{{issue.issueStatus === '已完成'}}">
+      <view class="section-header">
+        <text class="section-title">问题评价</text>
+      </view>
+      <view class="section-content">
+        <view wx:if="{{issue.isEvaluated === 1 && issue.satisfactionLevel}}">
+          <view class="info-row">
+            <text class="info-label">满意度评分</text>
+            <view class="star-rating">
+              <text class="star" wx:for="{{[1,2,3,4,5]}}" wx:key="*this" style="color: {{index < issue.satisfactionLevel ? '#ffa500' : '#ddd'}};">★</text>
+            </view>
+          </view>
+          <view class="info-row" wx:if="{{issue.satisfactionFeedback}}">
+            <text class="info-label">您的评价</text>
+            <text class="info-value">{{issue.satisfactionFeedback}}</text>
+          </view>
+        </view>
+        <view wx:else>
+          <view class="evaluate-prompt">
+            <text>已完成，期待您的评价</text>
+            <button class="btn-primary" bindtap="showEvaluate">立即评价</button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 评价弹窗 -->
+  <view class="modal-overlay" wx:if="{{showEvaluateModal}}" bindtap="closeEvaluate"></view>
+  <view class="modal-content" wx:if="{{showEvaluateModal}}">
+    <view class="modal-header">
+      <text class="modal-title">问题评价</text>
+      <text class="modal-close" bindtap="closeEvaluate">×</text>
+    </view>
+
+    <view class="modal-body">
+      <view class="form-item">
+        <view class="form-label">满意度评分</view>
+        <view class="star-rating-input">
+          <text 
+            class="star-btn" 
+            wx:for="{{[1,2,3,4,5]}}" 
+            wx:key="*this"
+            bindtap="setScore"
+            data-score="{{item}}"
+            style="color: {{item <= evaluationData.evaluationScore ? '#ffa500' : '#ddd'}};">
+            ★
+          </text>
+        </view>
+        <text class="score-text">{{evaluationData.evaluationScore}}/5 分</text>
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">评价（可选）</view>
+        <textarea
+          class="form-textarea"
+          placeholder="请输入您的评价意见..."
+          value="{{evaluationData.evaluationComment}}"
+          bindinput="onCommentInput"
+          maxlength="200"
+        />
+      </view>
+    </view>
+
+    <view class="modal-footer">
+      <button class="btn-secondary" bindtap="closeEvaluate">取消</button>
+      <button class="btn-primary" bindtap="handleEvaluate">提交评价</button>
+    </view>
+  </view>
+</view>
+

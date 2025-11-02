@@ -1,0 +1,574 @@
+/* ============================================
+   全局样式 - 现代简约设计主题
+   主题色: #45c3ff
+   背景色: #FFFFFF (白色)
+   ============================================ */
+
+/* 页面和基础 */
+page {
+  background-color: #FFFFFF;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 1.6;
+}
+
+view {
+  box-sizing: border-box;
+}
+
+text {
+  display: inline-block;
+}
+
+button {
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+button::after {
+  border: none;
+}
+
+input {
+  font-family: inherit;
+}
+
+/* ============================================
+   主题色定义
+   ============================================ */
+.primary {
+  color: #45c3ff;
+}
+
+.primary-bg {
+  background-color: #45c3ff;
+}
+
+.secondary {
+  color: #0088cc;
+}
+
+.secondary-bg {
+  background-color: #0088cc;
+}
+
+.success {
+  color: #67C23A;
+}
+
+.success-bg {
+  background-color: #67C23A;
+}
+
+.warning {
+  color: #E6A23C;
+}
+
+.warning-bg {
+  background-color: #E6A23C;
+}
+
+.danger {
+  color: #F56C6C;
+}
+
+.danger-bg {
+  background-color: #F56C6C;
+}
+
+.info {
+  color: #909399;
+}
+
+.info-bg {
+  background-color: #909399;
+}
+
+/* ============================================
+   卡片样式 - 简约设计
+   ============================================ */
+.card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(69, 195, 255, 0.08);
+  border: 1rpx solid #f0f4f8;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:active {
+  box-shadow: 0 4rpx 16rpx rgba(69, 195, 255, 0.12);
+  transform: translateY(-1rpx);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.card-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333333;
+  background: linear-gradient(135deg, #45c3ff 0%, #0088cc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.card-content {
+  font-size: 28rpx;
+  color: #666666;
+}
+
+/* ============================================
+   按钮样式 - 现代化设计
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12rpx 24rpx;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 0.5rpx;
+}
+
+.btn-large {
+  width: 100%;
+  padding: 16rpx 32rpx;
+  font-size: 30rpx;
+  border-radius: 12rpx;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #45c3ff 0%, #0088cc 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4rpx 16rpx rgba(69, 195, 255, 0.3);
+}
+
+.btn-primary:active {
+  opacity: 0.95;
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 8rpx rgba(69, 195, 255, 0.2);
+}
+
+.btn-secondary {
+  background: #FFFFFF;
+  color: #45c3ff;
+  border: 2rpx solid #45c3ff;
+  box-shadow: 0 2rpx 8rpx rgba(69, 195, 255, 0.1);
+}
+
+.btn-secondary:active {
+  background: #f0f8ff;
+  transform: scale(0.98);
+}
+
+.btn-text {
+  background: none;
+  color: #45c3ff;
+  padding: 8rpx 0;
+  box-shadow: none;
+}
+
+.btn-text:active {
+  opacity: 0.7;
+}
+
+/* ============================================
+   输入框样式
+   ============================================ */
+.input-group {
+  margin-bottom: 24rpx;
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 8rpx;
+  font-size: 26rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+.input-field {
+  width: 100%;
+  padding: 14rpx 16rpx;
+  border: 2rpx solid #f0f4f8;
+  border-radius: 12rpx;
+  background: #FFFFFF;
+  font-size: 28rpx;
+  color: #333333;
+  transition: all 0.3s ease;
+}
+
+.input-field:focus {
+  border-color: #45c3ff;
+  box-shadow: 0 0 0 4rpx rgba(69, 195, 255, 0.1);
+  background: #f0f8ff;
+}
+
+.input-field::placeholder {
+  color: #C0C4CC;
+}
+
+/* ============================================
+   标签样式
+   ============================================ */
+.tag {
+  line-height: 0.5;
+  display: inline-block;
+  padding: 0rpx 0rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+  margin-right: 8rpx;
+  transition: all 0.2s ease;
+}
+
+.tag-primary {
+  background: rgba(69, 195, 255, 0.1);
+  color: #45c3ff;
+}
+
+.tag-success {
+  background: rgba(103, 194, 58, 0.1);
+  color: #67C23A;
+}
+
+.tag-warning {
+  background: rgba(230, 162, 60, 0.1);
+  color: #E6A23C;
+}
+
+.tag-danger {
+  background: rgba(245, 108, 108, 0.1);
+  color: #F56C6C;
+}
+
+/* ============================================
+   列表样式
+   ============================================ */
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-item {
+  display: flex;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f0f4f8;
+  transition: all 0.2s ease;
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+.list-item:active {
+  background: #f0f8ff;
+  border-radius: 8rpx;
+  padding: 16rpx 12rpx;
+}
+
+.list-item-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.list-item-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 4rpx;
+}
+
+.list-item-desc {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.list-item-arrow {
+  display: flex;
+  align-items: center;
+  margin-left: 12rpx;
+  color: #45c3ff;
+  font-size: 28rpx;
+  transition: transform 0.3s ease;
+}
+
+.list-item:active .list-item-arrow {
+  transform: translateX(4rpx);
+}
+
+/* ============================================
+   容器布局
+   ============================================ */
+.container {
+  padding: 20rpx;
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+}
+
+.section {
+  margin-bottom: 24rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 16rpx;
+  padding-left: 16rpx;
+  border-left: 4rpx solid #45c3ff;
+  position: relative;
+}
+
+.section-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4rpx;
+  background: linear-gradient(180deg, #45c3ff 0%, transparent 100%);
+  animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+/* ============================================
+   网格布局
+   ============================================ */
+.grid {
+  display: grid;
+  gap: 12rpx;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-item {
+  background: #FFFFFF;
+  border-radius: 12rpx;
+  padding: 16rpx;
+  text-align: center;
+  border: 1rpx solid #f0f4f8;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.02);
+}
+
+.grid-item:active {
+  transform: translateY(-4rpx);
+  box-shadow: 0 4rpx 12rpx rgba(69, 195, 255, 0.15);
+  border-color: #45c3ff;
+}
+
+.grid-icon {
+  font-size: 48rpx;
+  margin-bottom: 8rpx;
+  transition: transform 0.3s ease;
+}
+
+.grid-item:active .grid-icon {
+  transform: scale(1.1);
+}
+
+.grid-label {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+/* ============================================
+   空状态
+   ============================================ */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60rpx 20rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 16rpx;
+  opacity: 0.5;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0rpx);
+  }
+  50% {
+    transform: translateY(-8rpx);
+  }
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999999;
+  margin-bottom: 12rpx;
+  font-weight: 500;
+}
+
+.empty-desc {
+  font-size: 24rpx;
+  color: #C0C4CC;
+  text-align: center;
+}
+
+/* ============================================
+   加载状态
+   ============================================ */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx;
+  color: #45c3ff;
+  font-size: 26rpx;
+}
+
+.loading::before {
+  content: '';
+  display: inline-block;
+  width: 20rpx;
+  height: 20rpx;
+  margin-right: 8rpx;
+  border: 2rpx solid #45c3ff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================
+   分隔线
+   ============================================ */
+.divider {
+  height: 1rpx;
+  background: linear-gradient(90deg, transparent 0%, #f0f4f8 50%, transparent 100%);
+  margin: 16rpx 0;
+}
+
+/* ============================================
+   Flex 工具类
+   ============================================ */
+.flex-row {
+  display: flex;
+  align-items: center;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ============================================
+   间距工具类
+   ============================================ */
+.m0 { margin: 0; }
+.m-8 { margin: 8rpx; }
+.m-16 { margin: 16rpx; }
+.m-24 { margin: 24rpx; }
+.m-32 { margin: 32rpx; }
+
+.mt-8 { margin-top: 8rpx; }
+.mt-16 { margin-top: 16rpx; }
+.mt-24 { margin-top: 24rpx; }
+.mt-32 { margin-top: 32rpx; }
+
+.mb-8 { margin-bottom: 8rpx; }
+.mb-16 { margin-bottom: 16rpx; }
+.mb-24 { margin-bottom: 24rpx; }
+.mb-32 { margin-bottom: 32rpx; }
+
+.p0 { padding: 0; }
+.p-8 { padding: 8rpx; }
+.p-16 { padding: 16rpx; }
+.p-24 { padding: 24rpx; }
+.p-32 { padding: 32rpx; }
+
+/* ============================================
+   文字工具类
+   ============================================ */
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-bold {
+  font-weight: 600;
+}
+
+.text-gray {
+  color: #999999;
+}
+
+.text-small {
+  font-size: 24rpx;
+}
+
+.text-large {
+  font-size: 32rpx;
+}
+
+/* ============================================
+   渐变文字
+   ============================================ */
+.gradient-text {
+  background: linear-gradient(135deg, #45c3ff 0%, #0088cc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+}
+
+/* ============================================
+   响应式
+   ============================================ */
+.hidden {
+  display: none !important;
+}

@@ -1,0 +1,107 @@
+<!-- pages/property/notice/detail/detail.wxml -->
+<!-- 公告管理 - 详情页面 -->
+
+<view class="page">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">
+    <view class="loading-spinner"></view>
+    <view class="loading-text">加载中...</view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{empty && !loading}}" class="empty-state">
+    <view class="empty-icon">📋</view>
+    <view class="empty-text">公告不存在</view>
+    <button class="back-btn" bindtap="goBack">返回列表</button>
+  </view>
+
+  <!-- 内容区域 -->
+  <view wx:if="{{notice && !loading}}" class="content">
+    <!-- 标题和分类 -->
+    <view class="header">
+      <view class="title">{{notice.title}}</view>
+      <view class="category-badge">{{notice.noticeType || '公告'}}</view>
+    </view>
+
+    <!-- 元数据 -->
+    <view class="metadata">
+      <view class="meta-item">
+        <text class="meta-label">发布时间：</text>
+        <text class="meta-value">{{notice.publishTime}}</text>
+      </view>
+      <view class="meta-item">
+        <text class="meta-label">阅读数：</text>
+        <text class="meta-value">{{notice.readCount || 0}}</text>
+      </view>
+      <view class="meta-item" wx:if="{{notice.isUrgent === 1}}">
+        <text class="meta-label">紧急程度：</text>
+        <text class="meta-value" style="color: #dc2626;">紧急</text>
+      </view>
+      <view class="meta-item" wx:if="{{notice.isTop === 1}}">
+        <text class="meta-label">置顶：</text>
+        <text class="meta-value" style="color: #35b6f4;">已置顶</text>
+      </view>
+    </view>
+
+    <!-- 分割线 -->
+    <view class="divider"></view>
+
+    <!-- 公告内容 -->
+    <view class="body">
+      <view class="notice-content">{{notice.content}}</view>
+    </view>
+
+    <!-- 公告图片 -->
+    <view wx:if="{{notice.noticeImages}}" class="notice-images">
+      <!-- <view class="images-title">公告图片</view> -->
+      <view class="images-container">
+        <block wx:for="{{noticeImagesList}}" wx:key="index">
+          <image class="notice-image" src="{{item}}" mode="aspectFill" bindtap="previewImage" data-url="{{item}}" />
+        </block>
+      </view>
+    </view>
+
+    <!-- 活动信息 -->
+    <block wx:if="{{notice.noticeType === '活动公告'}}">
+      <view class="divider"></view>
+      <view class="activity-section">
+        <view class="section-title">活动信息</view>
+        <view class="activity-info">
+          <view class="info-row" wx:if="{{notice.activityDate}}">
+            <text class="info-label">活动日期：</text>
+            <text class="info-value">{{notice.activityDate}}</text>
+          </view>
+          <view class="info-row" wx:if="{{notice.activityTime}}">
+            <text class="info-label">活动时间：</text>
+            <text class="info-value">{{notice.activityTime}}</text>
+          </view>
+          <view class="info-row" wx:if="{{notice.activityLocation}}">
+            <text class="info-label">活动地点：</text>
+            <text class="info-value">{{notice.activityLocation}}</text>
+          </view>
+          <view class="info-row" wx:if="{{notice.activityOrganizer}}">
+            <text class="info-label">主办单位：</text>
+            <text class="info-value">{{notice.activityOrganizer}}</text>
+          </view>
+          <view class="info-row" wx:if="{{notice.activityContact}}">
+            <text class="info-label">联系人：</text>
+            <text class="info-value">{{notice.activityContact}}</text>
+          </view>
+          <view class="info-row" wx:if="{{notice.activityContactPhone}}">
+            <text class="info-label">联系电话：</text>
+            <text class="info-value">{{notice.activityContactPhone}}</text>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 操作按钮 -->
+    <view class="actions">
+      <button class="action-btn edit-btn" bindtap="editNotice">编辑</button>
+      <button class="action-btn delete-btn" bindtap="deleteNotice">删除</button>
+    </view>
+
+    <!-- 返回按钮 -->
+    <button class="back-btn" bindtap="goBack">返回列表</button>
+  </view>
+</view>

@@ -1,0 +1,90 @@
+<!--pages/property/feedback/follow-up/follow-up.wxml-->
+<view class="page">
+  <!-- 页面标题 -->
+  <view class="header">
+    <text class="header-title">添加追加记录</text>
+    <text class="header-subtitle">记录问题处理的每一步进展</text>
+  </view>
+
+  <!-- 内容区域 -->
+  <view class="content">
+    <!-- 追加类型选择 -->
+    <view class="form-section">
+      <view class="form-title">追加类型 <text class="required">*</text></view>
+      <view class="form-description">选择本次追加的类型</view>
+      
+      <view class="type-options">
+        <block wx:for="{{followUpTypes}}" wx:key="value">
+          <view 
+            class="option-item {{followUpType === item.value ? 'active' : ''}}"
+            bindtap="onFollowUpTypeChange"
+            data-value="{{item.value}}"
+          >
+            <view class="option-radio">
+              <block wx:if="{{followUpType === item.value}}">✓</block>
+            </view>
+            <text class="option-label">{{item.label}}</text>
+          </view>
+        </block>
+      </view>
+      
+      <block wx:if="{{!followUpType}}">
+        <view class="validation-tip">请选择追加类型</view>
+      </block>
+    </view>
+
+    <!-- 追加内容 -->
+    <view class="form-section">
+      <view class="form-title">追加内容 <text class="required">*</text></view>
+      <view class="form-description">详细说明本次追加的具体内容</view>
+      
+      <textarea 
+        class="form-textarea textarea-follow-up"
+        placeholder="请输入追加内容，至少20个字符..."
+        placeholder-style="color: #ddd"
+        value="{{followUpContent}}"
+        bindinput="onFollowUpContentInput"
+        maxlength="200"
+      />
+      <view class="char-count">{{followUpContent.length}}/200</view>
+      
+      <block wx:if="{{!followUpContent.trim()}}">
+        <view class="validation-tip">请输入追加内容</view>
+      </block>
+    </view>
+
+    <!-- 内部备注（可选） -->
+    <view class="form-section">
+      <view class="form-title">内部备注</view>
+      <view class="form-description">仅对物业内部可见，不会显示给业主</view>
+      
+      <textarea 
+        class="form-textarea textarea-note"
+        placeholder="可选：添加物业内部备注..."
+        placeholder-style="color: #ddd"
+        value="{{internalNote}}"
+        bindinput="onInternalNoteInput"
+        maxlength="200"
+      />
+      <view class="char-count">{{internalNote.length}}/200</view>
+    </view>
+  </view>
+
+  <!-- 提交区域 -->
+  <view class="action-buttons">
+    <button 
+      class="btn btn-primary" 
+      bindtap="onSubmit"
+      disabled="{{submitting}}"
+    >
+      {{submitting ? '提交中...' : '保存追加记录'}}
+    </button>
+    <button 
+      class="btn btn-secondary" 
+      bindtap="onBack"
+      disabled="{{submitting}}"
+    >
+      返回
+    </button>
+  </view>
+</view>

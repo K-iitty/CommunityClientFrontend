@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "抄表记录",
+  "navigationBarBackgroundColor": "#35b6f4",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#f5f5f5",
+  "backgroundColorTop": "#f5f5f5",
+  "backgroundColorBottom": "#f5f5f5",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 50
+}

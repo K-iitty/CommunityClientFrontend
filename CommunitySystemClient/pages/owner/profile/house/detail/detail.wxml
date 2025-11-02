@@ -1,0 +1,182 @@
+<!-- pages/owner/profile/house/detail/detail.wxml -->
+<view class="container">
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 详情内容 -->
+  <view class="content" wx:if="{{!loading}}">
+    <!-- 房屋头部 -->
+    <view class="house-header">
+      <view class="house-name">{{house.fullRoomNo || house.roomNo}}</view>
+      <view class="house-meta">
+        <text class="house-type">{{house.houseType}}</text>
+        <text class="house-status tag-{{house.houseStatus === '已售' ? 'sold' : 'empty'}}">{{house.houseStatus}}</text>
+      </view>
+    </view>
+
+    <!-- 户型图 -->
+    <view class="section" wx:if="{{house.floorPlanImage}}">
+      <view class="section-title">户型图</view>
+        <view class="image-section" wx:if="{{house.floorPlanImage}}">
+            <image class="floor-plan-image" src="{{house.floorPlanImage}}" mode="aspectFill" bindtap="previewImage" />
+        </view>
+    </view>
+
+    <!-- 基本信息 -->
+    <view class="section">
+      <view class="section-title">基本信息</view>
+      <view class="info-list">
+        <view class="info-item">
+          <text class="label">房屋类型</text>
+          <text class="value">{{house.houseType || '-'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="label">户型</text>
+          <text class="value">{{house.houseLayout || '-'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="label">朝向</text>
+          <text class="value">{{house.houseOrientation || '-'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="label">楼层</text>
+          <text class="value">{{house.floorLevel || '-'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="label">状态</text>
+          <text class="value">{{house.houseStatus || '-'}}</text>
+        </view>
+        <view class="info-item" wx:if="{{house.decorationStatus}}">
+          <text class="label">装修状态</text>
+          <text class="value">{{house.decorationStatus}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 面积信息 -->
+    <view class="section">
+      <view class="section-title">面积信息</view>
+      <view class="info-list">
+        <view class="info-item">
+          <text class="label">建筑面积</text>
+          <text class="value">{{house.buildingArea || '-'}} m²</text>
+        </view>
+        <view class="info-item" wx:if="{{house.usableArea}}">
+          <text class="label">使用面积</text>
+          <text class="value">{{house.usableArea}} m²</text>
+        </view>
+        <view class="info-item" wx:if="{{house.sharedArea}}">
+          <text class="label">公摊面积</text>
+          <text class="value">{{house.sharedArea}} m²</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 楼栋信息 -->
+    <view class="section" wx:if="{{house.building && house.building.buildingNo}}">
+      <view class="section-title">楼栋信息</view>
+      <view class="info-list">
+        <view class="info-item">
+          <text class="label">楼栋号</text>
+          <text class="value">{{house.building.buildingNo}}栋</text>
+        </view>
+        <view class="info-item" wx:if="{{house.building.buildingName}}">
+          <text class="label">楼栋名称</text>
+          <text class="value">{{house.building.buildingName}}</text>
+        </view>
+        <view class="info-item" wx:if="{{house.building.buildingType}}">
+          <text class="label">楼栋类型</text>
+          <text class="value">{{house.building.buildingType}}</text>
+        </view>
+        <view class="info-item" wx:if="{{house.building.totalFloors}}">
+          <text class="label">总楼层</text>
+          <text class="value">{{house.building.totalFloors}}层</text>
+        </view>
+        <view class="info-item" wx:if="{{house.building.hasElevator !== undefined}}">
+          <text class="label">电梯</text>
+          <text class="value">{{house.building.hasElevator === 1 ? '有' : '无'}}</text>
+        </view>
+        <view class="info-item" wx:if="{{house.building.buildingAddress}}">
+          <text class="label">楼栋地址</text>
+          <text class="value">{{house.building.buildingAddress}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 其他配置 -->
+    <view class="section" wx:if="{{house.hasBalcony !== undefined || house.hasGarden !== undefined}}">
+      <view class="section-title">其他配置</view>
+      <view class="info-list">
+        <view class="info-item" wx:if="{{house.hasBalcony !== undefined}}">
+          <text class="label">阳台</text>
+          <text class="value">{{house.hasBalcony === 1 ? '有' : '无'}}</text>
+        </view>
+        <view class="info-item" wx:if="{{house.hasGarden !== undefined}}">
+          <text class="label">花园</text>
+          <text class="value">{{house.hasGarden === 1 ? '有' : '无'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 车位信息 -->
+    <view class="section" wx:if="{{house.parkingSpaceNo || house.parkingType}}">
+      <view class="section-title">车位信息</view>
+      <view class="info-list">
+        <view class="info-item" wx:if="{{house.parkingSpaceNo}}">
+          <text class="label">车位号</text>
+          <text class="value">{{house.parkingSpaceNo}}</text>
+        </view>
+        <view class="info-item" wx:if="{{house.parkingType}}">
+          <text class="label">车位类型</text>
+          <text class="value">{{house.parkingType}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 社区信息 -->
+    <view class="section" wx:if="{{house.community && house.community.communityName}}">
+      <view class="section-title">社区信息</view>
+      <view class="info-list">
+        <view class="info-item">
+          <text class="label">社区名称</text>
+          <text class="value">{{house.community.communityName}}</text>
+        </view>
+        <view class="info-item" wx:if="{{house.community.communityCode}}">
+          <text class="label">社区编码</text>
+          <text class="value">{{house.community.communityCode}}</text>
+        </view>
+        <view class="info-item" wx:if="{{house.community.detailAddress}}">
+          <text class="label">详细地址</text>
+          <text class="value">{{house.community.detailAddress}}</text>
+        </view>
+        <view class="info-item" wx:if="{{house.community.propertyCompany}}">
+          <text class="label">物业公司</text>
+          <text class="value">{{house.community.propertyCompany}}</text>
+        </view>
+        <view class="info-item" wx:if="{{house.community.contactPhone}}">
+          <text class="label">物业电话</text>
+          <text class="value contact-phone" data-phone="{{house.community.contactPhone}}" bindtap="callPhoneNumber">
+            {{house.community.contactPhone}}
+          </text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 其他信息 -->
+    <view class="section" wx:if="{{house.houseCode || house.remark}}">
+      <view class="section-title">其他信息</view>
+      <view class="info-list">
+        <view class="info-item" wx:if="{{house.houseCode}}">
+          <text class="label">房屋编码</text>
+          <text class="value">{{house.houseCode}}</text>
+        </view>
+        <view class="info-item" wx:if="{{house.remark}}">
+          <text class="label">备注</text>
+          <text class="value">{{house.remark}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

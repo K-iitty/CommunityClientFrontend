@@ -1,0 +1,80 @@
+<!--pages/owner/feedback/feedback.wxml-->
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-group">
+      <input
+        class="search-input"
+        type="text"
+        placeholder="搜索问题..."
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+        bindconfirm="handleSearch"
+      />
+      <text class="clear-btn" wx:if="{{searchKeyword}}" bindtap="clearSearch">×</text>
+    </view>
+  </view>
+
+  <!-- 状态标签栏 -->
+  <view class="status-bar">
+    <view class="status-item {{!statusFilter ? 'active' : ''}}" bindtap="setStatusFilter" data-status="">
+      <text class="status-badge">{{statusCounts.all}}</text>
+      <text>全部</text>
+    </view>
+    <view class="status-item {{statusFilter === '待处理' ? 'active' : ''}}" bindtap="setStatusFilter" data-status="待处理">
+      <text class="status-badge warning">{{statusCounts.pending}}</text>
+      <text>待处理</text>
+    </view>
+    <view class="status-item {{statusFilter === '处理中' ? 'active' : ''}}" bindtap="setStatusFilter" data-status="处理中">
+      <text class="status-badge primary">{{statusCounts.processing}}</text>
+      <text>处理中</text>
+    </view>
+    <view class="status-item {{statusFilter === '已完成' ? 'active' : ''}}" bindtap="setStatusFilter" data-status="已完成">
+      <text class="status-badge success">{{statusCounts.completed}}</text>
+      <text>已完成</text>
+    </view>
+  </view>
+
+  <!-- 问题列表 -->
+  <view class="issue-list" wx:if="{{issues.length > 0}}">
+    <view class="issue-card" wx:for="{{issues}}" wx:key="id" bindtap="viewDetail" data-id="{{item.id}}">
+      <view class="card-header">
+        <text class="issue-title">{{item.issueTitle || item.title}}</text>
+        <text class="tag tag-{{item.issueStatus === '已完成' ? 'success' : item.issueStatus === '处理中' ? 'primary' : 'warning'}}">
+          {{item.issueStatus || item.status || '待处理'}}
+        </text>
+      </view>
+      <view class="card-body">
+        <text class="issue-type">{{item.issueType}}</text>
+        <text class="urgency urgency-{{urgencyClassMap[item.urgencyLevel] || 'medium'}}">
+          {{item.urgencyLevel || item.urgency || '一般'}}
+        </text>
+        <text class="tag-label location-tag">{{item.locationType || '位置未知'}}</text>
+        <text class="tag-label subtype-tag">{{item.subType || '无子类'}}</text>
+      </view>
+      <view class="card-footer">
+        <text class="issue-meta">{{item.createdAt || item.createTime}}</text>
+        <text class="arrow">></text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:else>
+    <text class="empty-icon">-</text>
+    <text class="empty-text">{{searchKeyword ? '未找到匹配的问题' : '暂无问题反馈'}}</text>
+  </view>
+
+  <!-- 加载更多 -->
+  <view class="load-more" wx:if="{{issues.length > 0 && hasMore}}">
+    <button class="btn-load-more" bindtap="loadMore">加载更多</button>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-btn-wrapper">
+    <button class="submit-btn-2" bindtap="submitFeedback">
+      <text class="btn-text-1">提交问题</text>
+    </button>
+  </view>
+</view>
+

@@ -1,0 +1,121 @@
+<!-- pages/owner/profile/vehicle/detail/detail.wxml -->
+<view class="container">
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 详情内容 -->
+  <view class="content" wx:if="{{!loading}}">
+    <!-- 车辆头部 -->
+    <view class="vehicle-header">
+      <view class="vehicle-name">{{vehicle.plateNumber}}</view>
+      <view class="vehicle-meta">
+        <text class="vehicle-type">{{vehicle.vehicleType}}</text>
+        <text class="vehicle-status tag-{{vehicle.status === '正常' ? 'normal' : 'abnormal'}}">{{vehicle.status}}</text>
+      </view>
+    </view>
+
+    <!-- 基本信息 -->
+    <view class="section">
+      <view class="section-title">基本信息</view>
+      <view class="info-list">
+        <view class="info-item">
+          <text class="label">品牌</text>
+          <text class="value">{{vehicle.brand || '-'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="label">型号</text>
+          <text class="value">{{vehicle.model || '-'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="label">车辆类型</text>
+          <text class="value">{{vehicle.vehicleType || '-'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="label">车身颜色</text>
+          <text class="value">{{vehicle.color || '-'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="label">登记日期</text>
+          <text class="value">{{vehicle.registerDate || '-'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 证件信息 -->
+    <view class="section">
+      <view class="section-title">证件信息</view>
+      <view class="info-list">
+        <view class="info-item">
+          <text class="label">行驶证号</text>
+          <text class="value">{{vehicle.vehicleLicenseNo || '-'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="label">发动机号</text>
+          <text class="value">{{vehicle.engineNo || '-'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 驾照照片 -->
+    <view class="section" wx:if="{{vehicle.driverLicenseImage}}">
+      <view class="section-title">驾照照片</view>
+      <view class="image-gallery">
+        <view class="image-item">
+          <image 
+            class="gallery-image" 
+            src="{{vehicle.driverLicenseImage}}" 
+            mode="aspectFill"
+            bindtap="previewImage"
+            data-src="{{vehicle.driverLicenseImage}}"
+          />
+        </view>
+      </view>
+      <text class="image-tip">点击图片预览</text>
+    </view>
+
+    <!-- 车辆信息照片 -->
+    <view class="section" wx:if="{{vehicleImages.length > 0}}">
+      <view class="section-title">车辆信息照片</view>
+      <view class="image-gallery">
+        <view class="image-item" wx:for="{{vehicleImages}}" wx:key="*this">
+          <image 
+            class="gallery-image" 
+            src="{{item}}" 
+            mode="aspectFill"
+            bindtap="previewImage"
+            data-src="{{item}}"
+          />
+        </view>
+      </view>
+      <!-- <text class="image-tip">点击图片预览</text> -->
+    </view>
+
+    <!-- 停车位信息 -->
+    <view class="section" wx:if="{{vehicle.parkingSpaceNo || vehicle.fixedSpaceId}}">
+      <view class="section-title">停车位信息</view>
+      <view class="info-list">
+        <view class="info-item" wx:if="{{vehicle.parkingSpaceNo}}">
+          <text class="label">车位号</text>
+          <text class="value">{{vehicle.parkingSpaceNo}}</text>
+        </view>
+        <view class="info-item" wx:if="{{vehicle.parkingLotName}}">
+          <text class="label">停车位</text>
+          <text class="value">{{vehicle.parkingLotName}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 其他信息 -->
+    <view class="section" wx:if="{{vehicle.remark}}">
+      <view class="section-title">其他信息</view>
+      <view class="info-list">
+        <view class="info-item">
+          <text class="label">备注</text>
+          <text class="value">{{vehicle.remark}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

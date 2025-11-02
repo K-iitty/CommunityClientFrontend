@@ -1,0 +1,102 @@
+<!--pages/owner/profile/property-contact/property-contact.wxml-->
+<view class="container">
+  <!-- 物业人员列表 -->
+  <view class="section-header">
+    <text class="section-title">物业人员</text>
+    <text class="count">共 {{total}} 人</text>
+  </view>
+
+  <view class="staff-list" wx:if="{{staff.length > 0}}">
+    <view class="staff-card" wx:for="{{staff}}" wx:key="id">
+      <view class="staff-header" bindtap="toggleStaffDetail" data-id="{{item.id}}">
+        <view class="staff-avatar-container" wx:if="{{item.avatar}}">
+          <image class="staff-avatar" src="{{item.avatar}}" mode="aspectFill" />
+        </view>
+        <view class="staff-avatar-placeholder" wx:else>
+          <text>{{item.name ? item.name.charAt(0) : '?'}}</text>
+        </view>
+        <view class="staff-info">
+          <view class="staff-name-row">
+            <text class="staff-name">{{item.name}}</text>
+            <text class="staff-title" wx:if="{{item.jobTitle}}">{{item.jobTitle}}</text>
+          </view>
+          <view class="staff-meta">
+            <text class="meta-item" wx:if="{{item.position}}">{{item.position}}</text>
+            <text class="meta-item" wx:if="{{item.departmentName}}">{{item.departmentName}}</text>
+          </view>
+        </view>
+        <view class="expand-indicator">
+          <text class="icon {{expandedStaffId === item.id ? 'expanded' : ''}}">›</text>
+        </view>
+      </view>
+      <view class="staff-detail" wx:if="{{expandedStaffId === item.id}}">
+        <view class="detail-section">
+          <text class="detail-section-title">联系方式</text>
+          <view class="detail-item" wx:if="{{item.phone}}">
+            <text class="label">电话：</text>
+            <text class="value action-text" bindtap="copyPhone" data-phone="{{item.phone}}">
+              {{item.phone}} (点击复制)
+            </text>
+          </view>
+          <view class="detail-item" wx:if="{{item.email}}">
+            <text class="label">邮箱：</text>
+            <text class="value action-text" bindtap="copyEmail" data-email="{{item.email}}">
+              {{item.email}} (点击复制)
+            </text>
+          </view>
+          <view class="detail-item" wx:if="{{item.wechat}}">
+            <text class="label">微信：</text>
+            <text class="value action-text" bindtap="copyWechat" data-wechat="{{item.wechat}}">
+              {{item.wechat}} (点击复制)
+            </text>
+          </view>
+          <view class="detail-item" wx:if="{{item.telephoneNumber}}">
+            <text class="label">座机：</text>
+            <text class="value">{{item.telephoneAreaCode || ''}}{{item.telephoneNumber}}{{item.telephoneExtension ? '-' + item.telephoneExtension : ''}}</text>
+          </view>
+        </view>
+        <view class="detail-section" wx:if="{{item.educationLevel || item.major || item.graduateSchool}}">
+          <text class="detail-section-title">专业背景</text>
+          <view class="detail-item" wx:if="{{item.educationLevel}}">
+            <text class="label">学历：</text>
+            <text class="value">{{item.educationLevel}}</text>
+          </view>
+          <view class="detail-item" wx:if="{{item.major}}">
+            <text class="label">专业：</text>
+            <text class="value">{{item.major}}</text>
+          </view>
+          <view class="detail-item" wx:if="{{item.graduateSchool}}">
+            <text class="label">毕业院校：</text>
+            <text class="value">{{item.graduateSchool}}</text>
+          </view>
+        </view>
+        <view class="detail-section" wx:if="{{item.departmentName || item.roleName}}">
+          <text class="detail-section-title">组织信息</text>
+          <view class="detail-item" wx:if="{{item.departmentName}}">
+            <text class="label">部门：</text>
+            <text class="value">{{item.departmentName}}</text>
+          </view>
+          <view class="detail-item" wx:if="{{item.roleName}}">
+            <text class="label">角色：</text>
+            <text class="value">{{item.roleName}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分页信息 -->
+  <view class="pagination-info" wx:if="{{staff.length > 0 && pages > 1}}">
+    <text class="pagination-text">第 {{page}} / {{pages}} 页</text>
+  </view>
+
+  <view class="empty-state" wx:if="{{!loading && staff.length === 0}}">
+    <text class="empty-icon">-</text>
+    <text class="empty-text">暂无物业人员信息</text>
+    <text class="empty-tip">请稍后重试</text>
+  </view>
+
+  <view class="loading-state" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

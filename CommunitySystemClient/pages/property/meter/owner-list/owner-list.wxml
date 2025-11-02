@@ -1,0 +1,109 @@
+<!-- pages/property/meter/owner-list/owner-list.wxml -->
+
+<view class="page">
+  <!-- 页面头部 -->
+  <view class="header">
+    <view class="header-title">仪表管理</view>
+    <!-- <view class="header-subtitle">业主仪表列表</view> -->
+  </view>
+
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrapper">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="搜索业主名称或房号"
+        placeholder-class="search-placeholder"
+        value="{{searchText}}"
+        bindinput="onSearchInput"
+      />
+      <view class="search-icon"></view>
+    </view>
+  </view>
+
+  <!-- 内容区域 -->
+  <view class="content">
+    <!-- 空状态 -->
+    <view wx:if="{{empty && !loading}}" class="empty-state">
+      <view class="empty-icon">📋</view>
+      <view class="empty-text">暂无仪表数据</view>
+      <view class="empty-tip">仪表数据由系统管理员配置</view>
+    </view>
+
+    <!-- 业主列表 -->
+    <view wx:else class="owners-list">
+      <block wx:for="{{filteredOwners}}" wx:key="ownerId">
+        <!-- 业主信息卡片 -->
+        <view class="owner-card">
+          <!-- 业主信息头 - 可点击以折叠/展开仪表 -->
+          <view class="owner-header" bindtap="toggleOwnerMeters" data-owner-id="{{item.ownerId}}">
+            <view class="owner-info">
+              <view class="owner-name">{{item.ownerName}}</view>
+              <view class="house-number">房号: {{item.houseName}}</view>
+            </view>
+            <view class="owner-actions">
+              <view class="meter-count">{{item.meters ? item.meters.length : 0}}个仪表</view>
+              <view class="expand-icon" style="transform: rotate({{expandedOwners[item.ownerId] ? 180 : 0}}deg);">▼</view>
+            </view>
+          </view>
+
+          <!-- 仪表列表 - 可折叠 -->
+          <view class="meters-container" wx:if="{{item.meters && item.meters.length > 0 && expandedOwners[item.ownerId]}}">
+            <block wx:for="{{item.meters}}" wx:key="meterId" wx:for-item="meter">
+              <!-- 仪表卡片 -->
+              <view
+                class="meter-card"
+                data-owner-id="{{item.ownerId}}"
+                data-meter-id="{{meter.meterId}}"
+              >
+                <view class="meter-header">
+                  <view class="meter-type-badge" style="background-color: {{getMeterColor(meter.meterType)}};color: rgb(255, 255, 255);">
+                    {{meter.meterType}}
+                  </view>
+                  <view class="meter-info">
+                    <view class="meter-name">{{meter.meterName}} | {{meter.meterCode}}</view>
+                    <!-- <view class="meter-code">{{meter.meterCode}}</view> -->
+                  </view>
+                </view>
+
+                <view class="meter-readings">
+                  <view class="reading-item">
+                    <view class="reading-label">初始值</view>
+                    <view class="reading-value">{{meter.initialReading || '0'}}</view>
+                  </view>
+                  <view class="reading-arrow">→</view>
+                  <view class="reading-item">
+                    <view class="reading-label">当前值</view>
+                    <view class="reading-value">{{meter.currentReading || '0'}}</view>
+                  </view>
+                </view>
+
+                <!-- <view class="meter-usage">
+                  用量: {{meter.currentReading - meter.initialReading || 0}}
+                </view> -->
+
+                <view class="meter-footer">
+                  <view class="meter-time">更新: {{meter.lastCommTime || meter.createdAt || '未知'}}</view>
+                  <view class="meter-actions">
+                    <view class="meter-btn readings-btn" bindtap="onViewMeterReadings" catch:tap data-meter-id="{{meter.meterId}}" data-meter-code="{{meter.meterCode}}" data-meter-name="{{meter.meterName}}">抄表 →</view>
+                  </view>
+                </view>
+              </view>
+            </block>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <!-- 加载状态 -->
+    <view wx:if="{{loading && owners.length === 0}}" class="loading">
+      <text>加载中...</text>
+    </view>
+
+    <!-- 加载完成 -->
+    <view wx:if="{{!hasMore && filteredOwners.length > 0}}" class="load-complete">
+      已加载全部数据
+    </view>
+  </view>
+</view>

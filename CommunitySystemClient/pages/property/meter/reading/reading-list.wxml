@@ -1,0 +1,84 @@
+<!--pages/property/meter/reading/reading-list.wxml-->
+<view class="page">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="header-title">{{meterName || '抄表记录'}}</view>
+    <view class="btn-add" bindtap="goToAdd">+ 新增抄表</view>
+  </view>
+
+  <!-- 抄表列表 -->
+  <view class="container">
+    <block wx:if="{{readings.length > 0}}">
+      <view class="reading-list">
+        <block wx:for="{{readings}}" wx:key="id">
+          <view class="reading-card" bindtap="viewDetail" data-id="{{item.id}}">
+            <!-- 读数信息 -->
+            <view class="card-header">
+              <view class="reading-info">
+                <view class="reading-row">
+                  <text class="label">上次读数:</text>
+                  <text class="value">{{item.previousReading}} 单位</text>
+                </view>
+                <view class="reading-row">
+                  <text class="label">本次读数:</text>
+                  <text class="value highlight">{{item.currentReading}} 单位</text>
+                </view>
+                <view class="reading-row">
+                  <text class="label">用量:</text>
+                  <text class="value">{{item.usageAmount}} 单位</text>
+                </view>
+              </view>
+            </view>
+            <!-- 抄表详情 -->
+            <view class="card-info">
+              <view class="info-row">
+                <view class="label">抄表员:</view>
+                <view class="value">{{item.readerName || '-'}}</view>
+              </view>
+              <view class="info-row">
+                <view class="label">抄表类型:</view>
+                <view class="value">{{item.readingType || '手动'}}</view>
+              </view>
+              <view class="info-row">
+                <view class="label">抄表状态:</view>
+                <view class="value status {{item.readingStatus === '正常' ? 'normal' : 'abnormal'}}">
+                  {{item.readingStatus || '正常'}}
+                </view>
+              </view>
+              <view class="info-row" wx:if="{{item.readingTime}}">
+                <view class="label">抄表时间:</view>
+                <view class="value">{{item.readingTime}}</view>
+              </view>
+              <view class="info-row">
+                <view class="label">抄表日期:</view>
+                <view class="value">{{item.readingDate}}</view>
+              </view>
+              <view class="info-row" wx:if="{{item.remark}}">
+                <view class="label">备注:</view>
+                <view class="value">{{item.remark}}</view>
+              </view>
+            </view>
+
+            <!-- 图片预览 -->
+            <view class="card-image" wx:if="{{item.readingImage}}">
+              <image src="{{item.readingImage}}" mode="aspectFill"></image>
+            </view>
+          </view>
+        </block>
+      </view>
+    </block>
+
+    <!-- 空状态 -->
+    <block wx:if="{{readings.length === 0 && !loading}}">
+      <view class="empty-state">
+        <view class="empty-icon">📊</view>
+        <view class="empty-text">暂无抄表记录</view>
+      </view>
+    </block>
+
+    <!-- 加载完成 -->
+    <view wx:if="{{!hasMore && readings.length > 0}}" class="load-complete">
+      已加载全部记录
+    </view>
+  </view>
+</view>

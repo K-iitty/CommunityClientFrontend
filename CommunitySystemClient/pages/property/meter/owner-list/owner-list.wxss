@@ -1,0 +1,411 @@
+/* pages/property/meter/owner-list/owner-list.wxss */
+
+.page {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding-bottom: 20rpx;
+}
+
+/* ==================== 头部区域 ==================== */
+.header {
+  background: linear-gradient(135deg, #35b6f4 0%, #35b6f4 100%);
+  padding: 24rpx;
+  color: white;
+  box-shadow: 0 2rpx 8rpx rgba(53, 182, 244, 0.15);
+}
+
+.header-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  margin-bottom: 6rpx;
+  letter-spacing: 0.5rpx;
+}
+
+.header-subtitle {
+  font-size: 24rpx;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+/* ==================== 搜索栏 ==================== */
+.search-bar {
+  padding: 14rpx 18rpx 16rpx;
+  background-color: white;
+  border-bottom: 1rpx solid #f0f0f0;
+  display: flex;
+  gap: 10rpx;
+  align-items: center;
+}
+
+.search-input-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  border-radius: 20rpx;
+  padding: 8rpx 14rpx;
+  position: relative;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 12px;
+  color: #333;
+  background: transparent;
+  border: none;
+  height: 36rpx;
+  line-height: 36rpx;
+  padding: 0;
+  font-weight: 600;
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+.search-icon {
+  font-size: 16rpx;
+  color: #999;
+  margin-left: 8rpx;
+}
+
+.add-button {
+  padding: 10rpx 16rpx;
+  background: linear-gradient(135deg, #35b6f4 0%, #1e88e5 100%);
+  color: white;
+  border-radius: 8rpx;
+  font-size: 12px;
+  font-weight: 700;
+  border: none;
+  transition: all 0.3s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36rpx;
+  cursor: pointer;
+}
+
+.add-button:active {
+  box-shadow: 0 4rpx 12rpx rgba(53, 182, 244, 0.3);
+  transform: translateY(-2rpx);
+}
+
+/* ==================== 内容区域 ==================== */
+.content {
+  padding: 14rpx 18rpx;
+  min-height: calc(100vh - 200rpx);
+}
+
+/* ==================== 空状态 ==================== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 24rpx 60rpx;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.6;
+}
+
+.empty-text {
+  font-size: 13px;
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 8rpx;
+}
+
+.empty-tip {
+  font-size: 11px;
+  color: #999;
+  font-weight: 600;
+}
+
+/* ==================== 业主列表 ==================== */
+.owners-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14rpx;
+}
+
+/* 业主卡片 */
+.owner-card {
+  background-color: white;
+  border-radius: 12rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.owner-card:active {
+  transform: translateY(-2rpx);
+  box-shadow: 0 6rpx 16rpx rgba(53, 182, 244, 0.15);
+}
+
+/* 业主头部 */
+.owner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx 18rpx 12rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+  background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.owner-header:active {
+  background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
+}
+
+.owner-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.owner-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
+  letter-spacing: 0.5rpx;
+}
+
+.house-number {
+  font-size: 12px;
+  color: #666;
+  font-weight: 600;
+}
+
+/* 业主操作区 */
+.owner-actions {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  flex-shrink: 0;
+}
+
+.meter-count {
+  font-size: 12px;
+  color: #35b6f4;
+  font-weight: 700;
+  padding: 4rpx 8rpx;
+  background-color: #e8f4fd;
+  border-radius: 4rpx;
+  white-space: nowrap;
+}
+
+/* 展开/收起图标 */
+.expand-icon {
+  font-size: 18rpx;
+  color: #35b6f4;
+  transition: transform 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 仪表容器 */
+.meters-container {
+  padding: 12rpx 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+/* 仪表卡片 */
+.meter-card {
+  margin: 0 12rpx;
+  padding: 14rpx;
+  background: linear-gradient(135deg, #dff4ff 0%, #e6f0ff 100%);
+  border: 1rpx solid #eceef0;
+  border-radius: 10rpx;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.meter-card:active {
+  background: linear-gradient(135deg, #e8f4fd 0%, #dff0fe 100%);
+  border-color: #35b6f4;
+  box-shadow: 0 4rpx 12rpx rgba(53, 182, 244, 0.2);
+}
+
+.meter-header {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  margin-bottom: 12rpx;
+}
+
+.meter-type-badge {
+  /* background-color: #85b2ec; */
+  background-color: rgba(38, 93, 245, 0.36);
+  padding: 6rpx 12rpx;
+  border-radius: 5rpx;
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 50rpx;
+  text-align: center;
+}
+
+.meter-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.meter-name {
+  text-align: center;
+  font-size: 14px;
+  color: rgb(78, 78, 78);
+  font-weight: 600;
+}
+
+.meter-code {
+  flex: 1;
+  font-size: 12px;
+  color: #666;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+/* 读数部分 */
+.meter-readings {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 12rpx;
+  padding: 15rpx;
+  background-color: rgb(255, 255, 255);
+  border-radius: 8rpx;
+  /* border-left: 4rpx solid #35b6f4; */
+}
+
+.reading-item {
+  flex: 1;
+  text-align: center;
+}
+
+.reading-label {
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 6rpx;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.reading-value {
+  font-size: 16px;
+  color: #35b6f4;
+  font-weight: 700;
+  word-break: break-word;
+}
+
+.reading-arrow {
+  font-size: 28rpx;
+  color: rgb(182, 182, 182);
+  font-weight: bold;
+}
+
+/* 用量 */
+.meter-usage {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 10rpx;
+  font-weight: 600;
+  padding: 8rpx 0;
+  border-top: 1rpx dashed #f0f0f0;
+  padding-top: 10rpx;
+}
+
+/* 仪表底部 */
+.meter-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  gap: 10rpx;
+}
+
+.meter-time {
+  color: #999;
+  font-weight: 600;
+  flex: 1;
+}
+
+.meter-actions {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.meter-btn {
+  padding: 25rpx 40rpx !important;
+  background: linear-gradient(135deg, #35b6f4 0%, #1e88e5 100%);
+  color: white;
+  border: none;
+  border-radius: 6rpx;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  line-height: 1.5;
+  box-shadow: 0 2rpx 6rpx rgba(53, 182, 244, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28rpx;
+  cursor: pointer;
+  user-select: none;
+}
+
+.meter-btn:active {
+  transform: translateY(-2rpx);
+  box-shadow: 0 4rpx 12rpx rgba(53, 182, 244, 0.3);
+}
+
+.meter-action {
+  color: #35b6f4;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+/* 暂无仪表 */
+.no-meters {
+  padding: 20rpx 14rpx;
+  text-align: center;
+  border-top: 1rpx dashed #e0e0e0;
+}
+
+.no-meters-text {
+  font-size: 12px;
+  color: #999;
+  font-weight: 600;
+}
+
+/* ==================== 加载状态 ==================== */
+.loading {
+  text-align: center;
+  padding: 40rpx 20rpx;
+  color: #999;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.load-complete {
+  text-align: center;
+  padding: 20rpx;
+  color: #999;
+  font-size: 11px;
+  margin-top: 10rpx;
+  font-weight: 600;
+}

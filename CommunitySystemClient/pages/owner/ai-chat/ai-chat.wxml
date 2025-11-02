@@ -1,0 +1,96 @@
+<!--pages/owner/ai-chat/ai-chat.wxml-->
+<view class="chat-container">
+  <!-- 顶部操作栏 -->
+  <view class="chat-header">
+    <text class="header-title">智能客服</text>
+    <button class="clear-btn" bindtap="clearMessages" plain size="mini">清空</button>
+  </view>
+
+  <!-- 消息列表 -->
+  <scroll-view 
+    class="messages-area"
+    scroll-y="true"
+    scroll-top="{{scrollTop}}"
+    enable-back-to-top="true"
+    lower-threshold="50"
+  >
+    <view class="messages-list">
+      <!-- 单条消息 -->
+      <view 
+        wx:for="{{messages}}" 
+        wx:key="id"
+        class="message-wrapper {{item.type === 'user' ? 'user-wrapper' : 'assistant-wrapper'}}"
+      >
+        <!-- 助手消息 -->
+        <view wx:if="{{item.type === 'assistant'}}" class="message-row assistant-row">
+          <view class="avatar assistant-avatar">
+            <image src="/img/img-ai/rengongkefu.png" class="avatar-image"></image>
+          </view>
+          <view class="message-content-wrapper">
+            <view class="message-bubble assistant-bubble">
+              <text class="message-text">{{item.content}}</text>
+              <!-- 加载指示器 -->
+              <view wx:if="{{item.loading}}" class="typing-indicator">
+                <view class="dot"></view>
+                <view class="dot"></view>
+                <view class="dot"></view>
+              </view>
+            </view>
+            <view class="message-actions">
+              <button 
+                class="action-btn" 
+                bindtap="copyMessage" 
+                data-content="{{item.content}}"
+              >
+                复制
+              </button>
+              <text class="message-time">{{item.timestamp}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 用户消息 -->
+        <view wx:if="{{item.type === 'user'}}" class="message-row user-row">
+          <view class="message-content-wrapper user-message-wrapper">
+            <view class="message-bubble user-bubble">
+              <text class="message-text">{{item.content}}</text>
+            </view>
+            <text class="message-time">{{item.timestamp}}</text>
+          </view>
+          <view class="avatar user-avatar">
+            <image src="/img/img-ai/yonghu.png" class="avatar-image"></image>
+          </view>
+        </view>
+      </view>
+
+      <!-- 底部间距 -->
+      <view class="message-bottom-space"></view>
+    </view>
+  </scroll-view>
+
+  <!-- 输入区域 -->
+  <view class="input-area">
+    <view class="input-wrapper">
+      <input 
+        class="input-field"
+        type="text"
+        placeholder="输入您的问题..."
+        placeholder-style="color: #BFBFBF"
+        value="{{inputValue}}"
+        bindinput="onInput"
+        bindconfirm="sendMessage"
+        confirm-type="send"
+        adjust-position="true"
+        hold-keyboard="false"
+      />
+      <button 
+        class="send-btn-1 {{sending ? 'disabled' : ''}}"
+        bindtap="sendMessage"
+        disabled="{{sending}}"
+      >
+        {{sending ? '...' : '发送'}}
+      </button>
+    </view>
+    <!-- <text class="tips">💡 提示：您可以提问关于社区、物业、生活等任何问题</text> -->
+  </view>
+</view>

@@ -1,0 +1,131 @@
+<!--pages/property/feedback/list/list.wxml-->
+<view class="page">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input 
+      class="search-input" 
+      placeholder="输入反馈标题搜索"
+      bindinput="onSearch"
+      value="{{searchKeyword}}"
+    />
+  </view>
+
+  <!-- 状态过滤标签 -->
+  <view class="filter-tags">
+    <view 
+      class="filter-tag {{statusFilter === '' ? 'active' : ''}}"
+      bindtap="onStatusFilter"
+      data-status=""
+    >
+      全部
+    </view>
+    <view 
+      class="filter-tag {{statusFilter === '待处理' ? 'active' : ''}}"
+      bindtap="onStatusFilter"
+      data-status="待处理"
+    >
+      待处理
+    </view>
+    <view 
+      class="filter-tag {{statusFilter === '处理中' ? 'active' : ''}}"
+      bindtap="onStatusFilter"
+      data-status="处理中"
+    >
+      处理中
+    </view>
+    <view 
+      class="filter-tag {{statusFilter === '已完成' ? 'active' : ''}}"
+      bindtap="onStatusFilter"
+      data-status="已完成"
+    >
+      已完成
+    </view>
+  </view>
+
+  <!-- 反馈列表 -->
+  <view class="container">
+    <block wx:if="{{filteredIssues.length > 0}}">
+      <view 
+        class="issue-card"
+        wx:for="{{filteredIssues}}"
+        wx:key="id"
+        bindtap="onViewDetail"
+        data-id="{{item.id}}"
+      >
+        <!-- 标题和状态 -->
+        <view class="card-header">
+          <view class="issue-title">{{item.issueTitle}}</view>
+          <view class="status-badge {{item.statusClass}}">{{item.issueStatus}}</view>
+        </view>
+
+        <!-- 业主和房间信息 -->
+        <view class="card-row">
+          <view class="info-item">
+            <text class="label">业主:</text>
+            <text class="value">{{item.contactName || item.ownerName || '-'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">房间:</text>
+            <text class="value">{{(item.house && item.house.roomNo) || '-'}}</text>
+          </view>
+        </view>
+
+        <!-- 问题类型和紧急度 -->
+        <view class="card-row">
+          <view class="info-item">
+            <text class="label">类型:</text>
+            <text class="value">{{item.issueType || '-'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">级别:</text>
+            <text class="value urgency-text urgency-text-1">{{item.urgencyLevel || '中'}}</text>
+          </view>
+        </view>
+
+        <!-- 处理员和电话 -->
+        <view class="card-row">
+          <view class="info-item">
+            <text class="label">处理员:</text>
+            <text class="value">{{(item.processor && item.processor.name) || '-'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">电话:</text>
+            <text class="value">{{item.contactPhone || '-'}}</text>
+          </view>
+        </view>
+
+        <!-- 时间信息 -->
+        <view class="card-footer">
+          <view class="time-info">
+            <text class="time-label">报告:</text>
+            <text class="time-value">{{item.timeAgo}}</text>
+          </view>
+          <view class="time-info">
+            <text class="time-label">最后更新:</text>
+            <text class="time-value">{{item.updatedAt || item.reportedTime || '-'}}</text>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 空状态 -->
+    <block wx:if="{{filteredIssues.length === 0 && !loading}}">
+      <view class="empty-state">
+        <view class="empty-icon">📭</view>
+        <view class="empty-text">暂无反馈记录</view>
+      </view>
+    </block>
+
+    <!-- 加载状态 -->
+    <block wx:if="{{loading}}">
+      <view class="loading">
+        <text>加载中...</text>
+      </view>
+    </block>
+
+    <!-- 加载完成提示 -->
+    <view wx:if="{{!hasMore && issues.length > 0}}" class="load-complete">
+      已加载全部反馈
+    </view>
+  </view>
+</view>

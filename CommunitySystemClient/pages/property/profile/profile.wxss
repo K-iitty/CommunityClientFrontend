@@ -1,0 +1,375 @@
+/* pages/property/profile/profile.wxss */
+/* 员工资料管理 - 个人资料页面样式 */
+
+.page {
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  padding-bottom: 60rpx;
+}
+
+/* 加载状态 */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.loading-spinner {
+  width: 40rpx;
+  height: 40rpx;
+  border: 3rpx solid #dbeafe;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16rpx;
+}
+
+.loading-text {
+  font-size: 16px;
+  color: #9ca3af;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 40rpx 20rpx;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 16rpx;
+}
+
+.empty-text {
+  font-size: 13px;
+  color: #4b5563;
+  margin-bottom: 32rpx;
+}
+
+.retry-btn {
+  padding: 12rpx 32rpx;
+  background-color: #35b6f4;
+  color: white;
+  border-radius: 8rpx;
+  font-size: 12px;
+  border: none;
+}
+
+/* 内容区域 */
+.content {
+  padding: 16rpx 16rpx;
+}
+
+/* 员工头部信息卡片 */
+.staff-header {
+  background: linear-gradient(135deg, #35b6f4 0%, #35b6f4 100%);
+  color: white;
+  padding: 32rpx 24rpx;
+  border-radius: 12rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(53, 182, 244, 0.15);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  flex: 1;
+}
+
+.avatar {
+  font-size: 64rpx;
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.932);
+  border-radius: 8rpx;
+  flex-shrink: 0;
+}
+
+.info {
+  flex: 1;
+}
+
+.name {
+  color:#fafafa;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+  /* margin-left: 10px; */
+}
+
+.position {
+  color:#fafafa;
+  font-size: 12px;
+  margin-bottom: 8rpx;
+  opacity: 0.9;
+
+}
+
+.department {
+  color:#fafafa;
+  font-size: 10px;
+  opacity: 0.8;
+
+}
+
+/* 状态徽章 */
+.status-badge {
+  padding: 10rpx 20rpx;
+  background-color: #1ce737;
+  color: white;
+  border-radius: 20rpx;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 信息区域 */
+.info-section {
+  background-color: white;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 1rpx 3rpx rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 16rpx;
+  padding-bottom: 12rpx;
+  border-bottom: 1rpx solid #e5e7eb;
+}
+
+/* 信息网格布局 */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12rpx 0;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12rpx 0;
+  border-bottom: 1rpx solid #f3f4f6;
+  font-size: 12px;
+  gap: 12rpx;
+}
+
+.info-item:nth-child(2n) {
+  padding-left: 12rpx;
+  padding-right: 0;
+}
+
+.info-item:nth-last-child(1),
+.info-item:nth-last-child(2) {
+  border-bottom: none;
+}
+
+.label {
+  color: #6b7280;
+  font-weight: 500;
+  min-width: 70rpx;
+  white-space: nowrap;
+}
+
+.value {
+  color: #1f2937;
+  text-align: center;
+  flex: 1;
+  word-break: break-word;
+  font-size: 12px;
+}
+
+/* 菜单区域 */
+.menu-section {
+  background-color: white;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 1rpx 3rpx rgba(0, 0, 0, 0.08);
+}
+
+.menu-grid {
+  margin-left: 66px;
+  margin-right:80px;
+  background-color: #ffffff !important;
+  /* display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12rpx; */
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 16rpx;
+  background-color: #f9fafb;
+  border-radius: 8rpx;
+  border: 1rpx solid #35b6f4;
+  transition: all 0.3s ease;
+  border-radius: 20px;
+  margin-left: 20px;
+}
+
+.menu-item:active {
+  background-color: #dbeafe;
+  border-color: #35b6f4;
+  transform: scale(0.95);
+}
+
+.menu-icon {
+  font-size: 32rpx;
+  margin-bottom: 8rpx;
+}
+
+.menu-label {
+  font-size: 11px;
+  color: #35b6f4;
+  text-align: center;
+  line-height: 1.4;
+  background-color: #ffffff !important;
+}
+
+/* 状态区域 */
+.status-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.status-card {
+  background-color: white;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  box-shadow: 0 1rpx 3rpx rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.status-label {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-bottom: 8rpx;
+}
+
+.status-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.status-value.active {
+  color: #10b981;
+}
+
+/* 照片区域 */
+.photo-subsection {
+  width:520px;
+  margin-bottom: 20rpx;
+}
+
+.photo-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 12rpx;
+  padding-bottom: 12rpx;
+  border-bottom: 1rpx solid #e5e7eb;
+}
+
+.photo-grid {
+  width:400px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12rpx;
+}
+
+.photo-item {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 8rpx;
+  overflow: hidden;
+  background-color: #f3f4f6;
+  border: 1rpx solid #e5e7eb;
+  transition: all 0.3s ease;
+}
+
+.photo-item:active {
+  transform: scale(0.95);
+  box-shadow: 0 2rpx 8rpx rgba(53, 182, 244, 0.2);
+}
+
+.photo-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.photo-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.photo-item:active .photo-overlay {
+  opacity: 1;
+}
+
+/* 页脚提示 */
+/* .footer-tip {
+  text-align: center;
+  padding: 16rpx 20rpx;
+  font-size: 12px;
+  color: #9ca3af;
+  background-color: #f9fafb;
+  border-radius: 8rpx;
+  border-left: 3rpx solid #35b6f4;
+  margin-top: 20rpx;
+} */
+.outlog-button{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    border:1px solid #f43535;
+    color: #f44235;
+    padding: 10px 71px !important;
+    /* margin-left:10px !important; */
+    /* width: 80px !important; */
+    font-size: 10px;
+}

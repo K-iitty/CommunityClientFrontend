@@ -1,0 +1,168 @@
+<view class="page">
+  <!-- 页面头部 -->
+  <view class="page-header">
+    <view class="title">{{isEdit ? '编辑车辆' : '新增车辆'}}</view>
+    <!-- <view class="subtitle">请填写车辆信息及上传相关照片</view> -->
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <view class="loading-spinner"></view>
+    <text>加载中...</text>
+  </view>
+
+  <!-- 表单容器 -->
+  <view wx:if="{{!loading}}" class="form-container" style="margin-bottom: 120rpx;">
+    
+    <!-- 基础信息部分 -->
+    <view class="form-section">
+      <view class="section-title">基础信息</view>
+
+      <!-- 业主ID -->
+      <view class="form-group" wx:if="{{!isEdit}}">
+        <label class="label"><text class="required">*</text>业主ID</label>
+        <input class="form-input {{errors.owner ? 'error' : ''}}" type="number" placeholder="请输入业主ID" value="{{ownerId}}" bindinput="onOwnerIdInput" />
+        <text class="error-msg" wx:if="{{errors.owner}}">{{errors.owner}}</text>
+      </view>
+
+      <view class="form-group" wx:if="{{isEdit}}">
+        <label class="label"><text class="required">*</text>业主ID</label>
+        <view class="form-input-readonly">{{ownerId}}</view>
+      </view>
+
+      <!-- 车牌号 -->
+      <view class="form-group">
+        <label class="label"><text class="required">*</text>车牌号</label>
+        <input class="form-input {{errors.plateNumber ? 'error' : ''}}" type="text" placeholder="如：云A12346" value="{{plateNumber}}" bindinput="onPlateNumberInput" maxlength="8" />
+        <text class="error-msg" wx:if="{{errors.plateNumber}}">{{errors.plateNumber}}</text>
+        <text class="hint-text">格式：中文(省份)+字母/数字(5-7位)，如：湘A12345、京AED1234</text>
+      </view>
+
+      <!-- 车辆类型 -->
+      <view class="form-group">
+        <label class="label">车辆类型</label>
+        <input class="form-input" type="text" placeholder="小型车、中型车等" value="{{vehicleType}}" bindinput="onVehicleTypeInput" />
+      </view>
+
+      <!-- 品牌 -->
+      <view class="form-group">
+        <label class="label">品牌</label>
+        <input class="form-input" type="text" placeholder="宝马、奔驰等" value="{{brand}}" bindinput="onBrandInput" />
+      </view>
+
+      <!-- 型号 -->
+      <view class="form-group">
+        <label class="label">型号</label>
+        <input class="form-input" type="text" placeholder="X5、E300等" value="{{model}}" bindinput="onModelInput" />
+      </view>
+
+      <!-- 颜色 -->
+      <view class="form-group">
+        <label class="label">颜色</label>
+        <input class="form-input" type="text" placeholder="黑色、白色等" value="{{color}}" bindinput="onColorInput" />
+      </view>
+
+      <!-- 状态 -->
+      <view class="form-group">
+        <label class="label">状态</label>
+        <picker class="form-input picker-container" bindchange="onStatusChange" value="{{statusOptions.indexOf(status)}}">
+          <view class="picker-value">{{status}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <!-- 证件信息部分 -->
+    <view class="form-section">
+      <view class="section-title">证件信息</view>
+
+      <view class="form-group">
+        <label class="label">行驶证号</label>
+        <input class="form-input" type="text" placeholder="行驶证号码" value="{{vehicleLicenseNo}}" bindinput="onVehicleLicenseNoInput" />
+      </view>
+
+      <view class="form-group">
+        <label class="label">发动机号</label>
+        <input class="form-input" type="text" placeholder="发动机号码" value="{{engineNo}}" bindinput="onEngineNoInput" />
+      </view>
+
+      <view class="form-group">
+        <label class="label">登记日期</label>
+        <picker class="form-input picker-container" mode="date" bindchange="onRegisterDateChange" value="{{registerDate}}">
+          <view class="picker-value">{{registerDate || '请选择日期'}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <!-- 停车位信息部分 -->
+    <view class="form-section">
+      <view class="section-title">停车位信息</view>
+      <view class="form-group">
+        <label class="label">固定车位ID</label>
+        <input class="form-input" type="number" placeholder="不填则无固定车位" value="{{fixedSpaceId}}" bindinput="onFixedSpaceIdInput" />
+      </view>
+    </view>
+
+    <!-- 其他信息部分 -->
+    <view class="form-section">
+      <view class="section-title">其他信息</view>
+      <view class="form-group">
+        <label class="label">备注</label>
+        <textarea class="form-textarea" placeholder="输入备注信息（可选）" value="{{remark}}" bindinput="onRemarkInput" maxlength="500" style="height: 120rpx;" />
+        <text class="hint-text">已输入 {{remark.length}}/500 字符</text>
+      </view>
+    </view>
+
+    <!-- 驾照照片 -->
+    <view class="form-section">
+      <view class="section-title">驾照照片（可选）</view>
+      <view class="form-group">
+        <!-- 已选择的驾照图片 -->
+        <view wx:if="{{driverLicenseImageFile}}" class="img-box" bindtap="previewDriverLicense">
+          <image class="img" src="{{driverLicenseImageFile}}" mode="aspectFill"></image>
+          <view class="image-delete" bindtap="deleteDriverLicenseImage" catchtap="">✕</view>
+        </view>
+
+        <!-- 上传按钮 -->
+        <view wx:if="{{!driverLicenseImageFile}}" class="image-upload" bindtap="chooseDriverLicenseImage">
+          <!-- <view class="upload-icon">📷</view> -->
+          <view class="upload-text">点击上传驾照照片</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 车辆图片 -->
+    <view class="form-section">
+      <view class="section-title">车辆图片（可选）</view>
+      <view class="form-group">
+        <!-- 已选择的车辆图片 -->
+        <view wx:if="{{vehicleImageFiles.length > 0}}" class="image-grid">
+          <view wx:for="{{vehicleImageFiles}}" wx:key="index" class="img-box" bindtap="previewVehicleImage" data-index="{{index}}">
+            <image class="img" src="{{item}}" mode="aspectFill"></image>
+            <view class="image-delete" data-index="{{index}}" bindtap="deleteVehicleImage" catchtap="">✕</view>
+          </view>
+        </view>
+
+        <!-- 上传按钮 -->
+        <view wx:if="{{vehicleImageFiles.length === 0}}" class="image-upload" bindtap="chooseVehicleImages">
+          <!-- <view class="upload-icon">🚗</view> -->
+          <view class="upload-text">点击上传车辆照片</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 提示信息 -->
+    <!-- <view class="form-tips">
+      <view class="tip-item">✓ 带 * 的为必填项</view>
+      <view class="tip-item">✓ 图片自动压缩后上传</view>
+      <view class="tip-item">✓ 点击图片可预览，点击✕删除</view>
+    </view> -->
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="button-area">
+    <button class="btn btn-primary" bindtap="submitForm" disabled="{{submitting || loading}}">
+      {{submitting ? '提交中...' : (isEdit ? '更新信息' : '新增车辆')}}
+    </button>
+    <button class="btn btn-secondary" bindtap="goBack" disabled="{{submitting || loading}}">返回</button>
+  </view>
+</view>

@@ -1,0 +1,114 @@
+<!-- pages/property/house/add-house/add-house.wxml -->
+
+<view class="page">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="title">新增房产</view>
+    <view class="subtitle">请填写完整的房产信息</view>
+  </view>
+
+  <!-- 表单区域 -->
+  <view class="form-container">
+    <!-- 房产号 -->
+    <view class="form-group">
+      <view class="label"><text class="required">*</text>房产号</view>
+      <input
+        class="form-input {{errors.propertyNumber ? 'error' : ''}}"
+        type="text"
+        placeholder="如：A101、B2-302等"
+        maxlength="20"
+        bindinput="onPropertyNumberInput"
+        value="{{propertyNumber}}"
+        placeholder-class="placeholder"
+      />
+      <view class="error-msg" wx:if="{{errors.propertyNumber}}">{{errors.propertyNumber}}</view>
+    </view>
+
+    <!-- 房产类型 -->
+    <view class="form-group">
+      <view class="label"><text class="required">*</text>房产类型</view>
+      <picker class="form-input" mode="selector" range="{{propertyTypes}}" bindchange="onPropertyTypeChange">
+        <view class="picker-value">{{propertyType || '请选择房产类型'}}</view>
+      </picker>
+      <view class="error-msg" wx:if="{{errors.propertyType}}">{{errors.propertyType}}</view>
+    </view>
+
+    <!-- 所在区域 -->
+    <view class="form-group">
+      <view class="label"><text class="required">*</text>所在区域</view>
+      <input
+        class="form-input {{errors.region ? 'error' : ''}}"
+        type="text"
+        placeholder="如：A区、B区等"
+        maxlength="50"
+        bindinput="onRegionInput"
+        value="{{region}}"
+        placeholder-class="placeholder"
+      />
+      <view class="error-msg" wx:if="{{errors.region}}">{{errors.region}}</view>
+    </view>
+
+    <!-- 楼层 -->
+    <view class="form-group">
+      <view class="label">楼层</view>
+      <input
+        class="form-input"
+        type="number"
+        placeholder="输入楼层号"
+        bindinput="onFloorInput"
+        value="{{floor}}"
+        placeholder-class="placeholder"
+      />
+    </view>
+
+    <!-- 面积 -->
+    <view class="form-group">
+      <view class="label">面积</view>
+      <view class="form-input-with-unit">
+        <input
+          class="form-input"
+          type="number"
+          placeholder="输入面积"
+          step="0.1"
+          bindinput="onAreaInput"
+          value="{{area}}"
+          placeholder-class="placeholder"
+        />
+        <view class="unit">m²</view>
+      </view>
+    </view>
+
+    <!-- 业主选择 -->
+    <view class="form-group">
+      <view class="label"><text class="required">*</text>业主</view>
+      <picker class="form-input" mode="selector" range="{{ownerList}}" range-key="realName" bindchange="onOwnerChange">
+        <view class="picker-value">{{ownerName || '请选择业主'}}</view>
+      </picker>
+      <view class="error-msg" wx:if="{{errors.ownerId}}">{{errors.ownerId}}</view>
+    </view>
+
+    <!-- 状态选择 -->
+    <view class="form-group">
+      <view class="label"><text class="required">*</text>状态</view>
+      <picker class="form-input" mode="selector" range="{{statusOptions}}" bindchange="onStatusChange">
+        <view class="picker-value">{{status !== '' ? statusOptions[status] : '请选择状态'}}</view>
+      </picker>
+      <view class="error-msg" wx:if="{{errors.status}}">{{errors.status}}</view>
+    </view>
+
+    <!-- 提示信息 -->
+    <view class="form-tips">
+      <view class="tip-item">✓ 标记 * 的字段为必填项</view>
+      <view class="tip-item">✓ 房产号需唯一，不能重复</view>
+      <view class="tip-item">✓ 提交后将添加到房产管理系统</view>
+    </view>
+  </view>
+
+  <!-- 按钮区域 -->
+  <view class="button-area">
+    <button class="btn btn-primary" bindtap="submitForm" disabled="{{submitting}}">
+      {{submitting ? '提交中...' : '提交'}}
+    </button>
+    <button class="btn btn-secondary" bindtap="goBack">返回</button>
+  </view>
+</view>

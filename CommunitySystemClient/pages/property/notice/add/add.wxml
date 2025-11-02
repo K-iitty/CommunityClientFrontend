@@ -1,0 +1,118 @@
+<!-- pages/property/notice/add/add.wxml -->
+<!-- 公告管理 - 新增公告页面 -->
+
+<view class="page">
+
+  <!-- 表单内容 -->
+  <view class="form-container">
+    <!-- 标题字段 -->
+    <view class="form-group">
+      <view class="form-label">
+        <text class="required">*</text>
+        <text>公告标题</text>
+      </view>
+      <input
+        class="form-input {{data.errors.noticeTitle ? 'error' : ''}}"
+        type="text"
+        placeholder="请输入公告标题，不超过30字"
+        value="{{noticeTitle}}"
+        bindinput="onTitleInput"
+        maxlength="30"
+      />
+      <view class="char-count">{{noticeTitle.length}}/30</view>
+      <view wx:if="{{errors.noticeTitle}}" class="error-text">{{errors.noticeTitle}}</view>
+    </view>
+
+    <!-- 分类字段 -->
+    <view class="form-group">
+      <view class="form-label">
+        <text class="required">*</text>
+        <text>公告分类</text>
+      </view>
+      <picker
+        class="form-picker"
+        range="{{categories}}"
+        range-key="name"
+        value="{{categoryIndex}}"
+        bindchange="onCategoryChange"
+      >
+        <view class="picker-value">
+          {{categories[categoryIndex].name}}
+        </view>
+      </picker>
+      <view wx:if="{{errors.category}}" class="error-text">{{errors.category}}</view>
+    </view>
+
+    <!-- 内容字段 -->
+    <view class="form-group">
+      <view class="form-label">
+        <text class="required">*</text>
+        <text>公告内容</text>
+      </view>
+      <textarea
+        class="form-textarea {{errors.noticeContent ? 'error' : ''}}"
+        placeholder="请输入公告内容，不超过500字"
+        value="{{noticeContent}}"
+        bindinput="onContentInput"
+        maxlength="500"
+        auto-height
+      />
+      <view class="char-count">{{noticeContent.length}}/500</view>
+      <view wx:if="{{errors.noticeContent}}" class="error-text">{{errors.noticeContent}}</view>
+    </view>
+
+    <!-- 备注字段 -->
+    <view class="form-group">
+      <view class="form-label">备注（可选）</view>
+      <textarea
+        class="form-textarea"
+        placeholder="添加备注信息"
+        value="{{remarks}}"
+        bindinput="onRemarksInput"
+        maxlength="500"
+        auto-height
+      />
+      <view class="char-count">{{remarks.length}}/500</view>
+    </view>
+
+    <!-- 图片上传 -->
+    <view class="form-group">
+      <view class="form-label">
+        <text>图片附件</text>
+        <!-- <text class="optional">（最多3张）</text> -->
+      </view>
+      
+      <!-- 已上传的图片 -->
+      <view class="images-container">
+        <block wx:for="{{images}}" wx:key="index">
+          <view class="image-item">
+            <image
+              class="image-preview"
+              src="{{item.tempFilePath}}"
+              mode="aspectFill"
+            />
+            <view class="image-delete" data-index="{{index}}" bindtap="deleteImage">
+              ✕
+            </view>
+          </view>
+        </block>
+
+        <!-- 上传按钮 -->
+        <view wx:if="{{images.length < maxImages}}" class="image-upload" bindtap="selectImages">
+          <view class="upload-icon">➕</view>
+          <view class="upload-text">上传图片</view>
+        </view>
+      </view>
+
+      <!-- <view class="image-tip">提示: 支持JPG、PNG等格式，单张不超过5MB</view> -->
+    </view>
+
+    <!-- 提交按钮 -->
+    <view class="button-container">
+      <button class="btn-submit" bindtap="submitForm" disabled="{{submitting}}">
+        {{submitting ? '发布中...' : '发布公告'}}
+      </button>
+      <button class="btn-cancel" bindtap="goBack" disabled="{{submitting}}">取消</button>
+    </view>
+  </view>
+</view>

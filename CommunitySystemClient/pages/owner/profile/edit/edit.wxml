@@ -1,0 +1,301 @@
+<!--pages/owner/profile/edit/edit.wxml-->
+<view class="container">
+  <!-- 加载状态 -->
+  <view class="loading-state" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 编辑表单 -->
+  <scroll-view class="edit-form" scroll-y="true" wx:if="{{!loading}}">
+    <!-- 证件照部分 -->
+    <view class="form-section">
+      <view class="section-title">证件照</view>
+      <view class="avatar-container">
+        <view class="avatar-preview" wx:if="{{avatar}}">
+          <image src="{{avatar}}" mode="aspectFill" />
+          <view class="avatar-actions" wx:if="{{editMode}}">
+            <button class="action-btn" bindtap="deleteAvatar">删除</button>
+          </view>
+        </view>
+        <view class="avatar-placeholder" wx:elif="{{editMode}}" bindtap="uploadAvatar">
+          <text class="placeholder-icon">+</text>
+          <text class="placeholder-text">点击上传证件照</text>
+        </view>
+        <button class="upload-btn" wx:if="{{editMode && !avatar}}" bindtap="uploadAvatar">上传证件照</button>
+      </view>
+    </view>
+
+    <!-- 基本信息 -->
+    <view class="form-section">
+      <view class="section-title">基本信息</view>
+      
+      <view class="form-group">
+        <label class="form-label">姓名 *</label>
+        <input 
+          class="form-input"
+          type="text"
+          placeholder="请输入姓名"
+          value="{{formData.name}}"
+          data-field="name"
+          bindinput="onInputChange"
+          disabled="{{!editMode}}"
+        />
+      </view>
+
+      <view class="form-group">
+        <label class="form-label">手机号 *</label>
+        <input 
+          class="form-input"
+          type="text"
+          placeholder="请输入手机号"
+          value="{{formData.phone}}"
+          data-field="phone"
+          bindinput="onInputChange"
+          disabled="true"
+        />
+      </view>
+
+      <view class="form-group">
+        <label class="form-label">身份证号 *</label>
+        <input 
+          class="form-input"
+          type="text"
+          placeholder="请输入身份证号"
+          value="{{formData.idCard}}"
+          data-field="idCard"
+          bindinput="onInputChange"
+          disabled="true"
+        />
+      </view>
+
+      <view class="form-group">
+        <label class="form-label">性别</label>
+        <radio-group class="radio-group" bindchange="onGenderChange" wx:if="{{editMode}}">
+          <label class="radio-item">
+            <radio value="男" checked="{{formData.gender === '男'}}" />男
+          </label>
+          <label class="radio-item">
+            <radio value="女" checked="{{formData.gender === '女'}}" />女
+          </label>
+          <label class="radio-item">
+            <radio value="未知" checked="{{formData.gender === '未知'}}" />未知
+          </label>
+        </radio-group>
+        <view class="form-input-preview" wx:else>{{formData.gender}}</view>
+      </view>
+
+      <view class="form-group">
+        <label class="form-label">出生日期</label>
+        <picker 
+          class="form-picker"
+          mode="date"
+          value="{{formData.birthDate}}"
+          data-field="birthDate"
+          bindchange="onDateChange"
+          wx:if="{{editMode}}"
+        >
+          <view class="form-input">{{formData.birthDate || '请选择'}}</view>
+        </picker>
+        <view class="form-input-preview" wx:else>{{formData.birthDate || '-'}}</view>
+      </view>
+    </view>
+
+    <!-- 政治身份信息 -->
+    <view class="form-section">
+      <view class="section-title">政治身份</view>
+      
+      <view class="form-group">
+        <label class="form-label">政治面貌</label>
+        <input 
+          class="form-input"
+          type="text"
+          placeholder="如：中共党员"
+          value="{{formData.politicalStatus}}"
+          data-field="politicalStatus"
+          bindinput="onInputChange"
+          disabled="{{!editMode}}"
+        />
+      </view>
+
+      <view class="form-group">
+        <label class="form-label">婚姻状况</label>
+        <input 
+          class="form-input"
+          type="text"
+          placeholder="如：已婚"
+          value="{{formData.maritalStatus}}"
+          data-field="maritalStatus"
+          bindinput="onInputChange"
+          disabled="{{!editMode}}"
+        />
+      </view>
+
+      <view class="form-group">
+        <label class="form-label">民族</label>
+        <input 
+          class="form-input"
+          type="text"
+          placeholder="如：汉族"
+          value="{{formData.nationality}}"
+          data-field="nationality"
+          bindinput="onInputChange"
+          disabled="{{!editMode}}"
+        />
+      </view>
+    </view>
+
+    <!-- 户口信息 -->
+    <view class="form-section">
+      <view class="section-title">户口信息</view>
+      
+      <view class="form-group">
+        <label class="form-label">户口类型</label>
+        <input 
+          class="form-input"
+          type="text"
+          placeholder="如：城镇户口"
+          value="{{formData.householdType}}"
+          data-field="householdType"
+          bindinput="onInputChange"
+          disabled="{{!editMode}}"
+        />
+      </view>
+
+      <view class="form-group">
+        <label class="form-label">户籍所在地</label>
+        <input 
+          class="form-input"
+          type="text"
+          placeholder="请输入户籍所在地"
+          value="{{formData.censusRegister}}"
+          data-field="censusRegister"
+          bindinput="onInputChange"
+          disabled="{{!editMode}}"
+        />
+      </view>
+    </view>
+
+    <!-- 居住信息 -->
+    <view class="form-section">
+      <view class="section-title">居住信息</view>
+      
+      <view class="form-group">
+        <label class="form-label">居住类型</label>
+        <input 
+          class="form-input"
+          type="text"
+          placeholder="如：自住"
+          value="{{formData.residenceType}}"
+          data-field="residenceType"
+          bindinput="onInputChange"
+          disabled="{{!editMode}}"
+        />
+      </view>
+
+      <view class="form-group">
+        <label class="form-label">现住地址</label>
+        <input 
+          class="form-input"
+          type="text"
+          placeholder="请输入现住地址"
+          value="{{formData.currentAddress}}"
+          data-field="currentAddress"
+          bindinput="onInputChange"
+          disabled="{{!editMode}}"
+        />
+      </view>
+
+      <view class="form-group">
+        <label class="form-label">入住日期</label>
+        <picker 
+          class="form-picker"
+          mode="date"
+          value="{{formData.moveInDate}}"
+          data-field="moveInDate"
+          bindchange="onDateChange"
+          wx:if="{{editMode}}"
+        >
+          <view class="form-input">{{formData.moveInDate || '请选择'}}</view>
+        </picker>
+        <view class="form-input-preview" wx:else>{{formData.moveInDate || '-'}}</view>
+      </view>
+    </view>
+
+    <!-- 紧急联系人 -->
+    <view class="form-section">
+      <view class="section-title">紧急联系人</view>
+      
+      <view class="form-group">
+        <label class="form-label">联系人姓名</label>
+        <input 
+          class="form-input"
+          type="text"
+          placeholder="请输入紧急联系人姓名"
+          value="{{formData.emergencyContactName}}"
+          data-field="emergencyContactName"
+          bindinput="onInputChange"
+          disabled="{{!editMode}}"
+        />
+      </view>
+
+      <view class="form-group">
+        <label class="form-label">关系</label>
+        <input 
+          class="form-input"
+          type="text"
+          placeholder="如：配偶"
+          value="{{formData.emergencyContactRelation}}"
+          data-field="emergencyContactRelation"
+          bindinput="onInputChange"
+          disabled="{{!editMode}}"
+        />
+      </view>
+
+      <view class="form-group">
+        <label class="form-label">联系电话</label>
+        <input 
+          class="form-input"
+          type="text"
+          placeholder="请输入联系电话"
+          value="{{formData.emergencyContactPhone}}"
+          data-field="emergencyContactPhone"
+          bindinput="onInputChange"
+          disabled="{{!editMode}}"
+        />
+      </view>
+    </view>
+
+    <!-- 身份证照片 -->
+    <view class="form-section">
+      <view class="section-title">身份证照片 (最多2张)</view>
+      <view class="id-card-photos">
+        <view class="photo-item" wx:for="{{idCardPhotos}}" wx:key="index">
+          <image src="{{item}}" mode="aspectFill" />
+          <view class="photo-delete" bindtap="deleteIdCardPhoto" data-index="{{index}}" wx:if="{{editMode}}">
+            <text>删除</text>
+          </view>
+        </view>
+        <button class="upload-photo-btn" wx:if="{{editMode && idCardPhotos.length < 2}}" bindtap="uploadIdCardPhoto">
+          <text class="btn-icon">+</text>
+          <text>上传照片</text>
+        </button>
+      </view>
+    </view>
+
+    <!-- 底部按钮 -->
+    <view class="form-footer">
+      <!-- 预览模式：显示修改按钮 -->
+      <button class="edit-btn" bindtap="enterEditMode" wx:if="{{!editMode}}">
+        修改信息
+      </button>
+      
+      <!-- 编辑模式：显示保存和取消按钮 -->
+      <button class="save-btn" bindtap="saveProfile" disabled="{{saving}}" wx:if="{{editMode}}">
+        {{saving ? '保存中...' : '保存修改'}}
+      </button>
+      <button class="cancel-btn" bindtap="cancelEdit" wx:if="{{editMode}}">
+        取消
+      </button>
+    </view>
+  </scroll-view>
+</view>

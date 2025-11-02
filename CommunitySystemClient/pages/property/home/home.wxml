@@ -1,0 +1,142 @@
+<view class="page">
+  <!-- 头部欢迎区 -->
+  <view class="header">
+    <view class="header-top">
+      <view class="welcome-info">
+        <text class="username">{{userInfo.name || '物业管理员'}}</text>
+      </view>
+      <view class="header-avatar" bindtap="onAvatarTap">
+        <view class="avatar-content">
+          <text class="avatar-name-1">个人信息</text>
+        </view>
+      </view>
+    </view>
+    <view class="header-info">
+      <text class="info-label"> {{userInfo.position || '-'}}</text>
+    </view>
+  </view>
+
+  <!-- 问题统计卡片 -->
+<view class="section-title section-title-problem">反馈处理</view> 
+  <view class="statistics-section">
+    <navigator url="/pages/property/feedback/list/list?status=待处理" class="stat-card pending">
+
+      <view class="stat-number stat-number-color-1">{{issueStatistics.pendingIssues}}</view>
+      <view class="stat-label">待处理</view>
+    </navigator>
+    <navigator url="/pages/property/feedback/list/list?status=处理中" class="stat-card processing">
+
+      <view class="stat-number stat-number-color-2">{{issueStatistics.processingIssues}}</view>
+      <view class="stat-label">处理中</view>
+    </navigator>
+    <navigator url="/pages/property/feedback/list/list?status=已完成" class="stat-card completed">
+      
+      <view class="stat-number stat-number-color-3">{{issueStatistics.completedIssues}}</view>
+      <view class="stat-label">已完成</view>
+    </navigator>
+    <navigator url="/pages/property/feedback/list/list" class="stat-card total">
+     
+      <view class="stat-number stat-number-color-4">{{issueStatistics.totalIssues}}</view>
+      <view class="stat-label">总计</view>
+    </navigator>
+  </view>
+
+  <!-- 快速操作 -->
+  <view class="quick-actions-section">
+    <view class="section-title">快速操作</view>
+    <view class="quick-actions">
+      <block wx:for="{{quickActions}}" wx:key="text">
+        <view 
+          class="action-item icon-{{item.icon}}"
+          bindtap="navigateToAction"
+          data-url="{{item.url}}"
+        >
+          <view class="action-icon-box">
+            <image 
+              class="action-icon-img"
+              src="/img/home-pro/{{item.iconImage}}"
+              mode="aspectFit"
+            />
+          </view>
+          <view class="action-text">{{item.text}}</view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 最近反馈 -->
+  <!-- <view class="recent-section">
+    <view class="section-header">
+      <text class="section-title">最近反馈</text>
+      <navigator url="/pages/property/feedback/list/list" class="view-all">查看全部 ></navigator>
+    </view>
+
+    <block wx:if="{{recentIssues.length > 0}}">
+      <view class="issue-list">
+        <block wx:for="{{recentIssues}}" wx:key="id">
+          <view 
+            class="issue-item"
+            bindtap="viewIssueDetail"
+            data-issue-id="{{item.id}}"
+          >
+            <view class="issue-header">
+              <text class="issue-title">{{item.title}}</text>
+              <view class="issue-status {{item.status}}">{{item.status}}</view>
+            </view>
+            <view class="issue-info">
+              <text class="info-text">业主: {{item.ownerName}}</text>
+              <text class="info-text">房号: {{item.houseNo}}</text>
+              <view class="issue-tags">
+                <text class="issue-type-tag">{{item.issueType || '未分类'}}</text>
+                <text class="issue-urgency-tag urgency-{{item.urgencyLevel || 'medium'}}">{{item.urgencyLevel || '一般'}}</text>
+              </view>
+            </view>
+            <view class="issue-footer">
+              <text class="issue-time">{{item.createdAt}}</text>
+            </view>
+          </view>
+        </block>
+      </view>
+    </block>
+
+    <block wx:if="{{empty && !loading}}">
+      <view class="empty-state">
+        <text>暂无反馈</text>
+      </view>
+    </block>
+  </view> -->
+
+  <!-- 最新公告 -->
+  <view class="notices-section">
+    <view class="section-header">
+      <text class="section-title">最新公告</text>
+      <view class="view-all" bindtap="viewMoreNotices">查看全部 ></view>
+    </view>
+
+    <block wx:if="{{notices.length > 0}}">
+      <view class="notice-list">
+        <block wx:for="{{notices}}" wx:key="id">
+          <view class="notice-item">
+            <view class="notice-header">
+              <view class="notice-type">{{item.noticeType}}</view>
+              <text class="notice-time">{{item.publishTime}}</text>
+            </view>
+            <text class="notice-title">{{item.title}}</text>
+            <text class="notice-content" wx:if="{{item.content}}">{{item.content}}</text>
+          </view>
+        </block>
+      </view>
+    </block>
+
+    <block wx:if="{{notices.length === 0 && !loading}}">
+      <view class="empty-state">
+        <text>暂无公告</text>
+      </view>
+    </block>
+  </view>
+
+  <!-- 底部操作 -->
+  <!-- <view class="footer-actions">
+    <button class="btn btn-logout" bindtap="logout">退出登录</button>
+  </view> -->
+</view>

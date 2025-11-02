@@ -1,0 +1,173 @@
+<!--pages/property/house/edit-house/edit-house.wxml-->
+<view class="page">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">
+    <view class="loading-spinner"></view>
+    <view class="loading-text">加载中...</view>
+  </view>
+
+  <!-- 表单内容 -->
+  <view wx:if="{{!loading && house}}" class="content">
+    <!-- 基本信息卡片 -->
+    <view class="card">
+      <view class="section-title">基本信息</view>
+      <view class="card-content">
+        <view class="form-row">
+          <view class="form-group form-group-half">
+            <view class="form-label">房间号 <text class="required">*</text></view>
+            <input class="form-input" type="text" value="{{formData.roomNo}}" data-field="roomNo" bindinput="onInputChange" placeholder="如：1501" />
+          </view>
+          <view class="form-group form-group-half">
+            <view class="form-label">房屋编码</view>
+            <input class="form-input" type="text" value="{{formData.houseCode}}" data-field="houseCode" bindinput="onInputChange" placeholder="系统自动生成" disabled />
+          </view>
+        </view>
+
+        <view class="form-group">
+          <view class="form-label">完整房间号</view>
+          <input class="form-input" type="text" value="{{formData.fullRoomNo}}" data-field="fullRoomNo" bindinput="onInputChange" placeholder="如：C3-1-1501" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 面积信息卡片 -->
+    <view class="card">
+      <view class="section-title">面积信息</view>
+      <view class="card-content">
+        <view class="form-row">
+          <view class="form-group form-group-half">
+            <view class="form-label">建筑面积(㎡) <text class="required">*</text></view>
+            <input class="form-input" type="number" value="{{formData.buildingArea}}" data-field="buildingArea" bindinput="onInputChange" placeholder="建筑面积" />
+          </view>
+          <view class="form-group form-group-half">
+            <view class="form-label">使用面积(㎡)</view>
+            <input class="form-input" type="number" value="{{formData.usableArea}}" data-field="usableArea" bindinput="onInputChange" placeholder="使用面积" />
+          </view>
+        </view>
+
+        <view class="form-group">
+          <view class="form-label">公摊面积(㎡)</view>
+          <input class="form-input" type="number" value="{{formData.sharedArea}}" data-field="sharedArea" bindinput="onInputChange" placeholder="公摊面积" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 房屋属性卡片 -->
+    <view class="card">
+      <view class="section-title">房屋属性</view>
+      <view class="card-content">
+        <view class="form-row">
+          <view class="form-group form-group-half">
+            <view class="form-label">房屋类型 <text class="required">*</text></view>
+            <picker class="form-input" mode="selector" range="{{houseTypes}}" data-field="houseType" data-options="{{houseTypes}}" bindchange="onPickerChange">
+              <view>{{formData.houseType || '选择类型'}}</view>
+            </picker>
+          </view>
+          <view class="form-group form-group-half">
+            <view class="form-label">楼层</view>
+            <input class="form-input" type="number" value="{{formData.floorLevel}}" data-field="floorLevel" bindinput="onInputChange" placeholder="楼层号" />
+          </view>
+        </view>
+
+        <view class="form-row">
+          <view class="form-group form-group-half">
+            <view class="form-label">房屋户型</view>
+            <input class="form-input" type="text" value="{{formData.houseLayout}}" data-field="houseLayout" bindinput="onInputChange" placeholder="如：四室一厅" />
+          </view>
+          <view class="form-group form-group-half">
+            <view class="form-label">房屋朝向</view>
+            <input class="form-input" type="text" value="{{formData.houseOrientation}}" data-field="houseOrientation" bindinput="onInputChange" placeholder="如：坐南朝西" />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 房屋状态卡片 -->
+    <view class="card">
+      <view class="section-title">房屋状态</view>
+      <view class="card-content">
+        <view class="form-row">
+          <view class="form-group form-group-half">
+            <view class="form-label">房屋状态 <text class="required">*</text></view>
+            <picker class="form-input" mode="selector" range="{{houseStatuses}}" data-field="houseStatus" data-options="{{houseStatuses}}" bindchange="onPickerChange">
+              <view>{{formData.houseStatus || '选择状态'}}</view>
+            </picker>
+          </view>
+          <view class="form-group form-group-half">
+            <view class="form-label">装修状态</view>
+            <picker class="form-input" mode="selector" range="{{decorationStatuses}}" data-field="decorationStatus" data-options="{{decorationStatuses}}" bindchange="onPickerChange">
+              <view>{{formData.decorationStatus || '选择状态'}}</view>
+            </picker>
+          </view>
+        </view>
+
+        <view class="form-row">
+          <view class="form-group form-group-half">
+            <view class="form-label">是否有阳台</view>
+            <picker class="form-input" mode="selector" range="{{yesNoOptions}}" data-field="hasBalcony" data-options="{{yesNoOptions}}" bindchange="onPickerChange">
+              <view>{{formData.hasBalcony === 1 ? '是' : '否'}}</view>
+            </picker>
+          </view>
+          <view class="form-group form-group-half">
+            <view class="form-label">是否有花园</view>
+            <picker class="form-input" mode="selector" range="{{yesNoOptions}}" data-field="hasGarden" data-options="{{yesNoOptions}}" bindchange="onPickerChange">
+              <view>{{formData.hasGarden === 1 ? '是' : '否'}}</view>
+            </picker>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 停车信息卡片 -->
+    <view class="card">
+      <view class="section-title">停车信息</view>
+      <view class="card-content">
+        <view class="form-row">
+          <view class="form-group form-group-half">
+            <view class="form-label">车位号</view>
+            <input class="form-input" type="text" value="{{formData.parkingSpaceNo}}" data-field="parkingSpaceNo" bindinput="onInputChange" placeholder="如：B1-001" />
+          </view>
+          <view class="form-group form-group-half">
+            <view class="form-label">车位类型</view>
+            <input class="form-input" type="text" value="{{formData.parkingType}}" data-field="parkingType" bindinput="onInputChange" placeholder="如：地下车位" />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 户型图卡片 -->
+    <view class="card">
+      <view class="section-title">户型图</view>
+      <view class="card-content">
+        <!-- 显示户型图（原有或新增） -->
+        <view wx:if="{{(house.floorPlanImage && !floorPlanToDelete) || floorPlanImage}}" class="images-section">
+          <view class="images-container">
+            <view class="image-item">
+              <image class="image-preview" src="{{floorPlanImage || house.floorPlanImage}}" mode="aspectFill" bindtap="previewFloorPlan" />
+              <view class="image-delete" bindtap="deleteFloorPlan">✕</view>
+            </view>
+          </view>
+        </view>
+        <!-- 上传按钮（仅当没有户型图时显示） -->
+        <view wx:if="{{!floorPlanImage && (!house.floorPlanImage || floorPlanToDelete)}}" class="image-upload" bindtap="chooseFloorPlan">
+          <view class="upload-icon">➕</view>
+          <view class="upload-text">添加户型图</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 备注卡片 -->
+    <view class="card">
+      <view class="section-title">备注</view>
+      <view class="card-content">
+        <textarea class="form-textarea" value="{{formData.remark}}" data-field="remark" bindinput="onInputChange" placeholder="输入备注信息（可选）" />
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="actions">
+      <button class="action-btn save-btn" bindtap="submitEdit" disabled="{{submitting}}">{{submitting ? '保存中...' : '保存'}}</button>
+      <button class="action-btn cancel-btn" bindtap="cancelEdit" disabled="{{submitting}}">取消</button>
+    </view>
+  </view>
+</view>

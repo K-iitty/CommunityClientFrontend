@@ -1,0 +1,112 @@
+<!-- pages/property/house/house-list/house-list.wxml -->
+
+<view class="page">
+  <!-- 搜索栏 -->
+  <view class="search-container">
+    <view class="search-bar">
+      <input 
+        class="search-input" 
+        type="text" 
+        placeholder="输入房产号搜索"
+        bindinput="onSearchInput"
+        value="{{searchKeyword}}"
+      />
+      <button class="search-btn" bindtap="handleSearch">搜索</button>
+    </view>
+  </view>
+
+  <!-- 状态筛选 -->
+  <view class="status-filter-container">
+    <view class="filter-bar">
+      <view class="filter-tag" bindtap="setStatusFilter" data-status="">
+        <view class="tag-text {{statusFilter === '' ? 'active' : ''}}">全部状态</view>
+      </view>
+      <view class="filter-tag" bindtap="setStatusFilter" data-status="空置">
+        <view class="tag-text {{statusFilter === '空置' ? 'active' : ''}}">空置</view>
+      </view>
+      <view class="filter-tag" bindtap="setStatusFilter" data-status="已售">
+        <view class="tag-text {{statusFilter === '已售' ? 'active' : ''}}">已售</view>
+      </view>
+      <view class="filter-tag" bindtap="setStatusFilter" data-status="已租">
+        <view class="tag-text {{statusFilter === '已租' ? 'active' : ''}}">已租</view>
+      </view>
+      <view class="filter-tag" bindtap="setStatusFilter" data-status="维修">
+        <view class="tag-text {{statusFilter === '维修' ? 'active' : ''}}">维修</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主内容区 -->
+  <view class="content">
+    <!-- 加载状态 -->
+    <view class="loading" wx:if="{{loading && page === 1}}">
+      <view class="loading-spinner"></view>
+      <view class="loading-text">加载中...</view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{empty && !loading}}">
+      <view class="empty-icon">🏠</view>
+      <view class="empty-text">暂无房产数据</view>
+    </view>
+
+    <!-- 房产列表 -->
+    <view class="house-list" wx:if="{{!loading && !empty}}">
+      <view class="house-item" wx:for="{{houses}}" wx:key="id">
+        <!-- 可点击的卡片区域 -->
+        <view class="house-card" bindtap="viewDetails" data-id="{{item.id}}">
+          <!-- 卡片头部 -->
+          <view class="card-header">
+            <view class="property-number">{{item.roomNo || item.propertyNumber}}</view>
+            <view class="property-status {{item.houseStatus === '已售' ? 'sold' : item.houseStatus === '已租' ? 'rented' : item.houseStatus === '维修' ? 'maintenance' : 'empty'}}" wx:if="{{item.houseStatus}}">
+              {{item.houseStatus}}
+            </view>
+          </view>
+
+          <!-- 卡片内容 -->
+          <view class="card-content">
+            <view class="info-item">
+              <view class="label">房屋类型</view>
+              <view class="value">{{item.houseType || item.propertyType || '-'}}</view>
+            </view>
+            <view class="info-item">
+              <view class="label">户型</view>
+              <view class="value">{{item.houseLayout || '-'}}</view>
+            </view>
+            <view class="info-item">
+              <view class="label">业主</view>
+              <view class="value">{{item.ownerName || '未关联'}}</view>
+            </view>
+            <view class="info-item">
+              <view class="label">建筑面积</view>
+              <view class="value">{{item.buildingArea || item.area || '-'}} m²</view>
+            </view>
+            <view class="info-item">
+              <view class="label">可用面积</view>
+              <view class="value">{{item.usableArea || '-'}} m²</view>
+            </view>
+            <!-- <view class="info-item">
+              <view class="label">朝向</view>
+              <view class="value">{{item.houseOrientation || '-'}}</view>
+            </view>
+            <view class="info-item">
+              <view class="label">楼层</view>
+              <view class="value">{{item.floorLevel || item.floor || '-'}}</view>
+            </view> -->
+          </view>
+        </view>
+
+        <!-- 操作按钮 - 单独放在卡片外 -->
+        <view class="card-actions">
+          <button class="action-btn edit-btn" bindtap="editHouse" data-id="{{item.id}}" hover-class="btn-hover">修改</button>
+          <button class="action-btn delete-btn" bindtap="deleteHouse" data-id="{{item.id}}" hover-class="btn-hover">删除</button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 加载完成提示 -->
+    <view class="load-complete" wx:if="{{!hasMore && houses.length > 0 && !loading}}">
+      已加载全部
+    </view>
+  </view>
+</view>

@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "物业管理",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#fafafa",
+  "backgroundTextStyle": "dark",
+  "navigationBarBackgroundColor": "#35b6f4",
+  "navigationBarTextStyle": "white"
+}

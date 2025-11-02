@@ -1,0 +1,183 @@
+<!-- pages/property/vehicle/vehicle-list/vehicle-list.wxml -->
+
+<view class="page">
+ <!-- 模式切换条 -->
+ <view class="mode-bar">
+      <view class="mode-btn {{mode === 'vehicle' ? 'active' : ''}}" bindtap="switchMode" data-mode="vehicle">
+        车辆
+      </view>
+      <view class="mode-divider"></view>
+      <view class="mode-btn {{mode === 'parking' ? 'active' : ''}}" bindtap="switchMode" data-mode="parking">
+        停车位
+      </view>
+    </view>
+
+  <!-- 车辆模式 - 搜索栏 -->
+  <view class="search-container" wx:if="{{mode === 'vehicle'}}">
+    <view class="search-bar">
+      <input 
+        class="search-input" 
+        type="text" 
+        placeholder="搜索车牌号"
+        bindinput="onSearchInput"
+        value="{{searchKeyword}}"
+      />
+      <button class="search-btn" bindtap="handleSearch">搜索</button>
+    </view>
+  </view>
+
+  <!-- 停车位模式 - 筛选栏 -->
+  <view class="filter-container" wx:if="{{mode === 'parking'}}">
+    <view class="filter-bar">
+      <view class="filter-tag {{statusFilter === '' ? 'active' : ''}}" bindtap="setStatusFilter" data-status="">
+        <view class="tag-text">全部</view>
+      </view>
+      <view class="filter-tag {{statusFilter === '空闲' ? 'active' : ''}}" bindtap="setStatusFilter" data-status="空闲">
+        <view class="tag-text">空闲</view>
+      </view>
+      <view class="filter-tag {{statusFilter === '已租' ? 'active' : ''}}" bindtap="setStatusFilter" data-status="已租">
+        <view class="tag-text">已租</view>
+      </view>
+      <view class="filter-tag {{statusFilter === '占用' ? 'active' : ''}}" bindtap="setStatusFilter" data-status="占用">
+        <view class="tag-text">占用</view>
+      </view>
+      <view class="filter-tag {{statusFilter === '维修' ? 'active' : ''}}" bindtap="setStatusFilter" data-status="维修">
+        <view class="tag-text">维修</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主内容区 -->
+  <view class="content">
+
+    <!-- 车辆模式 -->
+    <view wx:if="{{mode === 'vehicle'}}">
+      <!-- 加载状态 -->
+      <view class="loading" wx:if="{{loading && page === 1}}">
+        <view class="loading-spinner"></view>
+        <view class="loading-text">加载中...</view>
+      </view>
+
+      <!-- 空状态 -->
+      <view class="empty-state" wx:if="{{empty && !loading}}">
+        <view class="empty-icon">📋</view>
+        <view class="empty-text">暂无车辆数据</view>
+        <button class="add-btn-primary" bindtap="goToAdd">新增车辆</button>
+      </view>
+
+      <!-- 车辆列表 -->
+      <view class="vehicle-list" wx:if="{{!loading && !empty}}">
+        <view class="vehicle-card" wx:for="{{vehicles}}" wx:key="id">
+          <!-- 卡片头部 - 车牌和类型 -->
+          <view class="card-header">
+            <view class="plate-badge">{{item.plateNumber || item.licensePlate}}</view>
+            <view class="vehicle-type-badge">{{item.vehicleType}}</view>
+          </view>
+
+          <!-- 卡片内容 -->
+          <view class="card-content">
+            <!-- 第一行：品牌型号 -->
+            <view class="info-row">
+              <view class="info-group">
+                <view class="label">品牌型号</view>
+                <view class="alue">{{item.brand || '-'}} {{item.model || '-'}}</view>
+              </view>
+              <view class="info-group">
+                <view class="label">车色</view>
+                <view class="value">{{item.color || '未填写'}}</view>
+              </view>
+            </view>
+          </view>
+
+          <!-- 操作按钮 -->
+          <view class="card-actions">
+            <button class="action-btn view-btn" bindtap="viewDetails" data-id="{{item.id}}">详情</button>
+            <button class="action-btn delete-btn" bindtap="deleteVehicle" data-id="{{item.id}}">删除</button>
+          </view>
+        </view>
+      </view>
+
+      <!-- 加载完成提示 -->
+      <view class="load-complete" wx:if="{{!hasMore && vehicles.length > 0 && !loading}}">
+        已加载全部 (共{{total}}条)
+      </view>
+    </view>
+
+    <!-- 停车位模式 -->
+    <view wx:if="{{mode === 'parking'}}">
+
+      <!-- 加载状态 -->
+      <view class="loading" wx:if="{{loadingParking && pageParking === 1}}">
+        <view class="loading-spinner"></view>
+        <view class="loading-text">加载中...</view>
+      </view>
+
+      <!-- 空状态 -->
+      <view class="empty-state" wx:if="{{emptyParking && !loadingParking}}">
+        <view class="empty-icon">🅿️</view>
+        <view class="empty-text">暂无车位数据</view>
+      </view>
+
+      <!-- 车位列表 -->
+      <view class="parking-list" wx:if="{{!loadingParking && !emptyParking}}">
+        <view class="parking-card" wx:for="{{parkingSpaces}}" wx:key="id">
+          <!-- 卡片头部 - 车位号和状态 -->
+          <view class="card-header">
+            <view class="space-info">
+              <view class="space-number">{{item.spaceNumber}}</view>
+              <view class="space-lot-info">停车场 #{{item.parkingLotId}}</view>
+            </view>
+            <view class="space-status-badge {{item.status === '空闲' ? 'status-vacant' : item.status === '已租' ? 'status-rented' : item.status === '占用' ? 'status-occupied' : item.status === '维修' ? 'status-maintenance' : 'status-vacant'}}">{{item.status || '空闲'}}</view>
+          </view>
+
+          <!-- 卡片内容 -->
+          <view class="card-content">
+            <!-- 第一行：完整号和类型 -->
+            <view class="info-row">
+              <view class="info-group">
+                <view class="label">完整号</view>
+                <view class="value">{{item.fullSpaceNo || item.spaceNumber}}</view>
+              </view>
+              <view class="info-group">
+                <view class="label">类型</view>
+                <view class="value">{{item.spaceType || '固定'}}</view>
+              </view>
+            </view>
+
+            <!-- 第二行：面积和月租费 -->
+            <view class="info-row">
+              <view class="info-group">
+                <view class="label">面积</view>
+                <view class="value">{{item.spaceArea || '-'}} ㎡</view>
+              </view>
+              <view class="info-group">
+                <view class="label">月租费</view>
+                <view class="value price">¥{{item.monthlyFee || '0'}}</view>
+              </view>
+            </view>
+
+            <!-- 第三行：备注 -->
+            <view class="info-row" wx:if="{{item.remark}}">
+              <view class="info-group full-width">
+                <view class="label">备注</view>
+                <view class="value description">{{item.remark}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 加载完成提示 -->
+      <view class="load-complete" wx:if="{{!hasMoreParking && parkingSpaces.length > 0 && !loadingParking}}">
+        已加载全部 (共{{totalParking}}条)
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部浮动按钮 -->
+  <view class="fab-button-container" wx:if="{{mode === 'vehicle'}}">
+    <button class="fab-button" bindtap="goToAdd">
+      新增车辆
+    </button>
+  </view>
+</view>

@@ -1,0 +1,509 @@
+/* pages/property/vehicle/vehicle-list/vehicle-list.wxss */
+
+.page {
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  padding-bottom: 80rpx;
+}
+
+/* ==================== 模式切换条 ==================== */
+.mode-bar {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 12rpx 0;
+  border-bottom: 1rpx solid #e5e7eb;
+}
+
+.mode-btn {
+  flex: 1;
+  padding: 14rpx 16rpx;
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 600;
+  border-bottom: 3rpx solid transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.mode-btn.active {
+  color: #35b6f4;
+  border-bottom-color: #35b6f4;
+  background-color: #f0f9ff;
+}
+
+.mode-divider {
+  width: 1rpx;
+  height: 24rpx;
+  background-color: #e5e7eb;
+}
+
+/* ==================== 筛选栏 ==================== */
+.filter-container {
+  background-color: white;
+  padding: 12rpx 16rpx;
+  border-bottom: 1rpx solid #e5e7eb;
+  overflow-x: auto;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 8rpx;
+  white-space: nowrap;
+}
+
+.filter-tag {
+  padding: 8rpx 14rpx;
+  border: 1rpx solid #d1d5db;
+  border-radius: 16rpx;
+  background-color: #f9fafb;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  min-height: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-tag .tag-text {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 活跃状态 - 直接作用在 filter-tag 上 */
+.filter-tag.active {
+  background-color: #35b6f4;
+  border-color: #35b6f4;
+}
+
+.filter-tag.active .tag-text {
+  color: white;
+}
+
+/* 按压状态 */
+.filter-tag:active {
+  opacity: 0.8;
+}
+
+.search-container {
+  background-color: white;
+  padding: 16rpx;   
+  border-bottom: 1rpx solid #e5e7eb;
+}
+
+.search-bar {
+  display: flex;
+  gap: 8rpx;
+}
+
+.search-input {
+  flex: 1;
+  width:80% !important;
+  padding: 12rpx 14rpx;
+  border: 1rpx solid #d1d5db;
+  border-radius: 8rpx;
+  font-size: 12px;
+  background-color: #f9fafb;
+}
+
+.search-btn {
+  padding: 12rpx 10rpx !important;
+  font-size: 12px;
+  background-color: #35b6f4;
+  color: white;
+  border-radius: 8rpx;
+  border: none;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400rpx;
+}
+
+.loading-spinner {
+  width: 40rpx;
+  height: 40rpx;
+  border: 3rpx solid #dbeafe;
+  border-top-color: #35b6f4;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16rpx;
+}
+
+.loading-text {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400rpx;
+  padding: 40rpx 20rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 16rpx;
+}
+
+.empty-text {
+  font-size: 13px;
+  color: #4b5563;
+  margin-bottom: 32rpx;
+}
+
+.add-btn-primary {
+  padding: 14rpx 32rpx;
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 8rpx;
+  font-size: 14px;
+  border: none;
+}
+
+.content {
+  padding: 16rpx;
+}
+
+.stats-bar {
+  background-color: white;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 16rpx;
+  box-shadow: 0 1rpx 3rpx rgba(0, 0, 0, 0.08);
+}
+
+.stat-item {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #9ca3af;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: #35b6f4;
+}
+
+.stat-divider {
+  width: 1rpx;
+  background-color: #e5e7eb;
+  margin: 0 20rpx;
+}
+
+.vehicle-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  
+}
+
+.vehicle-card {
+  /* background-color: rgb(227, 244, 250); */
+  background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+  border-radius: 12rpx;
+  overflow: hidden;
+  box-shadow: 0 1rpx 3rpx rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border: 1rpx solid #f0f0f0;
+  margin-bottom: 5px;
+}
+
+.vehicle-card:active {
+  box-shadow: 0 4rpx 12rpx rgba(53, 182, 244, 0.1);
+  transform: translateY(-1rpx);
+}
+
+/* 车位列表 */
+.parking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.parking-card {
+  background-color: white;
+  border-radius: 12rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.parking-card:active {
+  box-shadow: 0 4rpx 16rpx rgba(53, 182, 244, 0.15);
+  transform: translateY(-2rpx);
+}
+
+/* ==================== 卡片头部 ==================== */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14rpx 16rpx;
+  /* background: linear-gradient(135deg, #f9f5ff 0%, #f3f4f6 100%); */
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+/* 车牌样式 */
+.plate-badge {
+  font-size: 14px;
+  font-weight: 700;
+  color: #303030;
+  background-color: #fff9de;
+  padding: 8rpx 14rpx;
+  border-radius: 4rpx;
+  border: 2rpx solid #fdd05d;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1rpx;
+}
+
+/* 车辆类型徽章 */
+.vehicle-type-badge {
+  font-size: 12px;
+  background-color: #d8f3ff;
+  color: #35b6f4;
+  padding: 6rpx 12rpx;
+  border-radius: 6rpx;
+  font-weight: 600;
+}
+
+/* 车位信息 */
+.space-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.space-number {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.space-lot-info {
+  font-size: 11px;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+/* 车位状态徽章 */
+.space-status-badge {
+  padding:4px 5px;
+  border-radius: 10rpx;
+  font-weight: 600;
+  font-size: 12px;
+  transition: all 0.3s ease;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60rpx;
+}
+
+/* 空闲状态 - 黄色 */
+.space-status-badge.status-vacant {
+  background-color: #ffb330;
+  color: white;
+}
+
+/* 已租状态 - 绿色 */
+.space-status-badge.status-rented {
+  background-color: #19d496;
+  color: white;
+}
+
+/* 占用状态 - 蓝色 */
+.space-status-badge.status-occupied {
+  background-color: #35b6f4;
+  color: white;
+}
+
+/* 维修状态 - 红色 */
+.space-status-badge.status-maintenance {
+  background-color: #ef4444;
+  color: white;
+}
+
+/* ==================== 卡片内容 ==================== */
+.card-content {
+  padding: 12rpx 16rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+/* 信息行 */
+.info-row {
+  display: flex;
+  gap: 12rpx;
+}
+
+.info-row:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.info-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.info-group.full-width {
+  flex: 1 1 100%;
+}
+
+.label {
+  font-size: 11px;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.value {
+  font-size: 13px;
+  color: #1f2937;
+  font-weight: 500;
+}
+
+.value.small {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.value.price {
+  font-size: 14px;
+  color: #35b6f4;
+  font-weight: 600;
+}
+
+.value.time {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.value.description {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.value.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rpx 12rpx;
+  border-radius: 4rpx;
+  font-size: 11px;
+  font-weight: 600;
+  min-width: 60rpx;
+}
+
+.value.status.normal {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.value.status.abnormal {
+  background-color: #dcfce7;
+  color: #19800c;
+}
+
+/* ==================== 操作按钮 ==================== */
+.card-actions {
+  display: flex;
+  gap: 10rpx;
+  padding: 10rpx 16rpx;
+  border-top: 1rpx solid #f0f0f0;
+  margin-bottom: 5px;
+}
+
+.action-btn {
+  margin:0px 0px !important;
+  flex: 1;
+  padding: 10rpx 16rpx;
+  font-size: 12px;
+  border: none;
+  border-radius: 5rpx;
+  text-align: center;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.action-btn:active {
+  transform: scale(0.98);
+}
+
+.view-btn {
+  background-color: #81d7ff;
+  color: #ffffff;
+}
+
+.view-btn:active {
+  background-color: #bfdbfe;
+}
+
+.delete-btn {
+  background-color: #ff8383;
+  color: #ffffff;
+}
+
+.delete-btn:active {
+  background-color: #fecaca;
+}
+
+.load-complete {
+  text-align: center;
+  padding: 32rpx 20rpx;
+  color: #d1d5db;
+  font-size: 12px;
+}
+
+.fab-button-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12rpx 16rpx 16rpx;
+  background-color: white;
+  border-top: 1rpx solid #e5e7eb;
+  box-shadow: 0 -2rpx 8rpx rgba(0, 0, 0, 0.08);
+}
+
+.fab-button {
+  width: 100%;
+  padding: 14rpx 24rpx;
+  font-size: 16px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #35b6f4 0%, #35b6f4 100%);
+  color: white;
+  border: none;
+  border-radius: 8rpx;
+  line-height: center;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  /* height: 52rpx; */
+  /* line-height: 52rpx; */
+}

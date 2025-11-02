@@ -1,0 +1,332 @@
+/* ============================================
+   反馈页面 - 现代简约设计
+   主题色: #45c3ff
+   ============================================ */
+
+.container {
+  padding: 0;
+  background: #FFFFFF;
+  padding-bottom: 100rpx;
+  min-height: 100vh;
+}
+
+/* ============================================
+   搜索栏
+   ============================================ */
+.search-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #FFFFFF;
+  padding: 12rpx 16rpx;
+  border-bottom: 1rpx solid #f0f4f8;
+  box-shadow: 0 2rpx 8rpx rgba(69, 195, 255, 0.08);
+}
+
+.search-input-group {
+  display: flex;
+  align-items: center;
+  padding: 0 14rpx;
+  background: #f8f9fa;
+  border-radius: 24rpx;
+  height: 68rpx;
+  border: 2rpx solid #f0f4f8;
+  transition: all 0.3s ease;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.02);
+}
+
+.search-input-group:focus-within {
+  border-color: #45c3ff;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3rpx rgba(69, 195, 255, 0.1);
+}
+
+.search-icon {
+  font-size: 24rpx;
+  color: #45c3ff;
+  margin-right: 8rpx;
+  font-weight: 700;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 28rpx;
+  height: 100%;
+  background: transparent;
+  color: #333333;
+}
+
+.search-input::placeholder {
+  color: #C0C4CC;
+}
+
+.clear-btn {
+  font-size: 32rpx;
+  color: #45c3ff;
+  margin-left: 8rpx;
+  padding: 0 4rpx;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.clear-btn:active {
+  transform: scale(0.9);
+}
+
+/* ============================================
+   状态标签栏
+   ============================================ */
+.status-bar {
+  display: flex;
+  background: #FFFFFF;
+  border-bottom: 1rpx solid #f0f4f8;
+  padding: 12rpx 16rpx;
+  gap: 8rpx;
+}
+
+.status-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rpx;
+  padding: 10rpx;
+  border-radius: 12rpx;
+  background: #f8f9fa;
+  font-size: 24rpx;
+  color: #999999;
+  transition: all 0.3s ease;
+  border: 1rpx solid transparent;
+}
+
+.status-item.active {
+  background: linear-gradient(135deg, rgba(69, 195, 255, 0.12) 0%, rgba(0, 136, 204, 0.08) 100%);
+  color: #45c3ff;
+  border: 1rpx solid #45c3ff;
+  box-shadow: 0 2rpx 8rpx rgba(69, 195, 255, 0.12);
+}
+
+.status-item:active {
+  transform: scale(0.95);
+}
+
+.status-badge {
+  display: inline-block;
+  min-width: 32rpx;
+  height: 32rpx;
+  line-height: 32rpx;
+  text-align: center;
+  background: #a0a0a0;
+  color: #FFFFFF;
+  border-radius: 50%;
+  font-size: 20rpx;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.status-badge.primary {
+  background: linear-gradient(135deg, #45c3ff 0%, #0088cc 100%);
+}
+
+.status-badge.warning {
+  background: #E6A23C;
+}
+
+.status-badge.success {
+  background: #67C23A;
+}
+
+/* ============================================
+   问题列表
+   ============================================ */
+.issue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  padding: 12rpx 16rpx;
+  background: #FFFFFF;
+}
+
+.issue-card {
+  background: #FFFFFF;
+  border-radius: 12rpx;
+  padding: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(69, 195, 255, 0.08);
+  border: 1rpx solid #f0f4f8;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideIn 0.3s ease-out;
+  cursor: pointer;
+}
+
+.issue-card:active {
+  transform: translateY(-2rpx);
+  box-shadow: 0 4rpx 16rpx rgba(69, 195, 255, 0.15);
+  border-color: #45c3ff;
+  background: linear-gradient(135deg, rgba(69, 195, 255, 0.03) 0%, rgba(0, 136, 204, 0.01) 100%);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12rpx;
+  margin-bottom: 12rpx;
+}
+
+.issue-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333333;
+  flex: 1;
+  line-height: 1.4;
+}
+
+.card-body {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 12rpx;
+  flex-wrap: wrap;
+}
+
+.issue-type {
+  font-size: 24rpx;
+  color: #45c3ff;
+  background: rgba(69, 195, 255, 0.1);
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+  font-weight: 500;
+}
+
+.tag-label {
+  font-size: 22rpx;
+  padding: 4rpx 10rpx;
+  border-radius: 8rpx;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.location-tag {
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #FF9A56 0%, #FF7F50 100%);
+}
+
+.subtype-tag {
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #95DE64 0%, #52C41A 100%);
+}
+
+.urgency {
+  line-height: 0.5;
+  text-align: center;
+  height: 15px;
+  width: 30px;
+  font-size: 20rpx;
+  /* padding-bottom: 15px; */
+  border-radius: 10rpx;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.urgency-low {
+  background: #909399;
+}
+
+.urgency-medium {
+  background: #E6A23C;
+}
+
+.urgency-high {
+  background: #F56C6C;
+}
+
+.urgency-critical {
+  background: linear-gradient(135deg, #E03E3E 0%, #C03030 100%);
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12rpx;
+  border-top: 1rpx solid #f0f4f8;
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.issue-meta {
+  flex: 1;
+}
+
+.arrow {
+  font-size: 28rpx;
+  color: #45c3ff;
+  margin-left: 12rpx;
+  font-weight: 700;
+  transition: transform 0.3s ease;
+}
+
+.issue-card:active .arrow {
+  transform: translateX(4rpx);
+}
+
+/* ============================================
+   空状态
+   ============================================ */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 20rpx;
+  text-align: center;
+  background: #FFFFFF;
+}
+
+.empty-icon {
+  font-size: 100rpx;
+  color: #f0f4f8;
+  margin-bottom: 16rpx;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0rpx);
+  }
+  50% {
+    transform: translateY(-8rpx);
+  }
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999999;
+  font-weight: 500;
+}
+.submit-btn-2{
+    margin-top: 20px;
+    background-color: #35b6f4 !important;
+    color:#ffffff !important;
+    width:120px !important;
+    height: 30px !important;
+    line-height: 1.8;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+}
+.bth-text-1{
+    color: #ffffff !important;
+}
+

@@ -1,0 +1,273 @@
+<!-- pages/property/profile/edit/edit.wxml -->
+<!-- 员工资料管理 - 编辑个人信息页面 -->
+
+<view class="page">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">
+    <view class="loading-spinner"></view>
+    <view class="loading-text">加载中...</view>
+  </view>
+
+  <!-- 表单区域 -->
+  <view wx:if="{{!loading}}" class="form-container">
+    <!-- 页面头部 -->
+    <view class="header">
+      <view class="header-title">编辑个人信息</view>
+      <view class="header-subtitle">修改您的基本信息</view>
+    </view>
+
+    <!-- 基本信息组 -->
+    <view class="form-group-section">
+      <view class="form-section-title">基本信息</view>
+
+      <!-- 电话字段 -->
+      <view class="form-group">
+        <view class="form-label">电话</view>
+        <input
+          class="form-input {{errors.phone ? 'error' : ''}}"
+          type="tel"
+          placeholder="请输入手机号（11位）"
+          value="{{phone}}"
+          bindinput="onPhoneInput"
+          maxlength="11"
+        />
+        <view wx:if="{{errors.phone}}" class="error-text">{{errors.phone}}</view>
+      </view>
+
+      <!-- 邮箱字段 -->
+      <view class="form-group">
+        <view class="form-label">邮箱</view>
+        <input
+          class="form-input {{errors.email ? 'error' : ''}}"
+          type="text"
+          placeholder="请输入邮箱地址"
+          value="{{email}}"
+          bindinput="onEmailInput"
+          maxlength="50"
+        />
+        <view wx:if="{{errors.email}}" class="error-text">{{errors.email}}</view>
+      </view>
+
+      <!-- 性别字段 -->
+      <view class="form-group">
+        <view class="form-label">性别</view>
+        <picker class="form-picker" bindchange="onGenderChange" value="{{genderOptions.indexOf(gender)}}" range="{{genderOptions}}">
+          <view class="form-input picker-input">{{gender || '请选择性别'}}</view>
+        </picker>
+      </view>
+
+      <!-- 出生日期字段 -->
+      <view class="form-group">
+        <view class="form-label">出生日期</view>
+        <picker class="form-picker" mode="date" bindchange="onBirthDateChange" value="{{birthDate}}">
+          <view class="form-input picker-input">{{birthDate || '请选择出生日期'}}</view>
+        </picker>
+      </view>
+
+      <!-- 微信字段 -->
+      <view class="form-group">
+        <view class="form-label">微信</view>
+        <input
+          class="form-input"
+          type="text"
+          placeholder="请输入微信号"
+          value="{{wechat}}"
+          bindinput="onWechatInput"
+          maxlength="32"
+        />
+      </view>
+    </view>
+
+    <!-- 联系信息组 -->
+    <view class="form-group-section">
+      <view class="form-section-title">联系信息</view>
+
+      <!-- 办公电话 -->
+      <view class="form-group">
+        <view class="form-label">办公电话（区号）</view>
+        <input
+          class="form-input"
+          type="tel"
+          placeholder="如：010"
+          value="{{telephoneAreaCode}}"
+          bindinput="onTelephoneAreaCodeInput"
+          maxlength="6"
+        />
+      </view>
+
+      <view class="form-group">
+        <view class="form-label">办公电话（号码）</view>
+        <input
+          class="form-input"
+          type="tel"
+          placeholder="请输入办公电话"
+          value="{{telephoneNumber}}"
+          bindinput="onTelephoneNumberInput"
+          maxlength="20"
+        />
+      </view>
+
+      <view class="form-group">
+        <view class="form-label">电话分机</view>
+        <input
+          class="form-input"
+          type="tel"
+          placeholder="请输入分机号（可选）"
+          value="{{telephoneExtension}}"
+          bindinput="onTelephoneExtensionInput"
+          maxlength="10"
+        />
+      </view>
+
+      <!-- 紧急联系人 -->
+      <view class="form-group">
+        <view class="form-label">紧急联系人</view>
+        <input
+          class="form-input"
+          type="text"
+          placeholder="请输入紧急联系人姓名"
+          value="{{emergencyContact}}"
+          bindinput="onEmergencyContactInput"
+          maxlength="20"
+        />
+      </view>
+
+      <!-- 紧急电话 -->
+      <view class="form-group">
+        <view class="form-label">紧急电话</view>
+        <input
+          class="form-input"
+          type="tel"
+          placeholder="请输入紧急联系电话"
+          value="{{emergencyPhone}}"
+          bindinput="onEmergencyPhoneInput"
+          maxlength="11"
+        />
+      </view>
+    </view>
+
+    <!-- 教育信息组 -->
+    <view class="form-group-section">
+      <view class="form-section-title">教育信息</view>
+
+      <!-- 学历 -->
+      <view class="form-group">
+        <view class="form-label">学历</view>
+        <picker class="form-picker" bindchange="onEducationLevelChange" value="{{educationLevelOptions.indexOf(educationLevel)}}" range="{{educationLevelOptions}}">
+          <view class="form-input picker-input">{{educationLevel || '请选择学历'}}</view>
+        </picker>
+      </view>
+
+      <!-- 毕业院校 -->
+      <view class="form-group">
+        <view class="form-label">毕业院校</view>
+        <input
+          class="form-input"
+          type="text"
+          placeholder="请输入毕业院校"
+          value="{{graduateSchool}}"
+          bindinput="onGraduateSchoolInput"
+          maxlength="50"
+        />
+      </view>
+
+      <!-- 所学专业 -->
+      <view class="form-group">
+        <view class="form-label">所学专业</view>
+        <input
+          class="form-input"
+          type="text"
+          placeholder="请输入专业名称"
+          value="{{major}}"
+          bindinput="onMajorInput"
+          maxlength="50"
+        />
+      </view>
+
+      <!-- 毕业日期 -->
+      <view class="form-group">
+        <view class="form-label">毕业日期</view>
+        <picker class="form-picker" mode="date" bindchange="onGraduationDateChange" value="{{graduationDate}}">
+          <view class="form-input picker-input">{{graduationDate || '请选择毕业日期'}}</view>
+        </picker>
+      </view>
+
+      <!-- 籍贯 -->
+      <view class="form-group">
+        <view class="form-label">籍贯</view>
+        <input
+          class="form-input"
+          type="text"
+          placeholder="请输入籍贯"
+          value="{{nativePlace}}"
+          bindinput="onNativePlaceInput"
+          maxlength="50"
+        />
+      </view>
+    </view>
+
+    <!-- 证件照片组 -->
+    <view class="form-group-section">
+      <view class="form-section-title">证件照片</view>
+
+      <!-- 身份证照片 -->
+      <view class="form-group">
+        <view class="form-label">身份证照片</view>
+        
+        <!-- 已上传的照片 -->
+        <view wx:if="{{idCardPhotos}}" class="photo-grid">
+          <view class="photo-container">
+            <image src="{{idCardPhotos}}" mode="aspectFill" class="uploaded-photo"></image>
+            <view class="photo-delete-btn" bindtap="deleteIdCardPhoto">✕</view>
+          </view>
+        </view>
+
+        <!-- 新上传的照片 -->
+        <view wx:if="{{idCardPhotoFiles.length > 0}}" class="photo-grid">
+          <view class="photo-container">
+            <image src="{{idCardPhotoFiles[0]}}" mode="aspectFill" class="uploaded-photo"></image>
+            <view class="photo-delete-btn" data-index="0" bindtap="deleteIdCardPhotoFile">✕</view>
+          </view>
+        </view>
+
+        <!-- 添加照片按钮 -->
+        <view wx:if="{{!idCardPhotos && idCardPhotoFiles.length === 0}}" class="form-group">
+          <button class="btn-upload" bindtap="chooseIdCardPhotos">+ 添加身份证照片</button>
+        </view>
+      </view>
+
+      <!-- 证件照 -->
+      <view class="form-group">
+        <view class="form-label">证件照</view>
+        
+        <!-- 已上传的照片 -->
+        <view wx:if="{{certificatePhotos}}" class="photo-grid">
+          <view class="photo-container">
+            <image src="{{certificatePhotos}}" mode="aspectFill" class="uploaded-photo"></image>
+            <view class="photo-delete-btn" bindtap="deleteCertificatePhoto">✕</view>
+          </view>
+        </view>
+
+        <!-- 新上传的照片 -->
+        <view wx:if="{{certificatePhotoFiles.length > 0}}" class="photo-grid">
+          <view class="photo-container">
+            <image src="{{certificatePhotoFiles[0]}}" mode="aspectFill" class="uploaded-photo"></image>
+            <view class="photo-delete-btn" data-index="0" bindtap="deleteCertificatePhotoFile">✕</view>
+          </view>
+        </view>
+
+        <!-- 添加照片按钮 -->
+        <view wx:if="{{!certificatePhotos && certificatePhotoFiles.length === 0}}" class="form-group">
+          <button class="btn-upload" bindtap="chooseCertificatePhotos">+ 添加证件照</button>
+        </view>
+      </view>
+    </view>
+    <!-- 提交按钮 -->
+    <view class="button-container">
+      <button class="btn-cancel" bindtap="goBack" disabled="{{submitting}}">取消</button>
+      <button class="btn-submit" bindtap="submitForm" disabled="{{submitting}}">
+        {{submitting ? '保存中...' : '保存更改'}}
+      </button>
+    </view>
+  </view>
+</view>

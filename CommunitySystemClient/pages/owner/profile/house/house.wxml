@@ -1,0 +1,150 @@
+<!--pages/owner/profile/house/house.wxml-->
+<view class="container">
+  <!-- 房屋标签栏 -->
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === 0 ? 'active' : ''}}" bindtap="switchTab" data-index="0">
+      我的房屋
+    </view>
+    <view class="tab-item {{activeTab === 1 ? 'active' : ''}}" bindtap="switchTab" data-index="1">
+      申请记录
+    </view>
+  </view>
+
+  <!-- 房屋列表 -->
+  <view class="content" wx:if="{{activeTab === 0}}">
+    <view class="section-header">
+      <text class="section-title">房屋信息</text>
+      <text class="count">{{houses.length}}</text>
+    </view>
+
+    <view class="house-list" wx:if="{{houses.length > 0}}">
+      <view class="house-card" wx:for="{{houses}}" wx:key="index" bind:tap="viewDetail" data-house-id="{{item.id}}" style="cursor: pointer;">
+        <!-- 房屋图片 -->
+        <view class="house-image-container" wx:if="{{item.floorPlanImage}}">
+          <image class="house-image" src="{{item.floorPlanImage}}" mode="aspectFill" />
+          <view class="image-overlay"></view>
+        </view>
+
+        <!-- 房屋简要信息 -->
+        <view class="card-content">
+          <view class="card-header">
+            <view class="header-left">
+              <text class="house-name">{{item.fullRoomNo || item.roomNo}}</text>
+              <text class="status-tag tag-{{item.houseStatus === '已售' ? 'sold' : 'empty'}}">
+                {{item.houseStatus}}
+              </text>
+            </view>
+          </view>
+
+          <view class="card-body">
+            <!-- 基本信息 -->
+            <view class="info-item">
+              <text class="label">类型：</text>
+              <text class="value">{{item.houseType || '-'}}</text>
+            </view>
+            <view class="info-item">
+              <text class="label">户型：</text>
+              <text class="value">{{item.houseLayout || '-'}}</text>
+            </view>
+            <view class="info-item">
+              <text class="label">面积：</text>
+              <text class="value">{{item.buildingArea}} m²</text>
+            </view>
+            <view class="info-item">
+              <text class="label">社区：</text>
+              <text class="value">{{item.communityName}}</text>
+            </view>
+            <view class="info-item" wx:if="{{item.detailAddress}}">
+              <text class="label">地址：</text>
+              <text class="value">{{item.detailAddress}}</text>
+            </view>
+          </view>
+
+          <view class="card-footer">
+            <text class="btn-link">查看详情 ></text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:else>
+      <text class="empty-icon">-</text>
+      <text class="empty-text">暂无房屋信息</text>
+      <text class="empty-tip">请先通过申请关联房屋或联系物业</text>
+    </view>
+  </view>
+
+  <!-- 申请记录 -->
+  <view class="content" wx:if="{{activeTab === 1}}">
+    <view class="section-header">
+      <text class="section-title">申请记录</text>
+      <text class="count">{{applicationTotal}}</text>
+    </view>
+
+    <!-- 加载中状态 -->
+    <view class="loading-state" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+
+    <!-- 状态过滤栏 -->
+    <view class="filter-bar" wx:if="{{!loading}}">
+      <scroll-view scroll-x="true" class="filter-scroll">
+        <view class="filter-item {{activeStatusFilter === index ? 'active' : ''}}" 
+          wx:for="{{statusFilters}}" wx:key="*this" wx:for-index="index"
+          bindtap="selectStatusFilter" data-index="{{index}}">
+          {{item.label}}
+        </view>
+      </scroll-view>
+    </view>
+
+    <view class="application-list" wx:if="{{applications.length > 0 && !loading}}">
+      <view class="app-item" wx:for="{{applications}}" wx:key="applicationId">
+        <view class="app-header">
+          <view class="app-title-group">
+            <text class="app-title">{{item.fullRoomNo || item.roomNo}}</text>
+            <text class="app-house-type">{{item.houseType}}</text>
+          </view>
+          <view class="app-status-group">
+            <text class="app-status tag-{{item.isVerified === 0 ? 'warning' : (item.status === '正常' ? 'success' : (item.status === '到期' ? 'info' : 'danger'))}}">
+              {{item.isVerified === 0 ? '待审核' : (item.status || '正常')}}
+            </text>
+          </view>  
+        </view>
+
+        <view class="app-body">
+          <view class="info-item">
+            <text class="label">申请：</text>
+            <text class="value">{{item.applyDate}}</text>
+          </view>
+          <view class="info-item" wx:if="{{item.houseLayout}}">
+            <text class="label">户型：</text>
+            <text class="value">{{item.houseLayout}}</text>
+          </view>
+          <view class="info-item" wx:if="{{item.buildingArea}}">
+            <text class="label">面积：</text>
+            <text class="value">{{item.buildingArea}} m²</text>
+          </view>
+          <!-- <view class="info-item" wx:if="{{item.relationship}}">
+            <text class="label">关系：</text>
+            <text class="value">{{item.relationship}}</text>
+          </view> -->
+          <view class="info-item" wx:if="{{item.remark}}">
+            <text class="label">备注：</text>
+            <text class="value">{{item.remark}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 加载更多 -->
+      <view class="load-more" wx:if="{{applicationHasMore}}" bindtap="loadMoreApplications">
+        <text>加载更多</text>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{!loading && applications.length === 0}}">
+      <text class="empty-icon">-</text>
+      <text class="empty-text">暂无申请记录</text>
+    </view>
+  </view>
+</view>
+

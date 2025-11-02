@@ -1,0 +1,184 @@
+/* pages/property/house/house-info/house-info.wxss */
+
+.page {
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  padding-bottom: 20rpx;
+}
+
+/* 加载状态 */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400rpx;
+}
+
+.loading-spinner {
+  width: 40rpx;
+  height: 40rpx;
+  border: 3rpx solid #dbeafe;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16rpx;
+}
+
+.loading-text {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400rpx;
+  padding: 40rpx 20rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 16rpx;
+}
+
+.empty-text {
+  font-size: 16px;
+  color: #6b7280;
+  margin-bottom: 32rpx;
+}
+
+/* 内容区域 */
+.content {
+  padding: 20rpx 0;
+}
+
+/* 户型图 */
+.floor-plan-section {
+  margin-top: 20px;
+  margin:0 auto;
+  width: 300px;
+  height: 600rpx;
+  background-color: white;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+}
+
+.floor-plan-image {
+  width: 100%;
+  height: 100%;
+}
+
+/* 卡片样式 */
+.card {
+  background-color: white;
+  border-radius: 12rpx;
+  margin: 0 16rpx 16rpx;
+  box-shadow: 0 1rpx 3rpx rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.card-title {
+  background-color: #f9fafb;
+  padding: 16rpx 20rpx;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  border-bottom: 1rpx solid #e5e7eb;
+}
+
+.card-content {
+  padding: 0;
+}
+
+/* 信息项 */
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14rpx 20rpx;
+  border-bottom: 1rpx solid #f3f4f6;
+  font-size: 12px;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  color: #6b7280;
+  font-weight: 500;
+  min-width: 100rpx;
+}
+
+.value {
+  color: #1f2937;
+  text-align: center;
+  flex: 1;
+  margin-left: 160px;
+  word-break: break-all;
+}
+
+/* 状态样式 */
+.status {
+  display: inline-block;
+  padding: 4rpx 8rpx;
+  border-radius: 4rpx;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* 空置 - 黄色 */
+.status.vacant {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+/* 已售 - 绿色 */
+.status.sold {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+/* 已租 - 蓝色 */
+.status.rented {
+  background-color: #bfdbfe;
+  color: #1e40af;
+}
+
+/* 维修 - 红色 */
+.status.maintenance {
+  background-color: #fecaca;
+  color: #991b1b;
+}
+
+/* 备注文本 */
+.remark-text {
+  color: #374151;
+  line-height: 1.6;
+  padding: 12rpx 8rpx;
+  font-size: 12px;
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+/* 返回按钮 */
+.back-btn {
+  width: 90%;
+  margin: 32rpx auto;
+  padding: 14rpx 24rpx;
+  font-size: 14px;
+  background-color: #35b6f4;
+  color: white;
+  border: none;
+  border-radius: 8rpx;
+  height: 35px;
+  /* line-height: 44rpx; */
+}

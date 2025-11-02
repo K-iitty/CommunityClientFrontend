@@ -1,0 +1,357 @@
+/* pages/property/house/house-list/house-list.wxss */
+
+.page {
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  padding-bottom: 80rpx;
+}
+
+.search-container {
+  background-color: white;
+  padding: 16rpx;
+  border-bottom: 1rpx solid #e5e7eb;
+}
+
+.search-bar {
+  display: flex;
+  gap: 8rpx;
+}
+
+.search-input {
+  flex: 1;
+  padding: 12rpx 14rpx;
+  border: 1rpx solid #d1d5db;
+  border-radius: 8rpx;
+  font-size: 12px;
+  background-color: #f9fafb;
+}
+
+.search-btn {
+  padding: 12rpx 20rpx;
+  font-size: 12px;
+  background-color: #35b6f4;
+  color: white;
+  border-radius: 8rpx;
+  border: none;
+}
+
+.filter-container {
+  background-color: white;
+  padding: 12rpx 16rpx;
+  border-bottom: 1rpx solid #e5e7eb;
+}
+
+.status-filter-container {
+  background-color: white;
+  padding: 12rpx 16rpx;
+  border-bottom: 1rpx solid #e5e7eb;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 8rpx;
+  overflow-x: auto;
+  padding: 4rpx 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.filter-tag {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100rpx;
+  height: 25px;
+}
+
+.tag-text {
+  padding: 16rpx 24rpx;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #6b7280;
+  background-color: #f3f4f6;
+  border: 1rpx solid transparent;
+  transition: all 0.3s ease;
+}
+
+.tag-text.active {
+  color: white;
+  background-color: #35b6f4;
+  border-color: #35b6f4;
+}
+
+.content {
+  padding: 16rpx;
+}
+
+.stats-bar {
+  background-color: white;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 16rpx;
+  box-shadow: 0 1rpx 3rpx rgba(0, 0, 0, 0.08);
+}
+
+.stat-item {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #9ca3af;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: #35b6f4;
+}
+
+.stat-divider {
+  width: 1rpx;
+  background-color: #e5e7eb;
+  margin: 0 20rpx;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400rpx;
+}
+
+.loading-spinner {
+  width: 40rpx;
+  height: 40rpx;
+  border: 3rpx solid #dbeafe;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16rpx;
+}
+
+.loading-text {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400rpx;
+  padding: 40rpx 20rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 16rpx;
+}
+
+.empty-text {
+  font-size: 16px;
+  color: #4b5563;
+  margin-bottom: 32rpx;
+}
+
+.add-btn-primary {
+  padding: 14rpx 32rpx;
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 8rpx;
+  font-size: 14px;
+  border: none;
+}
+
+.house-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.house-item {
+  background-color: white;
+  border-radius: 12rpx;
+  /* box-shadow:3rpx 2rpx 5rpx rgba(0, 0, 0, 0.192); */
+  overflow: hidden;
+  border: 5rpx solid #e4e4e4;
+}
+
+.house-card {
+  background-color: white;
+  border-radius: 12rpx 12rpx 0 0;
+  padding: 16rpx;
+  cursor: pointer;
+  transition: all 0.3s ease;
+ 
+}
+
+.house-card:active {
+  box-shadow: 0 4rpx 12rpx rgba(53, 182, 244, 0.15);
+  transform: translateY(-2rpx);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+  padding-bottom: 12rpx;
+  border-bottom: 1rpx solid #f3f4f6;
+  transition: background-color 0.2s ease;
+}
+
+.property-number {
+  font-size: 13px;
+  font-weight: bold;
+  color: #1f2937;
+  background-color: #f0f9ff;
+  padding: 8rpx 12rpx;
+  border-radius: 4rpx;
+  border: 2rpx solid #bfdbfe;
+  min-width: 100rpx;
+  text-align: center;
+}
+
+.property-status {
+  font-size: 11px;
+  padding: 6rpx 12rpx;
+  border-radius: 4rpx;
+  font-weight: 500;
+}
+
+/* 空置状态 */
+.property-status.empty {
+  background-color: #fef3c7;
+  color: #e97a35;
+}
+
+/* 已售状态 */
+.property-status.sold {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+/* 已租状态 */
+.property-status.rented {
+  background-color: #bfdbfe;
+  color: #1e40af;
+}
+
+/* 维修状态 */
+.property-status.maintenance {
+  background-color: #fecaca;
+  color: #991b1b;
+}
+
+.card-content {
+  margin-bottom: 12rpx;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10rpx 0;
+  font-size: 12px;
+  border-bottom: 1rpx solid #f3f4f6;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  color: #6b7280;
+  font-weight: 500;
+  min-width: 80rpx;
+}
+
+.value {
+  color: #1f2937;
+  text-align: right;
+  margin-right:20px;
+  flex: 1;
+}
+
+.card-actions {
+  display: flex;
+  gap: 12rpx;
+  padding: 12rpx 16rpx;
+  border-top: 1rpx solid #f3f4f6;
+  background-color: white;
+  border-radius: 0 0 12rpx 12rpx;
+  position: relative;
+  z-index: 10;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 15rpx 16rpx;
+  font-size: 12px;
+  border: none;
+  border-radius: 6rpx;
+  height: 60rpx;
+  /* line-height: 40rpx; */
+}
+
+.view-btn {
+  background-color: #dbeafe;
+  color: #1e56d1;
+}
+
+.edit-btn {
+  background-color: #cfeffd;
+  color: #35b6f4;
+}
+
+.delete-btn {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.btn-hover {
+  opacity: 0.8;
+  transform: scale(0.95);
+}
+
+.load-complete {
+  text-align: center;
+  padding: 32rpx 20rpx;
+  color: #d1d5db;
+  font-size: 12px;
+}
+
+.fab-button-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12rpx 16rpx 16rpx;
+  background-color: white;
+  border-top: 1rpx solid #e5e7eb;
+  box-shadow: 0 -2rpx 8rpx rgba(0, 0, 0, 0.08);
+}
+
+.fab-button {
+  width: 100%;
+  padding: 14rpx 24rpx;
+  font-size: 16px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #35b6f4 0%, #1e88e5 100%);
+  color: white;
+  border: none;
+  border-radius: 8rpx;
+  height: 52rpx;
+  line-height: 52rpx;
+}
