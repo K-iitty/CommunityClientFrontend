@@ -9,6 +9,17 @@
 该项目由四个主要模块组成，分别针对**管理员（后端和前端）**和**业主/物业（后端和前端）**三个角色的业务需求。
 
 ---
+## 项目指路
+
+管理员前端-web网页（vue3+elementplus）：https://github.com/K-iitty/CommunitySystemFrontend
+
+管理员后端（springboot3）：https://github.com/K-iitty/CommunitySystemBackend
+
+业主/物业前端-微信小程序（微信小程序原生）：https://github.com/K-iitty/CommunityClientFrontend
+
+业主/物业后端（springboot3）：https://github.com/K-iitty/CommunityClientBackend
+
+---
 
 ##  项目模块结构与联系
 
