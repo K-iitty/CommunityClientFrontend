@@ -90,11 +90,7 @@ Page({
           })
           
           // 如果是首页且没有状态过滤，加载全部数据用于统计
-          if (!this.data.statusFilter) {
-            this.loadAllIssuesForCounts()
-          } else {
-            this.calculateStatusCounts(issues)
-          }
+          this.loadAllIssuesForCounts()
         } else {
           this.setData({
             issues: [...this.data.issues, ...issues],
